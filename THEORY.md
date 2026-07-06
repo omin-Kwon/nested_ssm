@@ -45,6 +45,59 @@ $$y^{fresh}_t - y^{stale}_t \;=\; \sum_{\tau = b+1}^{t} \Big(\prod_{s>\tau}\alph
 
 ---
 
+## 명제 1′ — 가족 불변성: hot/cold 절단이 4가족(GDN/GLA/KDA/M2) 전부에서 성립하는 이유 (T8 검증)
+
+네 가족의 recurrence는 전부 다음 **공통 골격**의 인스턴스다:
+
+$$S_t = D_t\, S_{t-1} + k_t\, w_t^\top, \qquad y_t = S_t^\top q_t$$
+
+- $D_t$ = **대각** decay (스칼라 $\alpha_t I$: GDN·M2 / 채널별 $\mathrm{Diag}(\alpha_{t,j})$: GLA·KDA)
+- 쓰기 = **rank-1, key-게이트**: key-채널 $j$는 오직 $k_t[j]$를 통해서만 기여받음
+- $w_t$: additive 가족은 $\beta_t v_t$ (state 안 읽음), delta 가족은 $\beta_t(v_t - S_{t-1}^\top k_t)$ (state 읽음)
+
+이 골격에서 세 성질이 따라 나오고, 각각이 티어링의 한 단계를 허가한다:
+
+**(A) 채널 직합(direct-sum) 구조 → "prefix 절단 = 같은 가족의 정확한 소형 모델".**
+$D_t$가 대각이고 쓰기가 $k_t[j]$-게이트이므로 state는 key-채널별 독립 누산기의 직합 $S=\oplus_j S_j$:
+$S_j$는 $k[j]$로만 쓰이고 $q[j]$로만 읽힌다 — **key-채널 간 혼합이 없다**. 따라서 $q,k$ 뒤 채널을
+0으로 마스킹하면 폭 $m$짜리 동일-가족 recurrence가 **근사 없이 정확히** 실행된다. 이것이 nesting
+학습의 자격(license). (delta의 $w_t$는 $S^\top k$로 채널들을 읽지만 결합이 **value 공간의 공유 벡터
+$w_t$를 통해서만** 흐르고 key-채널을 섞지 않으므로 닫힘성 유지 — blockdelta 반증 때 배운 "결합은
+값싼 곳에 있고 비싼 곳(key 기저)에 없다"의 수학적 실체.)
+
+**(B) 폭 추첨의 gradient 비대칭 → 중요도 순서는 학습이 새긴다.**
+채널 $j$는 추첨 폭 $w\ge j$일 때만 gradient를 받음: 생존확률 $P(w\ge j)$가 $j$에 단조 감소. 앞
+채널은 모든 부분모델에 존재하므로 범용·고가치 recall 방향을 흡수, 뒤 채널은 **잔차(한계 기여)**만
+학습. 목적함수 $\mathbb{E}_w[L(\text{trunc}_w)]$ = nested dropout이고 선형 케이스 최적해 = PCA 순서(명제 1의
+앵커). (A)만 있으면 가족 무관 — **순서는 아키텍처의 우연이 아니라 목적함수가 강제한 성질.**
+(증거: dedicated는 순서 없음 — hot-alone 0.00~0.44, 절단 붕괴 k8 522; nested는 있음 — 0.98, 44.8→37.1.)
+
+**(C) 대각 decay → staleness가 age-국소적, decay 보상이 정확 → 절단선이 안전.**
+cold 채널을 $c$스텝 전 스냅샷에서 읽어도 대각 decay는 $G=\prod D$(스칼라/채널별 벡터)로 **정확히**
+보상되므로 오차는 정확히 "최근 $c$토큰 쓰기의 cold 성분"뿐(명제 3). (B)의 순서 덕에 hot prefix가
+젊은/고가치 방향을 by-construction 커버. 요약: **(A)가 자를 수 있게 하고, (B)가 어디를 자를지
+순서를 만들고, (C)가 잘린 뒤쪽을 낡게 읽어도 안전하게 만든다.**
+
+**delta vs additive의 유일한 분기 — v4가 필요한가, 공짜인가.**
+$w_t$가 state를 읽는 delta 가족(GDN/KDA)은 correction staleness가 state에 **재귀**(명제 3(iii))하므로
+correction만은 정확해야 함 → v4 분리 필요, 비용 +2~4%. additive 가족(GLA/M2)은 $w_t$가 state를 안
+읽으므로 금기 자체가 없음 → v4 ~0% (실측: GLA 0%, M2 +0.05~0.4%). **가족 차이는 ordering(A,B)이
+아니라 "무엇을 정확히 유지해야 하는가"만 결정한다.**
+
+**게이지 관점 (가장 압축된 진술).** 스칼라 decay면 recurrence는 key 공간 직교 회전에 불변
+($k\to Rk, q\to Rq, S\to RS$ 출력 보존) — "어느 기저가 무엇을 담는가"는 **게이지 자유도**. nesting
+학습 = 이 자유도를 "중요도 내림차순 기저"로 고정하는 게이지 고정, 티어링 = 그 순서대로 자르기.
+채널별 decay(GLA/KDA)는 게이지 군이 작아(축이 이미 의미를 가짐) 회전-only retrofit은 실패하지만
+from-scratch nesting은 (A)(B)만 요구하므로 성립 — KDA tax +1.6%(최저)는 채널별 게이트가 이미
+채널을 비균등 취급하는 아키텍처라 순서 새기기와 가장 잘 공존한다는 해석(해석임을 명시).
+
+| 1′ 예측 | T7/T8 실측 |
+|---|---|
+| (A)(B) 가족 무관 → 탄력성 4가족 성립 | tax +1.6%(KDA)/+4~5%(GDN/GLA)/+7.1%(M2), 전부 단조 |
+| (C) → nested-v4 ≈ free 4가족 | +2~4%(GDN)/+1.9~3.4%(KDA)/0%(GLA)/+0.05~0.4%(M2) |
+| additive는 금기 없음 → v4 더 쌈 | GLA·M2가 delta 가족보다 일관되게 낮음 ✓ |
+| 순서 없으면 티어링 파탄 | dedic-v4 +92~369% 4가족 전부 ✓ |
+
 ## 명제 → 관찰 매핑 요약
 
 | 명제 | 예측 | 실측 |
