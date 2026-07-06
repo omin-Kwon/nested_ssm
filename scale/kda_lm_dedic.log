@@ -7,3 +7,11 @@
        new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
   self.m.impl(
 [kda-fixed64] 34.2M params
+[kda-fixed64] step 5000 loss 3.907 (261s) k64:46.43
+[kda-fixed64] step 10000 loss 3.348 (521s) k64:29.90
+[kda-fixed64] step 15000 loss 3.190 (783s) k64:24.89
+[kda-fixed64] step 20000 loss 3.355 (1125s) k64:21.88
+[kda-fixed64] step 25000 loss 3.223 (1522s) k64:20.78
+[kda-fixed64] step 30000 loss 3.191 (1919s) k64:19.70
+[kda-fixed64] FINAL k64:19.51
+[kda-fixed64] saved kda_lm_dedic.pt

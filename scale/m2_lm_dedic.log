@@ -7,3 +7,11 @@
        new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
   self.m.impl(
 [m2-fixed64] 35.3M params
+[m2-fixed64] step 5000 loss 4.059 (255s) k64:53.50
+[m2-fixed64] step 10000 loss 3.425 (510s) k64:33.72
+[m2-fixed64] step 15000 loss 3.265 (762s) k64:27.37
+[m2-fixed64] step 20000 loss 3.445 (1077s) k64:24.36
+[m2-fixed64] step 25000 loss 3.313 (1458s) k64:23.13
+[m2-fixed64] step 30000 loss 3.300 (1839s) k64:21.31
+[m2-fixed64] FINAL k64:21.01
+[m2-fixed64] saved m2_lm_dedic.pt

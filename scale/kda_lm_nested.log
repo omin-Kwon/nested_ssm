@@ -7,3 +7,11 @@
        new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
   self.m.impl(
 [kda-nested] 34.2M params
+[kda-nested] step 5000 loss 4.186 (287s) k8:51.24 k16:49.01 k32:47.38 k64:46.55
+[kda-nested] step 10000 loss 3.536 (575s) k8:33.44 k16:31.89 k32:30.76 k64:30.31
+[kda-nested] step 15000 loss 3.423 (861s) k8:27.61 k16:26.35 k32:25.33 k64:24.99
+[kda-nested] step 20000 loss 3.205 (1294s) k8:25.06 k16:24.03 k32:23.23 k64:22.88
+[kda-nested] step 25000 loss 3.185 (1741s) k8:22.94 k16:22.06 k32:21.34 k64:21.04
+[kda-nested] step 30000 loss 3.399 (2097s) k8:22.10 k16:21.27 k32:20.53 k64:20.27
+[kda-nested] FINAL k8:21.42 k16:20.69 k32:20.04 k64:19.82
+[kda-nested] saved kda_lm_nested.pt
