@@ -71,6 +71,7 @@ python3 plot_grid.py                                       # -> poc_grid.png
 - 환경: 4× B200, torch 2.10, 순수 PyTorch(no fla). GPU 0/2는 타 유저와 공유될 수 있음(1/3 사용).
 
 ## 6. 파일 지도
+- `TRAINING.md` — **학습 방법론(공통 레시피+가족별 norm 처리) + 전체 런 결과 원장(탄력성/tax 표, arms 판정 표, retrofit) + 안정화 인시던트 체크리스트.** 논문 §3.1/§4의 원장.
 - `BACKGROUND.md` — **초심자용 상세판 (합의된 서사 아크):** 공책→요약판→recall법칙→HW성격→통째-오프로딩 딜레마(A/B)→nesting+v4+계층배치→"10×/+120%/+2%" 인과 3숫자→payoff 두 얼굴→FAQ. 논문 intro/motivation의 모체.
 - `PROBLEM_SETTING.md` — Background/Motivation/Core Idea/Novelty/PoC결과/HW매핑/이득평가계획 (전체 논리).
 - `CORE_ALGORITHM.md` — **core algorithm 설계 v1 (Nested Block-Delta Memory):** "결합은 티어 안에서만" 원리, naive delta의 3가지 구멍(링크 직렬화·전역 norm 폭 간 불일치·GPU ragged), 블록별 norm/게이트 + block-diagonal delta, 성질 P1–P5, 검증 E1–E4.
