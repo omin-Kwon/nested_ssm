@@ -1,0 +1,15 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[gla-nested] 35.4M params
+[gla-nested] step 500 loss 6.540 (54s) k8:482.65 k16:475.51 k32:471.85 k64:476.71
+[gla-nested] step 1000 loss 5.797 (94s) k8:222.61 k16:220.13 k32:218.87 k64:219.81
+[gla-nested] step 1500 loss 4.870 (137s) k8:149.61 k16:148.09 k32:147.95 k64:147.58
+[gla-nested] step 2000 loss 4.767 (180s) k8:120.24 k16:118.65 k32:117.93 k64:118.28
+[gla-nested] FINAL k8:115.84 k16:114.06 k32:113.26 k64:113.23
+[gla-nested] saved gla_probe.pt

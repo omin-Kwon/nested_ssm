@@ -1,0 +1,4 @@
+device=cuda widths=[2, 4, 8, 16, 32] head_dim=32 layers=2 heads=2
+
+=== H1/H2: nested model, recall vs width across D ===
+[nested D=8] step  250 loss 2.698 | k2:0.18 k4:0.18 k8:0.18 k16:0.17 k32:0.15

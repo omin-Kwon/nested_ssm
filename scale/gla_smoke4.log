@@ -1,0 +1,13 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[gla-nested] 35.4M params
+[gla-nested] step 30 loss 256.338 (3s) k8:1363234587494678126932804880681676974778944632660679632917200260805009149485863642642417333970295802822656.00 k16:14899941522644506038730408088471027329951818159464412518966846404845158278046670358322443463927049224192.00 k32:2490728327070226546561765847360956709514887051946840389475619267417521145793699690228181720218172653568.00 k64:2238567437282572658197326453972025531371995141582522782879404535390218666534710154661957609970961743872.00
+[gla-nested] step 60 loss 40.877 (5s) k8:228577697498077024.00 k16:219296194136926848.00 k32:221643263245560224.00 k64:226783968067651136.00
+[gla-nested] FINAL k8:280060785023348640.00 k16:266632350632818176.00 k32:269209332937690944.00 k64:276463723549467072.00
+[gla-nested] saved gla_smoke.pt

@@ -1,0 +1,3 @@
+device=cuda mode=delta widths=[2, 4, 8, 16, 32] head_dim=32 layers=2 heads=1 Ds=[4, 8, 16, 32]
+
+=== H1/H2: ONE nested model, recall(width, D) grid ===

@@ -1,0 +1,6 @@
+# large artifacts stay on the training server (ARC): checkpoints & tokenized data
+*.pt
+*.npy
+__pycache__/
+nohup.out
+*.pyc

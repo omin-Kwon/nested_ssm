@@ -1,0 +1,15 @@
+device=cuda mode=delta widths=[2, 4, 8, 16, 32] head_dim=32 layers=2 heads=1 Ds=[4, 8, 16, 32]
+
+=== FIXED-ONLY baseline width=16 (delta) ===
+[fixed16] step 3000 loss 0.467
+D\k      16
+4     1.000
+8     0.999
+16    0.985
+32    0.856
+[fixed16] FINAL (662s):
+D\k      16
+4     1.000
+8     0.999
+16    0.983
+32    0.858

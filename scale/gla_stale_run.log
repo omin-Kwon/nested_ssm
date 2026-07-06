@@ -1,0 +1,14 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+needle ages (tok): min 45 median 300 max 590
+arm=none  c=   0 staled= 0.0% | ppl=  44.498 | recall all=0.00 old(age>c)=0.00 young=nan
+arm=slow  c=  64 staled=13.3% | ppl=  51.537 | recall all=0.00 old(age>c)=0.00 young=0.00
+arm=slow  c= 256 staled=13.3% | ppl=  56.932 | recall all=0.00 old(age>c)=0.00 young=0.00
+arm=fast  c=  64 staled=12.2% | ppl= 165.983 | recall all=0.00 old(age>c)=0.00 young=0.00
+arm=fast  c= 256 staled=12.2% | ppl= 166.891 | recall all=0.00 old(age>c)=0.00 young=0.00

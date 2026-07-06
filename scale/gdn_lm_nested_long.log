@@ -1,0 +1,21 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[nested] 35.4M params | train 136M tok | budget 2048M tok
+[nested] step 10000 loss 3.494 (511s) val_ppl: k8:30.08 k16:28.76 k32:28.03 k64:27.58
+[nested] step 20000 loss 3.132 (1146s) val_ppl: k8:22.72 k16:21.80 k32:21.24 k64:20.88
+[nested] step 30000 loss 3.267 (2037s) val_ppl: k8:20.23 k16:19.43 k32:19.01 k64:18.71
+[nested] step 40000 loss 3.088 (2898s) val_ppl: k8:18.54 k16:17.87 k32:17.56 k64:17.32
+[nested] step 50000 loss 3.200 (3485s) val_ppl: k8:17.89 k16:17.14 k32:16.78 k64:16.62
+[nested] step 60000 loss 3.046 (3765s) val_ppl: k8:17.26 k16:16.53 k32:16.19 k64:15.98
+[nested] step 70000 loss 2.916 (4043s) val_ppl: k8:17.04 k16:16.45 k32:16.14 k64:16.00
+[nested] step 80000 loss 2.625 (4322s) val_ppl: k8:16.34 k16:15.81 k32:15.53 k64:15.40
+[nested] step 90000 loss 3.000 (4639s) val_ppl: k8:16.26 k16:15.77 k32:15.44 k64:15.30
+[nested] step 100000 loss 2.752 (5203s) val_ppl: k8:16.35 k16:15.89 k32:15.58 k64:15.44
+[nested] FINAL val_ppl: k8:16.19 k16:15.73 k32:15.44 k64:15.30
+[nested] saved gdn_lm_nested_long.pt

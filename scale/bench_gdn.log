@@ -1,0 +1,26 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[gdn] m= 1 budget=    8GB B=  150 state/seq=0.025GB step=8.91ms tok/s=16,831 kernelBW~4.63TB/s
+[gdn] m= 1 budget=   16GB B=  468 state/seq=0.025GB step=21.49ms tok/s=21,778 kernelBW~2.74TB/s
+[gdn] m= 1 budget=   24GB B=  786 state/seq=0.025GB step=35.02ms tok/s=22,446 kernelBW~2.54TB/s
+[gdn] m= 2 budget=    8GB B=   63 state/seq=0.050GB step=7.97ms tok/s=7,906 kernelBW~4.51TB/s
+[gdn] m= 2 budget=   16GB B=  222 state/seq=0.050GB step=20.68ms tok/s=10,733 kernelBW~2.69TB/s
+[gdn] m= 2 budget=   24GB B=  381 state/seq=0.050GB step=33.08ms tok/s=11,519 kernelBW~2.51TB/s
+[gdn] m= 4 budget=    8GB B=   19 state/seq=0.101GB step=6.43ms tok/s=2,954 kernelBW~4.13TB/s
+[gdn] m= 4 budget=   16GB B=   99 state/seq=0.101GB step=19.15ms tok/s=5,169 kernelBW~2.53TB/s
+[gdn] m= 4 budget=   24GB B=  178 state/seq=0.101GB step=32.08ms tok/s=5,548 kernelBW~2.42TB/s
+[gdn] m=8 budget=8.0: batch=0, skip
+[gdn] m= 8 budget=   16GB B=   37 state/seq=0.201GB step=15.62ms tok/s=2,369 kernelBW~2.99TB/s
+[gdn] m= 8 budget=   24GB B=   77 state/seq=0.201GB step=27.96ms tok/s=2,753 kernelBW~2.61TB/s
+[gdn] m=16 budget=8.0: batch=0, skip
+[gdn] m=16 budget=   16GB B=    6 state/seq=0.403GB step=10.27ms tok/s=584 kernelBW~4.35TB/s
+[gdn] m=16 budget=   24GB B=   26 state/seq=0.403GB step=21.37ms tok/s=1,217 kernelBW~2.59TB/s
+[gdn] m=32 budget=8.0: batch=0, skip
+[gdn] m=32 budget=16.0: batch=0, skip
+[gdn] m=32 budget=   24GB B=    1 state/seq=0.805GB step=11.30ms tok/s=89 kernelBW~4.07TB/s

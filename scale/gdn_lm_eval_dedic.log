@@ -1,0 +1,24 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[lm-dedic] ppl vs width: k8:83.22 k16:34.67 k32:20.00 k64:15.97
+[lm-dedic] VALIDATION fused=15.97 naive=15.97
+[lm-dedic] ppl a-c16: nan
+[lm-dedic] ppl a-c64: 67.48
+[lm-dedic] ppl c1-c16: 110.75
+[lm-dedic] ppl c1-c64: 139.42
+[lm-dedic] ppl v4-c16: 35.21
+[lm-dedic] ppl v4-c64: 36.20
+[lm-dedic] needle fresh-k64: all=0.03 old=0.03 young=0.00 (ages 453 med)
+[lm-dedic] needle fresh-k16(hot alone): all=0.00
+[lm-dedic] needle a-c16: all=0.00 old=0.00 young=nan
+[lm-dedic] needle a-c64: all=0.00 old=0.00 young=0.00
+[lm-dedic] needle c1-c16: all=0.06 old=0.06 young=nan
+[lm-dedic] needle c1-c64: all=0.06 old=0.07 young=0.00
+[lm-dedic] needle v4-c16: all=0.03 old=0.03 young=nan
+[lm-dedic] needle v4-c64: all=0.03 old=0.03 young=0.00

@@ -1,0 +1,22 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[dedic] VALIDATION fused=0.997 naive=0.997
+[dedic] fresh-k64        all:1.00 1-4:1.00 5-8:1.00 9-32:1.00 33-+:1.00
+[dedic] fresh-k16(hot-alone) all:0.44 1-4:0.76 5-8:0.59 9-32:0.47 33-+:0.28
+[dedic] a-c8             all:0.90 1-4:0.58 5-8:0.74 9-32:0.99 33-+:0.95
+[dedic] a-c32            all:0.79 1-4:0.66 5-8:0.50 9-32:0.69 33-+:0.96
+[dedic] c1-c8            all:0.82 1-4:0.11 5-8:0.66 9-32:0.99 33-+:0.95
+[dedic] c1-c32           all:0.55 1-4:0.02 5-8:0.10 9-32:0.50 33-+:0.85
+[dedic] v4-c8            all:0.92 1-4:0.60 5-8:0.75 9-32:1.00 33-+:0.99
+[dedic] v4-c32           all:0.80 1-4:0.66 5-8:0.51 9-32:0.70 33-+:0.99
+[dedic] Q1 per-head (a)-staleness damage (c=32):
+[dedic]   head 0 only: all=0.984
+[dedic]   head 1 only: all=0.996
+[dedic]   head 2 only: all=0.998
+[dedic]   head 3 only: all=0.893

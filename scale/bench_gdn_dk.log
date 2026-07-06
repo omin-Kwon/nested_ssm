@@ -1,0 +1,13 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[gdn] m= 1 budget=   16GB B=  468 state/seq=0.025GB step=21.58ms tok/s=21,690 kernelBW~2.74TB/s
+[gdn] m= 2 budget=   16GB B=  230 state/seq=0.050GB step=20.40ms tok/s=11,275 kernelBW~2.78TB/s
+[gdn] m= 4 budget=   16GB B=  111 state/seq=0.101GB step=20.39ms tok/s=5,444 kernelBW~2.64TB/s
+[gdn] m= 8 budget=   16GB B=   51 state/seq=0.201GB step=28.22ms tok/s=1,807 kernelBW~1.28TB/s
+[gdn] m=16 budget=   16GB B=   21 state/seq=0.403GB step=85.32ms tok/s=246 kernelBW~0.22TB/s

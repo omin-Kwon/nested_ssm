@@ -1,0 +1,17 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[fixed64] 109.9M params | train 1500M tok | budget 1229M tok
+[fixed64] step 20000 loss 3.917 (1143s) val_ppl: k64:70.07
+[fixed64] step 40000 loss 3.557 (1970s) val_ppl: k64:49.69
+[fixed64] step 60000 loss 3.697 (2924s) val_ppl: k64:48.37
+[fixed64] step 80000 loss 3.310 (4276s) val_ppl: k64:43.15
+[fixed64] step 100000 loss 3.580 (5643s) val_ppl: k64:39.42
+[fixed64] step 120000 loss 3.323 (7187s) val_ppl: k64:40.33
+[fixed64] FINAL val_ppl: k64:49.88
+[fixed64] saved gdn_lm120_dedic.pt

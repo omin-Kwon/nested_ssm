@@ -1,0 +1,26 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[nested] 35.4M params | train 136M tok | budget 614M tok
+[nested] step 2000 loss 4.671 (146s) val_ppl: k8:101.74 k16:100.90 k32:100.81 k64:100.66
+[nested] step 4000 loss 3.934 (234s) val_ppl: k8:54.18 k16:52.03 k32:50.51 k64:49.86
+[nested] step 6000 loss 4.004 (352s) val_ppl: k8:40.20 k16:38.44 k32:37.50 k64:36.82
+[nested] step 8000 loss 3.753 (468s) val_ppl: k8:34.16 k16:32.48 k32:31.57 k64:30.99
+[nested] step 10000 loss 3.494 (585s) val_ppl: k8:30.08 k16:28.76 k32:28.03 k64:27.58
+[nested] step 12000 loss 3.582 (700s) val_ppl: k8:28.08 k16:26.64 k32:26.04 k64:25.54
+[nested] step 14000 loss 3.248 (802s) val_ppl: k8:26.29 k16:25.08 k32:24.40 k64:23.97
+[nested] step 16000 loss 3.178 (921s) val_ppl: k8:24.44 k16:23.31 k32:22.79 k64:22.33
+[nested] step 18000 loss 3.153 (1020s) val_ppl: k8:23.84 k16:22.84 k32:22.20 k64:21.76
+[nested] step 20000 loss 3.132 (1126s) val_ppl: k8:22.72 k16:21.80 k32:21.24 k64:20.88
+[nested] step 22000 loss 3.360 (1244s) val_ppl: k8:22.15 k16:21.26 k32:20.74 k64:20.40
+[nested] step 24000 loss 3.083 (1362s) val_ppl: k8:21.20 k16:20.40 k32:19.87 k64:19.61
+[nested] step 26000 loss 2.983 (1457s) val_ppl: k8:20.86 k16:20.06 k32:19.65 k64:19.31
+[nested] step 28000 loss 3.011 (1575s) val_ppl: k8:20.56 k16:19.80 k32:19.35 k64:19.00
+[nested] step 30000 loss 3.267 (1663s) val_ppl: k8:20.23 k16:19.43 k32:19.01 k64:18.71
+[nested] FINAL val_ppl: k8:20.03 k16:19.33 k32:18.97 k64:18.74
+[nested] saved gdn_lm_nested.pt

@@ -1,0 +1,15 @@
+device=cuda mode=additive widths=[2, 4, 8, 16, 32] head_dim=32 layers=2 heads=1 Ds=[4, 8, 16, 32]
+
+=== FIXED-ONLY baseline width=2 (additive) ===
+[fixed2] step 3000 loss 3.758
+D\k       2
+4     0.349
+8     0.183
+16    0.123
+32    0.077
+[fixed2] FINAL (563s):
+D\k       2
+4     0.349
+8     0.182
+16    0.116
+32    0.072

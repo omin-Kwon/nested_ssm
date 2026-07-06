@@ -1,0 +1,21 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+BEFORE adapt (dedicated truncated):
+8     0.388  0.860  0.994  1.000
+16    0.286  0.743  0.976  1.000
+32    0.201  0.602  0.940  1.000
+64    0.133  0.428  0.823  0.997
+step 1500 loss 0.036 (37s)
+step 3000 loss 0.167 (50s)
+AFTER rot-only Matryoshka FT:
+8     0.999  1.000  1.000  1.000
+16    0.994  1.000  1.000  1.000
+32    0.963  0.998  1.000  1.000
+64    0.863  0.975  0.997  0.997
+(reference from-scratch nested FINAL: k8 col 0.999/0.994/0.970/0.871)

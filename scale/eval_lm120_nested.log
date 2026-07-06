@@ -1,0 +1,24 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[lm120-nested] ppl vs width: k8:44.84 k16:41.05 k32:38.35 k64:37.07
+[lm120-nested] VALIDATION fused=37.07 naive=37.08
+[lm120-nested] ppl a-c16: 37.29
+[lm120-nested] ppl a-c64: 38.61
+[lm120-nested] ppl c1-c16: 260.72
+[lm120-nested] ppl c1-c64: 318.93
+[lm120-nested] ppl v4-c16: 37.37
+[lm120-nested] ppl v4-c64: 38.64
+[lm120-nested] needle fresh-k64: all=0.28 old=0.21 young=1.00 (ages 453 med)
+[lm120-nested] needle fresh-k16(hot alone): all=0.12
+[lm120-nested] needle a-c16: all=0.31 old=0.31 young=nan
+[lm120-nested] needle a-c64: all=0.25 old=0.24 young=0.33
+[lm120-nested] needle c1-c16: all=0.00 old=0.00 young=nan
+[lm120-nested] needle c1-c64: all=0.00 old=0.00 young=0.00
+[lm120-nested] needle v4-c16: all=0.31 old=0.31 young=nan
+[lm120-nested] needle v4-c64: all=0.25 old=0.24 young=0.33

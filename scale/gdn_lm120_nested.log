@@ -1,0 +1,17 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[nested] 109.9M params | train 1500M tok | budget 1229M tok
+[nested] step 20000 loss 3.786 (1201s) val_ppl: k8:99.44 k16:86.72 k32:78.95 k64:74.01
+[nested] step 40000 loss 3.780 (2043s) val_ppl: k8:71.63 k16:61.58 k32:56.81 k64:54.27
+[nested] step 60000 loss 3.759 (3024s) val_ppl: k8:62.79 k16:54.62 k32:50.54 k64:48.64
+[nested] step 80000 loss 3.384 (4540s) val_ppl: k8:58.89 k16:51.79 k32:48.09 k64:46.02
+[nested] step 100000 loss 3.660 (5973s) val_ppl: k8:52.46 k16:47.20 k32:44.23 k64:42.64
+[nested] step 120000 loss 3.326 (7594s) val_ppl: k8:52.48 k16:47.82 k32:44.52 k64:43.23
+[nested] FINAL val_ppl: k8:63.23 k16:57.79 k32:53.86 k64:52.43
+[nested] saved gdn_lm120_nested.pt

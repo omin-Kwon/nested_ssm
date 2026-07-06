@@ -1,0 +1,22 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[nested] VALIDATION fused=0.997 naive=0.997
+[nested] fresh-k64        all:1.00 1-4:1.00 5-8:1.00 9-32:1.00 33-+:1.00
+[nested] fresh-k16(hot-alone) all:0.98 1-4:0.98 5-8:0.99 9-32:0.99 33-+:0.96
+[nested] a-c8             all:0.97 1-4:0.86 5-8:0.92 9-32:1.00 33-+:0.99
+[nested] a-c32            all:0.93 1-4:0.86 5-8:0.85 9-32:0.90 33-+:0.99
+[nested] c1-c8            all:0.81 1-4:0.11 5-8:0.65 9-32:0.97 33-+:0.94
+[nested] c1-c32           all:0.51 1-4:0.02 5-8:0.10 9-32:0.48 33-+:0.77
+[nested] v4-c8            all:0.98 1-4:0.88 5-8:0.95 9-32:1.00 33-+:1.00
+[nested] v4-c32           all:0.95 1-4:0.89 5-8:0.89 9-32:0.93 33-+:1.00
+[nested] Q1 per-head (a)-staleness damage (c=32):
+[nested]   head 0 only: all=0.994
+[nested]   head 1 only: all=0.996
+[nested]   head 2 only: all=0.995
+[nested]   head 3 only: all=0.991
