@@ -5,7 +5,7 @@
 
 ---
 
-Subject: Prospective collaboration on memory-efficient linear attention serving
+Subject: Prospective collaboration: nested hot/cold state management for linear attention serving
 
 Dear Prof. Arora,
 
