@@ -13,7 +13,7 @@ I am Omin Kwon, a Master's student in Prof. Jae W. Lee's group at Seoul National
 
 Working on KV-cache systems led me to linear attention, whose fixed-size state is far more memory-efficient than traditional KV-based architectures - and your Zoology/Based line of work convinced me that state size is the real currency of recall. Reading your papers sparked the idea I am now pursuing: what if the recurrent state - the memory that buys recall - were trained as a nested structure that separates a small hot core from a large cold remainder? The two could then be managed differently at serving time: the hot core kept fresh every token, while the cold majority is updated and refreshed far more lazily. Even in a GPU-only setting this eliminates most of the per-token state traffic, and it extends naturally to deeper memory hierarchies. I have promising early results on production-grade architectures.
 
-I am based in Korea, but I am a diligent and highly motivated student, and I would be honored to explore a remote research collaboration with you. Would you be open to a short Zoom chat?
+I am based in Korea, but I am a diligent and highly motivated student, and I would be honored to explore a remote research collaboration. I am also planning to apply for PhD programs in Fall 2027 - another reason I would deeply value the chance to work with you. Would you be open to a short Zoom chat?
 
 Best regards,
 Omin Kwon
