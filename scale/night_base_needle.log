@@ -6,3 +6,5 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [base-needle-c4] ppl v4-c4 (hot 32/128): 6.55
 [base-needle-c4] needle fresh-k128: all=1.00 old=1.00 young=nan (med age 402)
 [base-needle-c4] needle hot-alone-k32: all=0.46
+[base-needle-c4] needle c1-c4: all=0.88 old=0.88 young=nan
+[base-needle-c4] needle v4-c4: all=0.96 old=0.96 young=nan
