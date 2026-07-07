@@ -65,7 +65,41 @@ def vppl(model, val, w, seqlen=1024, n=6, device="cuda"):
                                row[:, 1:].reshape(-1)).item()
     model.train(); return math.exp(tot / n)
 
+def _stub_mamba_ssm():
+    """Remote code hard-requires mamba_ssm only for rmsnorm_fn; stub it with an
+    exact pure-torch equivalent (group RMS-norm, gate via silu). Fast-path
+    detection uses importlib.metadata, so kernels stay disabled -> torch_forward."""
+    import sys, types
+    def rmsnorm_fn(x, weight, bias, z=None, eps=1e-6, group_size=None,
+                   norm_before_gate=True):
+        dt = x.dtype
+        x = x.float()
+        if z is not None and not norm_before_gate:
+            x = x * F.silu(z.float())
+        gs = group_size or x.shape[-1]
+        s = x.shape
+        xg = x.view(*s[:-1], s[-1] // gs, gs)
+        x = (xg * torch.rsqrt(xg.pow(2).mean(-1, keepdim=True) + eps)).view(s)
+        x = x * weight.float()
+        if bias is not None:
+            x = x + bias.float()
+        if z is not None and norm_before_gate:
+            x = x * F.silu(z.float())
+        return x.to(dt)
+    import importlib.machinery
+    for name in ["mamba_ssm", "mamba_ssm.ops", "mamba_ssm.ops.triton",
+                 "mamba_ssm.ops.triton.layernorm_gated"]:
+        if name not in sys.modules:
+            m = types.ModuleType(name)
+            m.__spec__ = importlib.machinery.ModuleSpec(name, None)
+            m.__path__ = []
+            sys.modules[name] = m
+    sys.modules["mamba_ssm.ops.triton.layernorm_gated"].rmsnorm_fn = rmsnorm_fn
+
 def main():
+    # NOTE: run with ~/nemo_env/bin/python3 (transformers 5.13 native NemotronH).
+    # The remote-code path (trust_remote_code + mamba_ssm stub) produced a BROKEN
+    # forward (ppl ~3700, degenerate generation); native torch path gives ppl 8.3.
     from transformers import AutoModelForCausalLM
     p = argparse.ArgumentParser()
     p.add_argument("--steps", type=int, default=1000)
@@ -87,10 +121,12 @@ def main():
     gen = torch.Generator(device=device); gen.manual_seed(args.seed)
     tag = "nemo9b-rot" if not args.fixed_only else f"nemo9b-fixed{args.fixed_only}"
     model = AutoModelForCausalLM.from_pretrained(
-        "nvidia/NVIDIA-Nemotron-Nano-9B-v2", torch_dtype=torch.bfloat16,
-        trust_remote_code=True).to(device)
+        "nvidia/NVIDIA-Nemotron-Nano-9B-v2", dtype=torch.bfloat16).to(device)
     for q in model.parameters():
         q.requires_grad_(False)
+    model.config.use_cache = False
+    model.gradient_checkpointing_enable(
+        gradient_checkpointing_kwargs={"use_reentrant": False})
     # baseline ppl BEFORE wrapping
     with torch.no_grad():
         tot = 0.0
@@ -139,6 +175,11 @@ def main():
         (loss + args.orth * orth).backward()
         torch.nn.utils.clip_grad_norm_(Rs, 1.0)
         opt.step(); opt.zero_grad()
+        with torch.no_grad():                        # QR retraction: R stays exactly
+            for R in Rs:                             # orthogonal -> full width EXACTLY
+                Q, Rr = torch.linalg.qr(R.data)      # preserved (rotation invariance)
+                sgn = torch.sign(torch.diagonal(Rr, dim1=-2, dim2=-1))
+                R.data = Q * sgn[..., None, :]
         if (step + 1) % args.log_every == 0:
             print(f"[{tag}] step {step+1} loss {loss.item():.3f} orth {orth.item():.4f} "
                   f"({time.time()-t0:.0f}s) " +

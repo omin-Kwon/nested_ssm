@@ -1,0 +1,41 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[gdn] m= 1 budget=   80GB B= 3011 state/seq=0.025GB step=59.73ms tok/s=50,412 kernelBW~4.96TB/s
+[gdn] m= 1 budget=  160GB B= 4096 state/seq=0.025GB step=80.52ms tok/s=50,867 kernelBW~4.91TB/s
+[gdn] m= 2 budget=   80GB B= 1493 state/seq=0.050GB step=57.05ms tok/s=26,171 kernelBW~4.98TB/s
+[gdn] m= 2 budget=  160GB B= 3083 state/seq=0.050GB step=117.14ms tok/s=26,319 kernelBW~4.99TB/s
+[gdn] m= 4 budget=   80GB B=  734 state/seq=0.101GB step=55.36ms tok/s=13,259 kernelBW~4.97TB/s
+[gdn] m= 4 budget=  160GB B= 1529 state/seq=0.101GB step=113.95ms tok/s=13,418 kernelBW~4.96TB/s
+[gdn] m= 8 budget=   80GB B=  355 state/seq=0.201GB step=53.71ms tok/s=6,610 kernelBW~4.96TB/s
+[gdn] m= 8 budget=  160GB B=  752 state/seq=0.201GB step=111.50ms tok/s=6,744 kernelBW~4.97TB/s
+[gdn] m=16 budget=   80GB B=  165 state/seq=0.403GB step=50.08ms tok/s=3,294 kernelBW~4.98TB/s
+[gdn] m=16 budget=  160GB B=  364 state/seq=0.403GB step=108.17ms tok/s=3,365 kernelBW~4.97TB/s
+[gdn] m=32 budget=   80GB B=   70 state/seq=0.805GB step=43.95ms tok/s=1,593 kernelBW~4.97TB/s
+[gdn] m=32 budget=  160GB B=  170 state/seq=0.805GB step=101.75ms tok/s=1,671 kernelBW~4.97TB/s
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[gla] m= 1 budget=   80GB B= 3011 state/seq=0.025GB step=59.86ms tok/s=50,298 kernelBW~4.84TB/s
+[gla] m= 1 budget=  160GB B= 4096 state/seq=0.025GB step=80.73ms tok/s=50,738 kernelBW~4.86TB/s
+[gla] m= 2 budget=   80GB B= 1493 state/seq=0.050GB step=57.57ms tok/s=25,936 kernelBW~4.83TB/s
+[gla] m= 2 budget=  160GB B= 3083 state/seq=0.050GB step=117.65ms tok/s=26,204 kernelBW~4.86TB/s
+[gla] m= 4 budget=   80GB B=  734 state/seq=0.101GB step=55.91ms tok/s=13,128 kernelBW~4.84TB/s
+[gla] m= 4 budget=  160GB B= 1529 state/seq=0.101GB step=114.91ms tok/s=13,306 kernelBW~4.86TB/s
+[gla] m= 8 budget=   80GB B=  355 state/seq=0.201GB step=54.28ms tok/s=6,541 kernelBW~4.83TB/s
+[gla] m= 8 budget=  160GB B=  752 state/seq=0.201GB step=112.40ms tok/s=6,690 kernelBW~4.86TB/s
+[gla] m=16 budget=   80GB B=  165 state/seq=0.403GB step=50.64ms tok/s=3,258 kernelBW~4.84TB/s
+[gla] m=16 budget=  160GB B=  364 state/seq=0.403GB step=109.08ms tok/s=3,337 kernelBW~4.86TB/s
+[gla] m=32 budget=   80GB B=   70 state/seq=0.805GB step=44.65ms tok/s=1,568 kernelBW~4.82TB/s
+[gla] m=32 budget=  160GB B=  170 state/seq=0.805GB step=102.66ms tok/s=1,656 kernelBW~4.86TB/s
+saved state_bound_motivation.png

@@ -1,0 +1,13 @@
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19439.19it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[nemo9b-fixed128] wrapped 27 mamba2 mixers
+[nemo9b-fixed128] VALIDATION original=8.42 patched-full=8.43
+[nemo9b-fixed128] PRE-FT ppl vs width: k16:264.97 k32:184.11 k64:2809.68 k128:8.43
+[nemo9b-fixed128] step 200 loss 3.408 orth 0.0061 (536s) k16:39.75 k32:38.94 k64:26.96 k128:13.30
+[nemo9b-fixed128] step 400 loss 2.941 orth 0.0177 (817s) k16:27.36 k32:29.57 k64:36.61 k128:18.98
+[nemo9b-fixed128] step 600 loss 2.827 orth 0.0330 (1099s) k16:17.95 k32:17.39 k64:17.10 k128:13.19
+[nemo9b-fixed128] step 800 loss 3.164 orth 0.0542 (1381s) k16:16.76 k32:14.60 k64:18.37 k128:17.87
+[nemo9b-fixed128] step 1000 loss 3.579 orth 0.0819 (1663s) k16:17.21 k32:15.95 k64:17.88 k128:28.71
+[nemo9b-fixed128] FINAL k16:17.21 k32:15.95 k64:17.88 k128:28.71
+[nemo9b-fixed128] saved nemo9b_fixed.pt
