@@ -1,0 +1,5 @@
+[m2-v4aware-cext] fresh(=pb64): 19.36
+[m2-v4aware-cext] v4 c=32 pb=16 (hot 16/64=25%): 19.29 (+-0.3%)
+[m2-v4aware-cext] v4 c=64 pb=16 (hot 16/64=25%): 19.32 (+-0.2%)
+[m2-v4aware-cext] v4 c=128 pb=16 (hot 16/64=25%): 19.37 (+0.1%)
+[m2-v4aware-cext] v4 c=256 pb=16 (hot 16/64=25%): 19.46 (+0.5%)
