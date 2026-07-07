@@ -7,7 +7,7 @@ metadata:
   originSessionId: 09706fad-d204-4de5-8592-38bd3d386694
 ---
 
-PoC for [[research-direction-elastic-ttm]]. Code in /home/omin/TTT-PNM/poc/ (nested_delta_mqar.py; plot_grid.py -> poc_grid.png). Env: 4× B200, torch 2.10, pure-PyTorch (no fla). gdn_out.txt = Gated DeltaNet paper.
+PoC for [[research-direction-elastic-ttm]]. Code in /home/omin/nested_ssm/poc/ (nested_delta_mqar.py; plot_grid.py -> poc_grid.png). Env: 4× B200, torch 2.10, pure-PyTorch (no fla). gdn_out.txt = Gated DeltaNet paper.
 
 **What it tests:** one gated-linear/delta recurrent LM trained with nested-dropout on the state KEY dim (Matryoshka), on Zoology-style MQAR, mixed #associations D per step. Eval = recall(width k, D) grid. State S ∈ R^{Dv×Dk}; nest = use first k key-dims at inference.
 
