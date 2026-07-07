@@ -1,0 +1,13 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+B=  448 pb=32 c=  4 | state   63.4GB | fresh   51.45ms (    8,707 tok/s, BW~2.47TB/s) | v4   39.31ms (   11,397 tok/s) | v4-ASYNC   39.15ms | v4-BF16COLD   26.78ms (   16,728 tok/s) | hot-only  14.56ms | eager3  115.07ms | speedup: sync 1.31x ASYNC 1.31x BF16COLD 1.92x (vs fused-fresh)
+B=  448 pb=32 c=  8 | state   63.4GB | fresh   51.33ms (    8,727 tok/s, BW~2.47TB/s) | v4   33.67ms (   13,305 tok/s) | v4-ASYNC   33.55ms | v4-BF16COLD   24.02ms (   18,654 tok/s) | hot-only  14.54ms | eager3  115.06ms | speedup: sync 1.52x ASYNC 1.53x BF16COLD 2.14x (vs fused-fresh)
+B=  448 pb=32 c= 16 | state   63.4GB | fresh   51.33ms (    8,728 tok/s, BW~2.47TB/s) | v4   28.31ms (   15,825 tok/s) | v4-ASYNC   28.27ms | v4-BF16COLD   21.22ms (   21,111 tok/s) | hot-only  14.53ms | eager3  115.06ms | speedup: sync 1.81x ASYNC 1.82x BF16COLD 2.42x (vs fused-fresh)
+B=  448 pb=32 c= 64 | state   63.4GB | fresh   51.34ms (    8,726 tok/s, BW~2.47TB/s) | v4   25.11ms (   17,841 tok/s) | v4-ASYNC   25.11ms | v4-BF16COLD   19.79ms (   22,641 tok/s) | hot-only  14.53ms | eager3  115.07ms | speedup: sync 2.04x ASYNC 2.04x BF16COLD 2.59x (vs fused-fresh)
+saved bench_v4_decode.json

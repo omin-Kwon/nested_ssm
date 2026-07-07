@@ -1,0 +1,35 @@
+{
+ "config": "retro_v4",
+ "ckpt": "nemo9b_rot_v4aware6k.pt",
+ "c": 4,
+ "pb": 32,
+ "lag": 0,
+ "cold_bf16": 1,
+ "limit": 500,
+ "results": {
+  "lambada_openai": {
+   "acc": 0.646,
+   "acc_norm": null
+  },
+  "piqa": {
+   "acc": 0.79,
+   "acc_norm": 0.822
+  },
+  "hellaswag": {
+   "acc": 0.5,
+   "acc_norm": 0.65
+  },
+  "arc_easy": {
+   "acc": 0.788,
+   "acc_norm": 0.766
+  },
+  "arc_challenge": {
+   "acc": 0.496,
+   "acc_norm": 0.516
+  },
+  "winogrande": {
+   "acc": 0.738,
+   "acc_norm": null
+  }
+ }
+}

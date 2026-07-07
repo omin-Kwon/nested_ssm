@@ -20,7 +20,7 @@ from nemo9b_eval import naive_mixer_forward, CFG
 MODEL_ID = "nvidia/NVIDIA-Nemotron-Nano-9B-v2"
 
 
-def build_model(config, ckpt, c, pb, device):
+def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0):
     from transformers import AutoModelForCausalLM
     model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16).to(device)
     model.config.use_cache = False
@@ -33,11 +33,15 @@ def build_model(config, ckpt, c, pb, device):
     saved = torch.load(ckpt)
     for i, m in enumerate(mixers):
         m.act.R.data.copy_(saved[i].to(device).float())
+    if "decay" in saved:                                  # tune_decay ckpts
+        for i, m in enumerate(mixers):
+            m.A_log.data.copy_(saved["decay"]["A_log"][i].to(device))
+            m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to(device))
     set_width(model, 128)
     if config == "retro_v4":
         for m in mixers:
             m.forward = naive_mixer_forward.__get__(m)
-        CFG.update(mode="v4", c=c, pb=pb)
+        CFG.update(mode="v4", c=c, pb=pb, lag=lag, cold_bf16=cold_bf16)
     model.eval()
     return model
 
@@ -49,6 +53,10 @@ def main():
     ap.add_argument("--tag", default=None)
     ap.add_argument("--c", type=int, default=16)
     ap.add_argument("--pb", type=int, default=32)
+    ap.add_argument("--lag", type=int, default=0,
+                    help="1 = async-flush semantics: readout snapshot lags one chunk (age (c,2c])")
+    ap.add_argument("--cold_bf16", type=int, default=0,
+                    help="1 = cold snapshot stored bf16 (halves cold readout bytes)")
     ap.add_argument("--bs", type=int, default=4)
     ap.add_argument("--limit", type=int, default=500)
     ap.add_argument("--tasks", nargs="+",
@@ -63,9 +71,11 @@ def main():
     from lm_eval.models.huggingface import HFLM
 
     tok = AutoTokenizer.from_pretrained(MODEL_ID)
-    model = build_model(args.config, args.ckpt, args.c, args.pb, device)
-    print(f"[{tag}] model built (config={args.config} ckpt={args.ckpt} "
-          f"c={args.c} pb={args.pb} bs={args.bs} limit={args.limit})", flush=True)
+    model = build_model(args.config, args.ckpt, args.c, args.pb, device,
+                        lag=args.lag, cold_bf16=args.cold_bf16)
+    print(f"[{tag}] model built (config={args.config} ckpt={args.ckpt} c={args.c} "
+          f"pb={args.pb} lag={args.lag} cold_bf16={args.cold_bf16} "
+          f"bs={args.bs} limit={args.limit})", flush=True)
 
     lm = HFLM(pretrained=model, tokenizer=tok, batch_size=args.bs)
     results = lm_eval.simple_evaluate(model=lm, tasks=args.tasks, limit=args.limit,
@@ -77,6 +87,7 @@ def main():
         out[task] = {"acc": acc, "acc_norm": accn}
         print(f"[{tag}] {task}: acc={acc} acc_norm={accn}", flush=True)
     json.dump({"config": args.config, "ckpt": args.ckpt, "c": args.c, "pb": args.pb,
+               "lag": args.lag, "cold_bf16": args.cold_bf16,
                "limit": args.limit, "results": out},
               open(f"nemo9b_lmeval_{tag}.json", "w"), indent=1)
     print(f"[{tag}] DONE -> nemo9b_lmeval_{tag}.json", flush=True)

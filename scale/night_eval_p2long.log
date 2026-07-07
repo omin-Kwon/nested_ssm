@@ -1,0 +1,14 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 18205.23it/s]
+[night-p2long] VALIDATION torch_forward=7.82 naive=6.45
+[night-p2long] ppl c1-c4 (hot 32/128): 7.77
+[night-p2long] ppl c1-c16 (hot 32/128): 17.00
+[night-p2long] ppl v4-c4 (hot 32/128): 6.51
+[night-p2long] ppl v4-c16 (hot 32/128): 6.52
+[night-p2long] needle fresh-k128: all=1.00 old=1.00 young=nan (med age 402)
+[night-p2long] needle hot-alone-k32: all=0.42
+[night-p2long] needle c1-c4: all=0.88 old=0.88 young=nan
+[night-p2long] needle c1-c16: all=0.04 old=0.04 young=nan
+[night-p2long] needle v4-c4: all=0.96 old=0.96 young=nan
+[night-p2long] needle v4-c16: all=0.96 old=0.96 young=nan

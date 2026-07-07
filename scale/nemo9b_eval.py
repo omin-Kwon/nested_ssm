@@ -9,7 +9,7 @@ import numpy as np
 import torch, torch.nn.functional as F
 from nemotron_retrofit import ActRotMask, get_wrappers, set_width
 
-CFG = {"mode": "fresh", "c": 16, "pb": 32}
+CFG = {"mode": "fresh", "c": 16, "pb": 32, "lag": 0, "cold_bf16": 0}
 
 def naive_mixer_forward(self, input_states, cache_params=None, cache_position=None,
                         attention_mask=None, **kw):
@@ -34,28 +34,34 @@ def naive_mixer_forward(self, input_states, cache_params=None, cache_position=No
     dt = F.softplus(dt.float() + self.dt_bias.float())
     dt = torch.clamp(dt, self.time_step_min)                      # (B,T,H)
     A = -torch.exp(self.A_log.float())                            # (H,)
-    mode, c, pb = CFG["mode"], CFG["c"], CFG["pb"]
+    mode, c, pb, lag = CFG["mode"], CFG["c"], CFG["pb"], CFG.get("lag", 0)
     S = x.new_zeros(B_, H, P, N)
     Snap = S.clone()
-    Glog = x.new_zeros(B_, H)                                     # scalar/head log decay
+    SnapL = S.clone()                                             # lagged snapshot (async flush)
+    Gtot = x.new_zeros(B_, H)                                     # running scalar/head log decay
+    gSnap = Gtot.clone(); gSnapL = Gtot.clone()
     outs = []
     for t in range(T):
         dA_log = dt[:, t] * A                                     # (B,H) <= 0
         S = S * dA_log.exp()[..., None, None] \
             + (dt[:, t][..., None] * x[:, t])[..., None] * B[:, t][:, :, None, :]
-        if mode != "fresh":
-            if t % c == 0:
-                Snap = S.clone(); Glog = torch.zeros_like(Glog)
-            else:
-                Glog = Glog + dA_log
+        Gtot = Gtot + dA_log
+        if mode != "fresh" and t % c == 0:
+            SnapL = Snap; gSnapL = gSnap                          # readers lag one chunk
+            # cold_bf16: snapshot stored bf16 (values rounded, kept fp32 for einsum)
+            Snap = (S.to(torch.bfloat16).float() if CFG.get("cold_bf16")
+                    else S.clone())
+            gSnap = Gtot.clone()
+        Rd, gRd = (SnapL, gSnapL) if lag else (Snap, gSnap)
+        Glog = Gtot - gRd                                         # decay since read snapshot
         Ct = C[:, t]
         if mode == "fresh":
             y = torch.einsum('bhpn,bhn->bhp', S, Ct)
         elif mode == "c1":
-            y = torch.einsum('bhpn,bhn->bhp', Snap, Ct) * Glog.exp()[..., None]
+            y = torch.einsum('bhpn,bhn->bhp', Rd, Ct) * Glog.exp()[..., None]
         else:                                                     # v4
             y_hot = torch.einsum('bhpn,bhn->bhp', S[..., :pb], Ct[..., :pb].contiguous())
-            y_cold = torch.einsum('bhpn,bhn->bhp', Snap[..., pb:],
+            y_cold = torch.einsum('bhpn,bhn->bhp', Rd[..., pb:],
                                   Ct[..., pb:].contiguous()) * Glog.exp()[..., None]
             y = y_hot + y_cold
         outs.append(y)
@@ -136,6 +142,10 @@ def main():
     saved = torch.load(args.ckpt)
     for i, m in enumerate(mixers):
         m.act.R.data.copy_(saved[i].to(device).float())
+    if "decay" in saved:                                  # tune_decay ckpts
+        for i, m in enumerate(mixers):
+            m.A_log.data.copy_(saved["decay"]["A_log"][i].to(device))
+            m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to(device))
     model.eval()
     set_width(model, 128)
     p_fused = ppl(model, val, device=device)

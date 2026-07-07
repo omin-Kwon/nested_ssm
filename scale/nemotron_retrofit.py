@@ -171,12 +171,23 @@ def main():
     p.add_argument("--cosine", action="store_true", help="cosine lr decay to 0")
     p.add_argument("--v4aware", action="store_true",
                    help="our chunked scan; 50%% steps under v4 (random c, pb=32)")
+    p.add_argument("--cs_menu", type=int, nargs="+", default=[8, 16, 32, 64],
+                   help="c menu for v4 steps (include 4 to train the deploy point)")
+    p.add_argument("--distill", action="store_true",
+                   help="v4 steps: 0.5*CE + 0.5*KL to the fresh full-width teacher "
+                        "(no-grad) — directly minimizes deploy-vs-fresh gap")
+    p.add_argument("--tune_decay", action="store_true",
+                   help="unfreeze A_log/dt_bias at 0.05x lr (staleness-adaptive decay). "
+                        "BREAKS exact full-width preservation -> watch k128 gate")
     p.add_argument("--log_every", type=int, default=100)
     p.add_argument("--seed", type=int, default=0)
+    p.add_argument("--data", default="wt103_train_nemo.npy",
+                   help="tokenized train corpus (night finding: wikitext-only FT "
+                        "overfits the rotation -> mix diverse web text)")
     args = p.parse_args()
     device = "cuda"
     torch.manual_seed(args.seed)
-    train = np.load("wt103_train_nemo.npy", mmap_mode="r")
+    train = np.load(args.data, mmap_mode="r")
     val = np.load("wt103_val_nemo.npy")
     gen = torch.Generator(device=device); gen.manual_seed(args.seed)
     tag = "nemo9b-rot" if not args.fixed_only else f"nemo9b-fixed{args.fixed_only}"
@@ -218,16 +229,27 @@ def main():
           " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths),
           flush=True)
     Rs = [m.R for m in get_wrappers(model)]
+    mixers = [m for m in model.modules() if type(m).__name__ == "NemotronHMamba2Mixer"]
     if args.resume:
         saved = torch.load(args.resume)
         for i, R in enumerate(Rs):
             R.data.copy_(saved[i].to(R.device).float())
+        if "decay" in saved:
+            for i, m in enumerate(mixers):
+                m.A_log.data.copy_(saved["decay"]["A_log"][i].to(device))
+                m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to(device))
         print(f"[{tag}] resumed R from {args.resume}: " +
               " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths),
               flush=True)
     for R in Rs:
         R.requires_grad_(True)
-    opt = torch.optim.AdamW(Rs, lr=args.lr, weight_decay=0.0, betas=(0.9, 0.95))
+    groups = [{"params": Rs, "lr": args.lr}]
+    if args.tune_decay:
+        dec = [m.A_log for m in mixers] + [m.dt_bias for m in mixers]
+        for q in dec:
+            q.requires_grad_(True)
+        groups.append({"params": dec, "lr": args.lr * 0.05})
+    opt = torch.optim.AdamW(groups, lr=args.lr, weight_decay=0.0, betas=(0.9, 0.95))
     widths = args.widths if not args.fixed_only else [args.fixed_only]
     eye = torch.eye(128, device=device)
     model.train()
@@ -236,26 +258,55 @@ def main():
         lr = args.lr * min(1.0, (step + 1) / args.warmup)
         if args.cosine:
             lr *= 0.5 * (1 + math.cos(math.pi * step / args.steps))
-        for g_ in opt.param_groups: g_["lr"] = lr
+        for gi, g_ in enumerate(opt.param_groups):
+            g_["lr"] = lr * (0.05 if gi == 1 else 1.0)      # decay group at 0.05x
         x, y = batches(train, args.batch, args.seqlen, gen, device)
+        is_v4 = False
         if args.v4aware:
             if int(torch.randint(2, (1,), generator=gen, device=device)) == 1:
-                cs = [8, 16, 32, 64]
+                cs = args.cs_menu
                 cfg = (cs[int(torch.randint(len(cs), (1,), generator=gen, device=device))],
                        32, True)
+                is_v4 = True
             else:
                 cfg = (64, 128, False)
             for m_ in model.modules():
                 if hasattr(m_, "scan_cfg"):
                     m_.scan_cfg = cfg
-        if len(widths) > 1:
-            ws = torch.tensor(widths, device=device)[
-                torch.randint(len(widths), (x.shape[0],), generator=gen, device=device)]
-            set_width(model, ws)
+        if args.distill and is_v4:
+            # deploy-config distillation: v4 student matches the fresh teacher at
+            # the SAME sampled width (width forced to 128 killed elasticity: P1
+            # pilot k16 8.10->9.24; width-sampled distill preserves the menu)
+            if len(widths) > 1:
+                ws = torch.tensor(widths, device=device)[
+                    torch.randint(len(widths), (x.shape[0],), generator=gen, device=device)]
+                set_width(model, ws)
+            else:
+                set_width(model, widths[0])
+            with torch.no_grad():
+                for m_ in model.modules():
+                    if hasattr(m_, "scan_cfg"):
+                        m_.scan_cfg = (64, 128, False)
+                tprob = F.softmax(model(x).logits.float(), -1)
+                for m_ in model.modules():
+                    if hasattr(m_, "scan_cfg"):
+                        m_.scan_cfg = cfg
+            logits = model(x).logits
+            lsm = F.log_softmax(logits.float(), -1)
+            kl = F.kl_div(lsm.view(-1, lsm.shape[-1]),
+                          tprob.view(-1, tprob.shape[-1]),
+                          reduction="batchmean")
+            ce = F.cross_entropy(logits.float().view(-1, logits.shape[-1]), y.reshape(-1))
+            loss = 0.5 * ce + 0.5 * kl
         else:
-            set_width(model, widths[0])
-        logits = model(x).logits
-        loss = F.cross_entropy(logits.float().view(-1, logits.shape[-1]), y.reshape(-1))
+            if len(widths) > 1:
+                ws = torch.tensor(widths, device=device)[
+                    torch.randint(len(widths), (x.shape[0],), generator=gen, device=device)]
+                set_width(model, ws)
+            else:
+                set_width(model, widths[0])
+            logits = model(x).logits
+            loss = F.cross_entropy(logits.float().view(-1, logits.shape[-1]), y.reshape(-1))
         orth = sum(((R.transpose(-1, -2) @ R) - eye).pow(2).mean() for R in Rs) / len(Rs)
         (loss + args.orth * orth).backward()
         torch.nn.utils.clip_grad_norm_(Rs, 1.0)
@@ -272,7 +323,11 @@ def main():
                   flush=True)
     print(f"[{tag}] FINAL " +
           " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths), flush=True)
-    torch.save({i: R.detach().cpu() for i, R in enumerate(Rs)}, args.save)
+    out = {i: R.detach().cpu() for i, R in enumerate(Rs)}
+    if args.tune_decay:
+        out["decay"] = {"A_log": [m.A_log.detach().cpu() for m in mixers],
+                        "dt_bias": [m.dt_bias.detach().cpu() for m in mixers]}
+    torch.save(out, args.save)
     print(f"[{tag}] saved {args.save}", flush=True)
 
 if __name__ == "__main__":

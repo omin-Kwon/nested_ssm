@@ -1,0 +1,14 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+B=  448 pb=32 c=  2 | state   63.4GB | fresh   51.41ms (    8,715 tok/s, BW~2.47TB/s) | v4   53.49ms (    8,375 tok/s) | v4-ASYNC   53.14ms (    8,431 tok/s) | hot-only  14.56ms | eager3  115.04ms | speedup: sync 0.96x ASYNC 0.97x (vs fused-fresh)
+B=  448 pb=32 c=  4 | state   63.4GB | fresh   51.33ms (    8,728 tok/s, BW~2.47TB/s) | v4   39.32ms (   11,393 tok/s) | v4-ASYNC   39.13ms (   11,449 tok/s) | hot-only  14.53ms | eager3  115.04ms | speedup: sync 1.31x ASYNC 1.31x (vs fused-fresh)
+B=  448 pb=32 c=  8 | state   63.4GB | fresh   51.32ms (    8,729 tok/s, BW~2.47TB/s) | v4   33.66ms (   13,308 tok/s) | v4-ASYNC   33.55ms (   13,354 tok/s) | hot-only  14.53ms | eager3  115.05ms | speedup: sync 1.52x ASYNC 1.53x (vs fused-fresh)
+B=  448 pb=32 c= 16 | state   63.4GB | fresh   51.33ms (    8,728 tok/s, BW~2.47TB/s) | v4   28.30ms (   15,829 tok/s) | v4-ASYNC   28.26ms (   15,851 tok/s) | hot-only  14.53ms | eager3  115.05ms | speedup: sync 1.81x ASYNC 1.82x (vs fused-fresh)
+B=  448 pb=32 c= 64 | state   63.4GB | fresh   51.33ms (    8,729 tok/s, BW~2.47TB/s) | v4   25.10ms (   17,846 tok/s) | v4-ASYNC   25.11ms (   17,845 tok/s) | hot-only  14.53ms | eager3  115.05ms | speedup: sync 2.04x ASYNC 2.04x (vs fused-fresh)
+saved bench_v4_decode.json

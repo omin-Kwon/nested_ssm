@@ -1,0 +1,17 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19042.93it/s]
+[nemo9b-rot] wrapped 27 mamba2 mixers
+[nemo9b-rot] VALIDATION original=8.43 patched-full=6.98 (patched = OUR chunked scan engine)
+[nemo9b-rot] PRE-FT ppl vs width: k16:257.66 k32:292.32 k64:2071.79 k128:6.98
+[nemo9b-rot] resumed R from nemo9b_rot_v4aware.pt: k16:8.10 k32:7.52 k64:7.17 k128:6.98
+[nemo9b-rot] step 500 loss 2.065 orth 0.0000 (905s) k16:8.25 k32:7.69 k64:7.33 k128:6.98
+[nemo9b-rot] step 1000 loss 2.162 orth 0.0000 (1811s) k16:8.42 k32:7.65 k64:7.41 k128:6.98
+[nemo9b-rot] step 1500 loss 2.437 orth 0.0000 (2755s) k16:8.44 k32:7.73 k64:7.39 k128:6.98
+[nemo9b-rot] step 2000 loss 2.282 orth 0.0000 (3612s) k16:8.14 k32:7.47 k64:7.23 k128:6.98
+[nemo9b-rot] step 2500 loss 2.427 orth 0.0000 (4545s) k16:8.24 k32:7.54 k64:7.22 k128:6.98
+[nemo9b-rot] step 3000 loss 2.264 orth 0.0000 (5522s) k16:7.86 k32:7.40 k64:7.14 k128:6.97
+[nemo9b-rot] step 3500 loss 2.175 orth 0.0000 (6440s) k16:7.89 k32:7.37 k64:7.15 k128:6.98
+[nemo9b-rot] step 4000 loss 2.621 orth 0.0000 (7371s) k16:7.87 k32:7.36 k64:7.11 k128:6.98
+[nemo9b-rot] FINAL k16:7.87 k32:7.36 k64:7.11 k128:6.98
+[nemo9b-rot] saved nemo9b_rot_v4aware6k.pt

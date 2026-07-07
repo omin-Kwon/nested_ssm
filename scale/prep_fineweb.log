@@ -1,16 +1,20 @@
-100M tokens
-200M tokens
-300M tokens
-401M tokens
-500M tokens
-600M tokens
-700M tokens
-800M tokens
-900M tokens
-1000M tokens
-1100M tokens
-1200M tokens
-1300M tokens
-1400M tokens
-1500M tokens
-DONE 1500349311
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+docs 0 tokens 154
+docs 2000 tokens 1,441,124
+docs 4000 tokens 2,793,093
+docs 6000 tokens 4,153,906
+docs 8000 tokens 5,606,707
+docs 10000 tokens 6,982,763
+docs 12000 tokens 8,419,036
+docs 14000 tokens 9,848,873
+docs 16000 tokens 11,190,780
+docs 18000 tokens 12,739,635
+docs 20000 tokens 14,116,857
+docs 22000 tokens 15,448,655
+docs 24000 tokens 16,889,292
+docs 26000 tokens 18,420,383
+docs 28000 tokens 19,876,776
+docs 30000 tokens 21,231,642
+docs 32000 tokens 22,667,764
+saved fineweb_train_nemo.npy (24000000,)
+saved mixed_train_nemo.npy 48,000,000 tokens
