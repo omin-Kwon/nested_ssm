@@ -5,7 +5,7 @@
 
 ---
 
-Subject: Prospective collaboration: nested hot/cold state management for linear attention serving
+Subject: Prospective collaboration: nested hot/cold memory for efficient recurrent-state LLMs
 
 Dear Prof. Arora,
 
