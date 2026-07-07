@@ -8,3 +8,4 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [nemo9b-rot] step 400 loss 2.617 orth 0.0000 (4257s) k16:10.19 k32:9.20 k64:8.61 k128:8.43
 [nemo9b-rot] step 800 loss 2.576 orth 0.0000 (8520s) k16:9.72 k32:8.69 k64:8.39 k128:8.43
 [nemo9b-rot] step 1200 loss 2.643 orth 0.0000 (12784s) k16:9.31 k32:8.56 k64:8.03 k128:8.43
+[nemo9b-rot] step 1600 loss 2.471 orth 0.0000 (17047s) k16:9.37 k32:8.44 k64:8.31 k128:8.43
