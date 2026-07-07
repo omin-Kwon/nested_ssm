@@ -1,8 +1,29 @@
-# Simran Arora 컨택 메일 초안 (2026-07-07)
+# Simran Arora 컨택 메일 (v2 — 협업 타진용 컴팩트 버전, 2026-07-07 확정)
 
-**보내기 전 체크리스트**: ① 지도교수(Jae W. Lee 교수님) 승인 + cc 여부 결정, ② 첨부물 준비(1-pager PDF, Fig 2장: `state_bound_motivation.png` + 9B retrofit 표), ③ arXiv 프리프린트가 있으면 링크 교체(현재는 "in preparation"), ④ 그녀의 최신 논문(Cartridges ICLR'26) 한 번 훑고 문장 정확성 확인.
+**전략**: 방법 비공개(목표 수준까지만), 협업 의사 + Zoom 요청에 집중, ~180단어.
+**보내기 전**: 지도교수(Jae W. Lee 교수님) 승인/cc 결정만 남음.
 
 ---
+
+Subject: Prospective collaboration on memory-efficient linear attention serving
+
+Dear Prof. Arora,
+
+I am Omin Kwon, a Master's student in Prof. Jae W. Lee's group at Seoul National University. My research is on system-efficient LLM memory and serving systems. Most recently, I developed a sparse attention technique for block diffusion LLMs (Oral, AdaptFM @ ICML '26) and designed a CPU-GPU offloading technique for serving them efficiently, which is currently under review.
+
+Working on KV-cache systems led me to linear attention, whose fixed-size state is far more memory-efficient than traditional KV-based architectures - and your Zoology/Based line of work convinced me that state size is the real currency of recall. Reading your papers sparked an idea I am now pursuing: treating the recurrent state itself as a first-class object of the serving system - making its capacity adjustable at inference time and placing it across the memory hierarchy while preserving accuracy. I have promising early results on production-grade architectures.
+
+I am based in Korea, but I am a diligent and highly motivated student, and I would be honored to explore a remote research collaboration with you. Would you be open to a short Zoom chat?
+
+Best regards,
+Omin Kwon
+Seoul National University
+
+---
+
+# (참고) v1 — 상세 공개 버전 (미사용, Zoom 성사 후 팔로업 자료로 재활용 가능)
+
+
 
 Subject: **Extending the recall–throughput tradeoff to a runtime dial: importance-ordered recurrent state across memory tiers**
 
