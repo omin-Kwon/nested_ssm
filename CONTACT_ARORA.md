@@ -1,7 +1,7 @@
 # Simran Arora 컨택 메일 (v2 — 협업 타진용 컴팩트 버전, 2026-07-07 확정)
 
 **전략**: 방법 비공개(목표 수준까지만), 협업 의사 + Zoom 요청에 집중, ~180단어.
-**보내기 전**: 지도교수(Jae W. Lee 교수님) 승인/cc 결정만 남음.
+**보내기 전**: ① 지도교수(Jae W. Lee 교수님) 승인/cc, ② **Stuart Sul(ssul@cs.stanford.edu, Arora와 ParallelKittens/TK2.0 공저자)에게 먼저 연락** — 이름 언급 허락 또는 warm intro 요청(응답률 최선).
 
 ---
 
@@ -9,7 +9,7 @@ Subject: Prospective collaboration on memory-efficient linear attention serving
 
 Dear Prof. Arora,
 
-I am Omin Kwon, a Master's student in Prof. Jae W. Lee's group at Seoul National University. My research is on system-efficient LLM memory and serving systems. Most recently, I developed a sparse attention technique for block diffusion LLMs (Oral, AdaptFM @ ICML '26) and designed a CPU-GPU offloading technique for serving them efficiently, which is currently under review.
+I am Omin Kwon, a Master's student in Prof. Jae W. Lee's group at Seoul National University - you may know our group through Stuart Sul, who did his research internship with us before joining Stanford. My research is on system-efficient LLM memory and serving systems. Most recently, I developed a sparse attention technique for block diffusion LLMs (Oral, AdaptFM @ ICML '26) and designed a CPU-GPU offloading technique for serving them efficiently, which is currently under review.
 
 Working on KV-cache systems led me to linear attention, whose fixed-size state is far more memory-efficient than traditional KV-based architectures - and your Zoology/Based line of work convinced me that state size is the real currency of recall. Reading your papers sparked an idea I am now pursuing: treating the recurrent state itself as a first-class object of the serving system - making its capacity adjustable at inference time and placing it across the memory hierarchy while preserving accuracy. I have promising early results on production-grade architectures.
 
