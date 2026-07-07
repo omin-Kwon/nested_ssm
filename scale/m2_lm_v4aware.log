@@ -1,0 +1,43 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[m2-nested] 35.3M params
+[m2-nested] step 5000 loss 4.101 (306s) k8:54.62 k16:53.65 k32:54.01 k64:54.73
+[m2-nested] step 10000 loss 3.731 (610s) k8:36.69 k16:36.25 k32:36.36 k64:36.72
+[m2-nested] step 15000 loss 3.483 (910s) k8:29.73 k16:29.05 k32:28.97 k64:29.12
+[m2-nested] step 20000 loss 3.310 (1201s) k8:26.70 k16:26.27 k32:26.12 k64:26.27
+[m2-nested] step 25000 loss 3.407 (1510s) k8:24.82 k16:24.29 k32:24.03 k64:24.20
+[m2-nested] step 30000 loss 3.388 (1812s) k8:22.86 k16:22.32 k32:22.05 k64:22.16
+[m2-nested] FINAL k8:22.67 k16:22.19 k32:21.98 k64:22.12
+[m2-nested] saved m2_lm_v4aware.pt
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+[m2-v4aware] VALIDATION fused=19.36 naive=19.36
+[m2-v4aware] ppl c1-c16: 999.76
+[m2-v4aware] ppl c1-c64: 1731.03
+[m2-v4aware] ppl v4-c16: 19.27
+[m2-v4aware] ppl v4-c64: 19.32
+[m2-v4aware-pb] fresh(=pb64): 19.36
+[m2-v4aware-pb] v4 c=8 pb=0 (hot 0/64=0%): 652.87 (+3272.8%)
+[m2-v4aware-pb] v4 c=8 pb=4 (hot 4/64=6%): 33.31 (+72.1%)
+[m2-v4aware-pb] v4 c=8 pb=8 (hot 8/64=12%): 19.40 (+0.2%)
+[m2-v4aware-pb] v4 c=8 pb=16 (hot 16/64=25%): 19.28 (+-0.4%)
+[m2-v4aware-pb] v4 c=8 pb=32 (hot 32/64=50%): 19.26 (+-0.5%)
+[m2-v4aware-pb] v4 c=8 pb=48 (hot 48/64=75%): 19.30 (+-0.3%)
+[m2-v4aware-pb] v4 c=16 pb=0 (hot 0/64=0%): 999.76 (+5064.9%)
+[m2-v4aware-pb] v4 c=16 pb=4 (hot 4/64=6%): 35.23 (+82.0%)
+[m2-v4aware-pb] v4 c=16 pb=8 (hot 8/64=12%): 19.40 (+0.2%)
+[m2-v4aware-pb] v4 c=16 pb=16 (hot 16/64=25%): 19.27 (+-0.5%)
+[m2-v4aware-pb] v4 c=16 pb=32 (hot 32/64=50%): 19.23 (+-0.7%)
+[m2-v4aware-pb] v4 c=16 pb=48 (hot 48/64=75%): 19.29 (+-0.4%)

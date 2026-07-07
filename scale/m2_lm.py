@@ -42,6 +42,25 @@ class Mamba2CoreAttention(nn.Module):
         q, k = q.to(v.dtype), k.to(v.dtype)
         o, _ = chunk_simple_gla(q=q, k=k, v=v, g=g,
                                 initial_state=None, output_final_state=False)
+        v4 = getattr(self, "v4_cfg", None)
+        if v4 is not None:
+            # tiering-aware training: v4 readout = full - intra-chunk COLD part
+            # (inter part of the chunk kernel == snapshot + decay compensation)
+            c, pb = v4
+            B_, T = q.shape[0], q.shape[1]
+            n = T // c
+            qc = rearrange(q[..., pb:], 'b (n c) h d -> b n h c d', c=c) * self.head_k_dim ** -0.5
+            kc = rearrange(k[..., pb:], 'b (n c) h d -> b n h c d', c=c)
+            vc = rearrange(v, 'b (n c) h d -> b n h c d', c=c)
+            Gc = rearrange(g, 'b (n c) h -> b n h c', c=c).cumsum(-1)
+            A = torch.einsum('bnhid,bnhjd->bnhij', qc, kc.to(qc.dtype))
+            dg = Gc[..., :, None] - Gc[..., None, :]
+            fut = torch.triu(torch.ones(c, c, dtype=torch.bool, device=q.device), 1)
+            dg = dg.masked_fill(fut, float("-inf"))            # mask BEFORE exp:
+            A = A * dg.exp().to(A.dtype)                       # upper -> exp(-inf)=0,
+                                                               # backward stays finite
+            o = o - rearrange(torch.einsum('bnhij,bnhjd->bnhid', A, vc.to(A.dtype)),
+                              'b n h c d -> b (n c) h d').to(o.dtype)
         gate = rearrange(self.g_proj(x), '... (h d) -> ... h d', d=self.head_v_dim)
         o = self.o_norm(o) * F.silu(gate)
         return self.o_proj(rearrange(o, 'b t h d -> b t (h d)'))
@@ -90,6 +109,8 @@ def main():
     p.add_argument("--fixed_only", type=int, default=0)
     p.add_argument("--widths", type=int, nargs="+", default=[8, 16, 32, 64])
     p.add_argument("--save", default="m2_lm_nested.pt")
+    p.add_argument("--v4aware", action="store_true",
+                   help="50%% of steps train under v4 readout (random c, pb=16)")
     p.add_argument("--log_every", type=int, default=5000)
     p.add_argument("--seed", type=int, default=0)
     args = p.parse_args()
@@ -108,6 +129,8 @@ def main():
     @torch.no_grad()
     def vppl(w, n=8):
         model.eval(); tot = 0.0
+        for b_ in model.blocks:
+            b_.attn.v4_cfg = None
         for b in range(n):
             s = b * args.seqlen * 4
             row = torch.from_numpy(val[s:s + args.seqlen + 1].astype(np.int64))[None].to(device)
@@ -122,6 +145,14 @@ def main():
         lr = args.lr * min(1.0, (step + 1) / args.warmup)
         for g_ in opt.param_groups: g_["lr"] = lr
         x, y = batches(train, args.batch, args.seqlen, gen, device)
+        if args.v4aware:
+            if int(torch.randint(2, (1,), generator=gen, device=device)) == 1:
+                cs = [8, 16, 32, 64]
+                cfg = (cs[int(torch.randint(len(cs), (1,), generator=gen, device=device))], 16)
+            else:
+                cfg = None
+            for b_ in model.blocks:
+                b_.attn.v4_cfg = cfg
         with torch.autocast('cuda', dtype=torch.bfloat16):
             if len(widths) > 1:
                 ws = torch.tensor(widths, device=device)[

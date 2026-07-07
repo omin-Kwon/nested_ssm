@@ -5,3 +5,4 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [nemo9b-rot] VALIDATION original=8.43 patched-full=8.43
 [nemo9b-rot] PRE-FT ppl vs width: k16:264.97 k32:184.11 k64:2809.68 k128:8.43
 [nemo9b-rot] resumed R from nemo9b_rot_qr.pt: k16:9.93 k32:9.03 k64:8.51 k128:8.44
+[nemo9b-rot] step 400 loss 2.617 orth 0.0000 (4257s) k16:10.19 k32:9.20 k64:8.61 k128:8.43
