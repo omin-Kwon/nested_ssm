@@ -1,64 +1,14 @@
-[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
-Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19578.09it/s]
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Traceback (most recent call last):
-  File "/home/omin/TTT-PNM/scale/nemotron_retrofit.py", line 279, in <module>
-    main()
-  File "/home/omin/TTT-PNM/scale/nemotron_retrofit.py", line 196, in main
-    logits = model(row[:, :-1]).logits
-             ^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 911, in wrapper
-    output = func(self, *args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1190, in forward
-    outputs = self.model(
-              ^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 1040, in wrapper
-    output = func(self, *args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 252, in wrapper
-    outputs = func(self, *args, **kwargs)
-              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1124, in forward
-    hidden_states = mixer_block(
-                    ^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
-    return super().__call__(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 960, in forward
-    hidden_states = self.mixer(hidden_states, cache_params=past_key_values, attention_mask=attention_mask)
-                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
-    return self._call_impl(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
-    return forward_call(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/integrations/accelerate.py", line 945, in wrapped
-    output = forward_func(self, *args, **kwargs)
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 604, in forward
-    return self.torch_forward(hidden_states, cache_params, attention_mask)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 529, in torch_forward
-    G_intermediate = C[:, :, :, None, :, :] * B[:, :, None, :, : ,:]  # shape: (b, c, l, s, h, n)
-                     ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
-torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 8.00 GiB. GPU 0 has a total capacity of 178.35 GiB of which 7.87 GiB is free. Process 998006 has 152.76 GiB memory in use. Including non-PyTorch memory, this process has 17.70 GiB memory in use. Of the allocated memory 16.89 GiB is allocated by PyTorch, and 49.88 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 5082.16it/s]
+[nemo9b-rot] wrapped 27 mamba2 mixers
+[nemo9b-rot] VALIDATION original=8.43 patched-full=6.98 (patched = OUR chunked scan engine)
+[nemo9b-rot] PRE-FT ppl vs width: k16:257.66 k32:292.32 k64:2071.79 k128:6.98
+[nemo9b-rot] resumed R from nemo9b_rot_qr.pt: k16:9.44 k32:8.49 k64:8.05 k128:6.98
+[nemo9b-rot] step 400 loss 2.579 orth 0.0000 (558s) k16:8.52 k32:7.82 k64:7.57 k128:6.98
+[nemo9b-rot] step 800 loss 2.290 orth 0.0000 (1132s) k16:8.21 k32:7.60 k64:7.41 k128:6.98
+[nemo9b-rot] step 1200 loss 2.554 orth 0.0000 (1693s) k16:8.12 k32:7.52 k64:7.24 k128:6.98
+[nemo9b-rot] step 1600 loss 2.332 orth 0.0000 (2237s) k16:8.11 k32:7.53 k64:7.17 k128:6.98
+[nemo9b-rot] step 2000 loss 2.283 orth 0.0000 (2797s) k16:8.10 k32:7.52 k64:7.17 k128:6.98
+[nemo9b-rot] FINAL k16:8.10 k32:7.52 k64:7.17 k128:6.98
+[nemo9b-rot] saved nemo9b_rot_v4aware.pt

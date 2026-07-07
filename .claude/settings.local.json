@@ -3,7 +3,8 @@
     "allow": [
       "Skill(deep-research)",
       "Skill(deep-research:*)",
-      "Workflow(deep-research)"
+      "Workflow(deep-research)",
+      "Bash(nvidia-smi --query-gpu=index,memory.used,memory.total,utilization.gpu --format=csv,noheader)"
     ]
   }
 }

@@ -1,0 +1,64 @@
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19578.09it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Traceback (most recent call last):
+  File "/home/omin/TTT-PNM/scale/nemotron_retrofit.py", line 279, in <module>
+    main()
+  File "/home/omin/TTT-PNM/scale/nemotron_retrofit.py", line 196, in main
+    logits = model(row[:, :-1]).logits
+             ^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 911, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1190, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 1040, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 252, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1124, in forward
+    hidden_states = mixer_block(
+                    ^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 960, in forward
+    hidden_states = self.mixer(hidden_states, cache_params=past_key_values, attention_mask=attention_mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/integrations/accelerate.py", line 945, in wrapped
+    output = forward_func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 604, in forward
+    return self.torch_forward(hidden_states, cache_params, attention_mask)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 529, in torch_forward
+    G_intermediate = C[:, :, :, None, :, :] * B[:, :, None, :, : ,:]  # shape: (b, c, l, s, h, n)
+                     ~~~~~~~~~~~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 8.00 GiB. GPU 0 has a total capacity of 178.35 GiB of which 7.87 GiB is free. Process 998006 has 152.76 GiB memory in use. Including non-PyTorch memory, this process has 17.70 GiB memory in use. Of the allocated memory 16.89 GiB is allocated by PyTorch, and 49.88 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
