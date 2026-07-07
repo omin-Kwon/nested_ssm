@@ -1,0 +1,11 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 5351.18it/s]
+[nemo9b-rot] wrapped 27 mamba2 mixers
+[nemo9b-rot] VALIDATION original=8.42 patched-full=6.98 (patched = OUR chunked scan engine)
+[nemo9b-rot] PRE-FT ppl vs width: k16:257.66 k32:292.32 k64:2071.79 k128:6.98
+[nemo9b-rot] resumed R from nemo9b_rot_qr.pt: k16:9.44 k32:8.49 k64:8.05 k128:6.98
+[nemo9b-rot] step 3 loss 2.841 orth 0.0000 (3s) k16:9.44 k32:8.48 k64:8.06 k128:6.98
+[nemo9b-rot] step 6 loss 2.852 orth 0.0000 (8s) k16:9.37 k32:8.44 k64:8.05 k128:6.98
+[nemo9b-rot] FINAL k16:9.37 k32:8.44 k64:8.05 k128:6.98
+[nemo9b-rot] saved /tmp/nemo_v4_smoke.pt

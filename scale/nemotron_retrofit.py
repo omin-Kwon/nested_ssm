@@ -41,6 +41,59 @@ class ActRotMask(nn.Module):
             x = torch.cat([h, self.rotmask(B), self.rotmask(C)], dim=-1)
         return x
 
+def chunked_mixer_forward(self, input_states, **kw):
+    """Differentiable chunked SSD (scalar per-head decay) with native v4:
+    chunk size = c; intra-chunk term restricted to HOT dims when v4 is on
+    (cold readout = carried chunk-start state, decay-compensated == v4).
+    self.scan_cfg = (c, pb, v4flag)."""
+    import torch.nn.functional as F
+    B_, T, _ = input_states.shape
+    proj = self.in_proj(input_states)
+    d_mlp = (proj.shape[-1] - 2 * self.intermediate_size
+             - 2 * self.n_groups * self.ssm_state_size - self.num_heads) // 2
+    _, _, gate, hBC, dt = proj.split(
+        [d_mlp, d_mlp, self.intermediate_size,
+         self.intermediate_size + 2 * self.n_groups * self.ssm_state_size,
+         self.num_heads], dim=-1)
+    hBC = hBC.transpose(1, 2)
+    hBC = self.act(self.conv1d(hBC)[..., :hBC.shape[-1]].transpose(1, 2))
+    x, Bm, Cm = torch.split(
+        hBC, [self.intermediate_size, self.n_groups * self.ssm_state_size,
+              self.n_groups * self.ssm_state_size], dim=-1)
+    H, P, N, G = self.num_heads, self.head_dim, self.ssm_state_size, self.n_groups
+    rep = H // G
+    c, pb, v4 = self.scan_cfg
+    n = T // c
+    x = x.reshape(B_, n, c, H, P).float()
+    Bm = Bm.reshape(B_, n, c, G, N).repeat_interleave(rep, dim=3).float()
+    Cm = Cm.reshape(B_, n, c, G, N).repeat_interleave(rep, dim=3).float()
+    dt = F.softplus(dt.float() + self.dt_bias.float())
+    dt = torch.clamp(dt, self.time_step_min).reshape(B_, n, c, H)
+    A = -torch.exp(self.A_log.float())
+    g = dt * A                                             # (B,n,c,H) log decay <= 0
+    Gc = g.cumsum(2)
+    xd = x * dt[..., None]                                 # discretized values
+    # intra-chunk attention term (hot dims only when v4)
+    Bi, Ci = (Bm[..., :pb], Cm[..., :pb]) if v4 else (Bm, Cm)
+    Aij = torch.einsum('bnihd,bnjhd->bnhij', Ci, Bi)
+    dg = Gc.permute(0, 1, 3, 2)                            # (B,n,H,c)
+    dg = dg[..., :, None] - dg[..., None, :]
+    fut = torch.triu(torch.ones(c, c, dtype=torch.bool, device=x.device), 1)
+    Aij = Aij * dg.masked_fill(fut, float("-inf")).exp()
+    y = torch.einsum('bnhij,bnjhp->bnihp', Aij, xd)
+    # inter-chunk: carried state (exact for BOTH tiers), decay-compensated readout
+    S = x.new_zeros(B_, H, P, N)
+    yin = []
+    for i in range(n):
+        yin.append(torch.einsum('bchn,bhpn->bchp', Cm[:, i] * Gc[:, i].exp()[..., None], S))
+        w = (Gc[:, i, -1:, :] - Gc[:, i]).exp()[..., None] * Bm[:, i]   # (B,c,H,N)
+        S = S * Gc[:, i, -1].exp()[:, :, None, None] \
+            + torch.einsum('bchp,bchn->bhpn', xd[:, i], w)
+    y = y + torch.stack(yin, 1)
+    y = y + x * self.D.float()[None, None, None, :, None]
+    y = y.reshape(B_, T, -1).to(input_states.dtype)
+    return self.out_proj(self.norm(y, gate))
+
 def get_wrappers(model):
     return [m for m in model.modules() if isinstance(m, ActRotMask)]
 
@@ -57,6 +110,9 @@ def batches(train, bsz, seqlen, gen, device):
 @torch.no_grad()
 def vppl(model, val, w, seqlen=1024, n=6, device="cuda"):
     model.eval(); set_width(model, w); tot = 0.0
+    for m in model.modules():
+        if hasattr(m, "scan_cfg"):
+            m.scan_cfg = (64, 128, False)                 # fresh eval semantics
     for b in range(n):
         s = b * seqlen * 4
         row = torch.from_numpy(val[s:s + seqlen + 1].astype(np.int64))[None].to(device)
@@ -113,6 +169,8 @@ def main():
     p.add_argument("--save", default="nemo9b_rot.pt")
     p.add_argument("--resume", default="", help="load saved R dict and continue")
     p.add_argument("--cosine", action="store_true", help="cosine lr decay to 0")
+    p.add_argument("--v4aware", action="store_true",
+                   help="our chunked scan; 50%% steps under v4 (random c, pb=32)")
     p.add_argument("--log_every", type=int, default=100)
     p.add_argument("--seed", type=int, default=0)
     args = p.parse_args()
@@ -148,8 +206,14 @@ def main():
             m.act = w.to(device)
             nmix += 1
     print(f"[{tag}] wrapped {nmix} mamba2 mixers", flush=True)
+    if args.v4aware:
+        for m in model.modules():
+            if type(m).__name__ == "NemotronHMamba2Mixer":
+                m.forward = chunked_mixer_forward.__get__(m)
+                m.scan_cfg = (64, 128, False)
     p_patch = vppl(model, val, 128, device=device)
-    print(f"[{tag}] VALIDATION original={p_orig:.2f} patched-full={p_patch:.2f}", flush=True)
+    print(f"[{tag}] VALIDATION original={p_orig:.2f} patched-full={p_patch:.2f}"
+          + (" (patched = OUR chunked scan engine)" if args.v4aware else ""), flush=True)
     print(f"[{tag}] PRE-FT ppl vs width: " +
           " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths),
           flush=True)
@@ -174,6 +238,16 @@ def main():
             lr *= 0.5 * (1 + math.cos(math.pi * step / args.steps))
         for g_ in opt.param_groups: g_["lr"] = lr
         x, y = batches(train, args.batch, args.seqlen, gen, device)
+        if args.v4aware:
+            if int(torch.randint(2, (1,), generator=gen, device=device)) == 1:
+                cs = [8, 16, 32, 64]
+                cfg = (cs[int(torch.randint(len(cs), (1,), generator=gen, device=device))],
+                       32, True)
+            else:
+                cfg = (64, 128, False)
+            for m_ in model.modules():
+                if hasattr(m_, "scan_cfg"):
+                    m_.scan_cfg = cfg
         if len(widths) > 1:
             ws = torch.tensor(widths, device=device)[
                 torch.randint(len(widths), (x.shape[0],), generator=gen, device=device)]
