@@ -111,6 +111,8 @@ def main():
     p.add_argument("--widths", type=int, nargs="+", default=[16, 32, 64, 128])
     p.add_argument("--fixed_only", type=int, default=0)
     p.add_argument("--save", default="nemo9b_rot.pt")
+    p.add_argument("--resume", default="", help="load saved R dict and continue")
+    p.add_argument("--cosine", action="store_true", help="cosine lr decay to 0")
     p.add_argument("--log_every", type=int, default=100)
     p.add_argument("--seed", type=int, default=0)
     args = p.parse_args()
@@ -152,6 +154,13 @@ def main():
           " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths),
           flush=True)
     Rs = [m.R for m in get_wrappers(model)]
+    if args.resume:
+        saved = torch.load(args.resume)
+        for i, R in enumerate(Rs):
+            R.data.copy_(saved[i].to(R.device).float())
+        print(f"[{tag}] resumed R from {args.resume}: " +
+              " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths),
+              flush=True)
     for R in Rs:
         R.requires_grad_(True)
     opt = torch.optim.AdamW(Rs, lr=args.lr, weight_decay=0.0, betas=(0.9, 0.95))
@@ -161,6 +170,8 @@ def main():
     t0 = time.time()
     for step in range(args.steps):
         lr = args.lr * min(1.0, (step + 1) / args.warmup)
+        if args.cosine:
+            lr *= 0.5 * (1 + math.cos(math.pi * step / args.steps))
         for g_ in opt.param_groups: g_["lr"] = lr
         x, y = batches(train, args.batch, args.seqlen, gen, device)
         if len(widths) > 1:
