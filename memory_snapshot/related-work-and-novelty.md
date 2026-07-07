@@ -24,3 +24,8 @@ Related work / novelty for [[research-direction-elastic-ttm]] (from 4 parallel l
 **Controller lit ("who picks width k per request"):** DS-Net learned gate (arXiv:2103.13258, per-input slimming ratio, easy/hard mining) = blueprint; CALM (arXiv:2207.07061) Learn-then-Test calibration for a provable global quality guarantee; PonderNet (2107.05407) probabilistic halting; Titans "surprise" = gradient norm as "needs more memory" signal; Mixture-of-Depths (2404.02258) = fix k options a priori for static tensor shapes (HW-friendly). Signals ranked: surprise/grad-norm > readout uncertainty (entropy/margin/hidden-saturation) > conformal set size > context length/density.
 
 **Strongest motivation cites:** "Impossibility Triangle of Long-Context Modeling" (arXiv:2605.05066) — argues fixed state budget bounds worst-case recall; input-adaptive state width is the principled fix. Just Read Twice (2407.05483) — state 80→640 lowers ppl ~15%. BASED/Zoology recall-vs-state Pareto.
+
+## Sparse linear attention 계열과의 구분 (2026-07-07 추가, 인용 검증됨)
+- **SSE (Scaling Linear Attention with Sparse State Expansion, arXiv:2507.16577, 2025-07)**: state를 N 파티션으로 확장, write-read 게이트 + softmax top-k row-sparse 갱신. **MoM (arXiv:2502.13685, 2025-02, Shanghai AI Lab)**: 다중 독립 메모리 + 토큰 라우터.
+- **구분 4축**: ① 근사 자리 — 그들은 WHAT을 버림(라우팅 탈락 슬롯은 영구 미수신, 내용의존·비가역), 우리는 WHEN만 미룸(dense-but-stale; 오차 = 최근 c토큰 cold 성분, age-국소·정확보상). ② HW — 그들 state는 전부 HBM 상주(capacity 불변, 오히려 악화; gather/scatter), 우리는 capacity 해방 + dense streaming(PNM 정합). ③ 결정 — 그들은 데이터패스에 토큰별 라우터, 우리는 controller-less(순서는 학습이 굽고 배치는 정적 절단). ④ 직교 — SSE/MoM의 확장 state도 K×V 직합이라 우리 nesting+티어링을 얹을 수 있음(경쟁 아닌 보완 포지셔닝).
+- 한 줄: **"sparse-and-fresh vs dense-but-stale"** — 논문 related work의 핵심 대조 문장.

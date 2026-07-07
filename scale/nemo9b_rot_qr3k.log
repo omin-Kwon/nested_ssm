@@ -6,3 +6,5 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [nemo9b-rot] PRE-FT ppl vs width: k16:264.97 k32:184.11 k64:2809.68 k128:8.43
 [nemo9b-rot] resumed R from nemo9b_rot_qr.pt: k16:9.93 k32:9.03 k64:8.51 k128:8.44
 [nemo9b-rot] step 400 loss 2.617 orth 0.0000 (4257s) k16:10.19 k32:9.20 k64:8.61 k128:8.43
+[nemo9b-rot] step 800 loss 2.576 orth 0.0000 (8520s) k16:9.72 k32:8.69 k64:8.39 k128:8.43
+[nemo9b-rot] step 1200 loss 2.643 orth 0.0000 (12784s) k16:9.31 k32:8.56 k64:8.03 k128:8.43
