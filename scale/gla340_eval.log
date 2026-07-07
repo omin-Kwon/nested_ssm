@@ -8,3 +8,7 @@
   self.m.impl(
 `torch_dtype` is deprecated! Use `dtype` instead!
 [gla340-nested] VALIDATION fused=10.69 naive=10.70
+[gla340-nested] ppl c1-c16 (hot 32/128): 125.49
+[gla340-nested] ppl c1-c64 (hot 32/128): 192.83
+[gla340-nested] ppl v4-c16 (hot 32/128): 12.09
+[gla340-nested] ppl v4-c64 (hot 32/128): 11.68
