@@ -1,0 +1,32 @@
+{
+ "mode": "fresh",
+ "ckpt": "nemo9b_rot_p4long.pt",
+ "limit": 300,
+ "results": {
+  "fda": {
+   "sample_len": 300,
+   "contains": 0.31
+  },
+  "swde": {
+   "sample_len": 300,
+   "contains": 0.6566666666666666
+  },
+  "squad_completion": {
+   "sample_len": 300,
+   "contains": 0.7
+  },
+  "triviaqa": {
+   "sample_len": 300,
+   "exact_match": 0.31
+  },
+  "nq_open": {
+   "sample_len": 300,
+   "exact_match": 0.08666666666666667
+  },
+  "drop": {
+   "sample_len": 300,
+   "em": 0.006666666666666667,
+   "f1": 0.05683333333333331
+  }
+ }
+}

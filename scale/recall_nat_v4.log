@@ -1,0 +1,105 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 17959.04it/s]
+[nat_v4] v4 installed on 27 mixers (pb=32 c=16 bf16cold)
+`pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}
+  0%|          | 0/300 [00:00<?, ?it/s]100%|██████████| 300/300 [00:00<00:00, 330868.05it/s]
+  0%|          | 0/300 [00:00<?, ?it/s]100%|██████████| 300/300 [00:00<00:00, 352956.86it/s]
+  0%|          | 0/300 [00:00<?, ?it/s]100%|██████████| 300/300 [00:00<00:00, 169535.33it/s]
+  0%|          | 0/300 [00:00<?, ?it/s] 94%|█████████▎| 281/300 [00:00<00:00, 2808.43it/s]100%|██████████| 300/300 [00:00<00:00, 2805.16it/s]
+  0%|          | 0/300 [00:00<?, ?it/s] 84%|████████▍ | 252/300 [00:00<00:00, 2510.19it/s]100%|██████████| 300/300 [00:00<00:00, 2507.61it/s]
+  0%|          | 0/300 [00:00<?, ?it/s] 76%|███████▌  | 227/300 [00:00<00:00, 2263.34it/s]100%|██████████| 300/300 [00:00<00:00, 2265.76it/s]
+Running generate_until requests:   0%|          | 0/1800 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/run_recall_native.py", line 45, in <module>
+    res = lm_eval.simple_evaluate(model=lm, tasks=TASKS, limit=limit, bootstrap_iters=0)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/utils.py", line 575, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/evaluator.py", line 358, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/utils.py", line 575, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/evaluator.py", line 596, in evaluate
+    resps = getattr(lm, reqtype)(cloned_reqs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/models/huggingface.py", line 1672, in generate_until
+    cont = self._model_generate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/models/huggingface.py", line 1185, in _model_generate
+    return self.model.generate(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/generation/utils.py", line 2645, in generate
+    result = decoding_method(
+             ^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/generation/utils.py", line 2859, in _sample
+    outputs = model_forward(**model_inputs, return_dict=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 911, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1190, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 1040, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 252, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1124, in forward
+    hidden_states = mixer_block(
+                    ^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 960, in forward
+    hidden_states = self.mixer(hidden_states, cache_params=past_key_values, attention_mask=attention_mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/integrations/accelerate.py", line 945, in wrapped
+    output = forward_func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 604, in forward
+    return self.torch_forward(hidden_states, cache_params, attention_mask)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nested_ssm/scale/v4_native_decode.py", line 103, in _dispatch
+    return _v4_decode(self, input_states, cache_params, attention_mask)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nested_ssm/scale/v4_native_decode.py", line 82, in _v4_decode
+    + torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: The size of tensor a (128) must match the size of tensor b (80) at non-singleton dimension 2
+Running generate_until requests:   0%|          | 0/1800 [00:05<?, ?it/s]
