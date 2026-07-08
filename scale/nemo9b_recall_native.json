@@ -1,0 +1,27 @@
+{
+ "fda": {
+  "sample_len": 300,
+  "contains": 0.31
+ },
+ "swde": {
+  "sample_len": 300,
+  "contains": 0.6566666666666666
+ },
+ "squad_completion": {
+  "sample_len": 300,
+  "contains": 0.7
+ },
+ "triviaqa": {
+  "sample_len": 300,
+  "exact_match": 0.31
+ },
+ "nq_open": {
+  "sample_len": 300,
+  "exact_match": 0.09333333333333334
+ },
+ "drop": {
+  "sample_len": 300,
+  "em": 0.006666666666666667,
+  "f1": 0.05469999999999998
+ }
+}

@@ -1,0 +1,16 @@
+{
+ "config": "retro_v4",
+ "ckpt": "nemo9b_rot_p4long.pt",
+ "c": 16,
+ "pb": 32,
+ "lag": 0,
+ "cold_bf16": 1,
+ "warm": 64,
+ "limit": 4,
+ "results": {
+  "fda": {
+   "acc": null,
+   "acc_norm": null
+  }
+ }
+}

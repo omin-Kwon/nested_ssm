@@ -1,0 +1,8 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 17281.37it/s]
+[fresh_recall] model built (config=naive_fresh ckpt=nemo9b_rot_p4long.pt c=16 pb=32 lag=0 cold_bf16=0 bs=1 limit=300)
+`pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}

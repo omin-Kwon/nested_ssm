@@ -38,18 +38,22 @@ def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0, warm=0, cold_fp
             m.A_log.data.copy_(saved["decay"]["A_log"][i].to(device))
             m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to(device))
     set_width(model, 128)
-    if config == "retro_v4":
+    if config in ("retro_v4", "naive_fresh"):
         for m in mixers:
             m.forward = naive_mixer_forward.__get__(m)
-        CFG.update(mode="v4", c=c, pb=pb, lag=lag, cold_bf16=cold_bf16, warm=warm,
-                   cold_fp8=cold_fp8)
+        if config == "retro_v4":
+            CFG.update(mode="v4", c=c, pb=pb, lag=lag, cold_bf16=cold_bf16,
+                       warm=warm, cold_fp8=cold_fp8)
+        else:               # fresh through the SAME naive engine (engine-consistent
+            CFG.update(mode="fresh")   # comparison; also low peak memory for gen)
     model.eval()
     return model
 
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--config", required=True, choices=["orig", "retro_fresh", "retro_v4"])
+    ap.add_argument("--config", required=True,
+                    choices=["orig", "retro_fresh", "retro_v4", "naive_fresh"])
     ap.add_argument("--ckpt", default="nemo9b_rot_v4aware.pt")
     ap.add_argument("--tag", default=None)
     ap.add_argument("--c", type=int, default=16)
@@ -89,10 +93,11 @@ def main():
                                       bootstrap_iters=0)
     out = {}
     for task, m in results["results"].items():
-        acc = m.get("acc,none", m.get("acc_norm,none"))
-        accn = m.get("acc_norm,none")
-        out[task] = {"acc": acc, "acc_norm": accn}
-        print(f"[{tag}] {task}: acc={acc} acc_norm={accn}", flush=True)
+        metrics = {k.split(",")[0]: v for k, v in m.items()
+                   if isinstance(v, (int, float)) and "stderr" not in k}
+        out[task] = metrics
+        print(f"[{tag}] {task}: " +
+              " ".join(f"{k}={v}" for k, v in sorted(metrics.items())), flush=True)
     json.dump({"config": args.config, "ckpt": args.ckpt, "c": args.c, "pb": args.pb,
                "lag": args.lag, "cold_bf16": args.cold_bf16, "warm": args.warm,
                "limit": args.limit, "results": out},

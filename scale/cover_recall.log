@@ -1,0 +1,118 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 27786.02it/s]
+[fresh_recall] model built (config=retro_fresh ckpt=nemo9b_rot_p4long.pt c=16 pb=32 lag=0 cold_bf16=0 bs=1 limit=300)
+`pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}
+Generating validation split:   0%|          | 0/1111 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 1111/1111 [00:00<00:00, 94480.48 examples/s]
+None: No `generation_kwargs` specified in task config, defaulting to {'temperature': 0.0, 'do_sample': False, 'max_gen_toks': 256, 'until': ['\n\n']}
+Generating validation split:   0%|          | 0/2984 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 2984/2984 [00:00<00:00, 247881.86 examples/s]
+Generating train split:   0%|          | 0/138384 [00:00<?, ? examples/s]Generating train split:  31%|███       | 43000/138384 [00:00<00:00, 420230.79 examples/s]Generating train split:  75%|███████▌  | 104000/138384 [00:00<00:00, 387766.87 examples/s]Generating train split: 100%|██████████| 138384/138384 [00:00<00:00, 390057.95 examples/s]
+Generating validation split:   0%|          | 0/17944 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 17944/17944 [00:00<00:00, 463736.57 examples/s]
+Generating test split:   0%|          | 0/17210 [00:00<?, ? examples/s]Generating test split: 100%|██████████| 17210/17210 [00:00<00:00, 1469633.16 examples/s]
+Generating train split:   0%|          | 0/87925 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 87925/87925 [00:00<00:00, 4980272.24 examples/s]
+Generating validation split:   0%|          | 0/3610 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 3610/3610 [00:00<00:00, 1940214.95 examples/s]
+Generating train split:   0%|          | 0/77409 [00:00<?, ? examples/s]Generating train split: 100%|██████████| 77409/77409 [00:00<00:00, 1688167.83 examples/s]
+Generating validation split:   0%|          | 0/9536 [00:00<?, ? examples/s]Generating validation split: 100%|██████████| 9536/9536 [00:00<00:00, 1082459.62 examples/s]
+Map:   0%|          | 0/77409 [00:00<?, ? examples/s]Map:   2%|▏         | 1780/77409 [00:00<00:04, 16980.37 examples/s]Map:   5%|▍         | 3557/77409 [00:00<00:04, 17431.52 examples/s]Map:   8%|▊         | 6160/77409 [00:00<00:04, 17382.00 examples/s]Map:  10%|█         | 8000/77409 [00:00<00:04, 16733.74 examples/s]Map:  13%|█▎        | 10000/77409 [00:00<00:03, 17180.93 examples/s]Map:  16%|█▌        | 12000/77409 [00:00<00:03, 17518.72 examples/s]Map:  18%|█▊        | 14000/77409 [00:00<00:03, 17736.99 examples/s]Map:  21%|██        | 16000/77409 [00:00<00:03, 17670.03 examples/s]Map:  23%|██▎       | 18000/77409 [00:01<00:03, 17698.34 examples/s]Map:  26%|██▌       | 20000/77409 [00:01<00:03, 17801.40 examples/s]Map:  28%|██▊       | 22000/77409 [00:01<00:03, 17910.01 examples/s]Map:  31%|███       | 23931/77409 [00:01<00:02, 17957.61 examples/s]Map:  34%|███▍      | 26518/77409 [00:01<00:02, 17690.12 examples/s]Map:  38%|███▊      | 29140/77409 [00:01<00:02, 17614.68 examples/s]Map:  40%|████      | 31000/77409 [00:01<00:02, 17473.14 examples/s]Map:  43%|████▎     | 33000/77409 [00:01<00:02, 17381.23 examples/s]Map:  45%|████▌     | 35000/77409 [00:01<00:02, 17551.54 examples/s]Map:  48%|████▊     | 37000/77409 [00:02<00:02, 17608.15 examples/s]Map:  50%|█████     | 39000/77409 [00:02<00:02, 17752.74 examples/s]Map:  53%|█████▎    | 41000/77409 [00:02<00:02, 17851.31 examples/s]Map:  56%|█████▌    | 43000/77409 [00:02<00:01, 17983.73 examples/s]Map:  58%|█████▊    | 45000/77409 [00:02<00:01, 17889.25 examples/s]Map:  61%|██████    | 47000/77409 [00:02<00:01, 17902.57 examples/s]Map:  63%|██████▎   | 49000/77409 [00:02<00:01, 18009.33 examples/s]Map:  66%|██████▌   | 51000/77409 [00:02<00:01, 17968.42 examples/s]Map:  69%|██████▉   | 53665/77409 [00:03<00:01, 17891.14 examples/s]Map:  73%|███████▎  | 56292/77409 [00:03<00:01, 17759.30 examples/s]Map:  75%|███████▌  | 58095/77409 [00:03<00:01, 17823.17 examples/s]Map:  78%|███████▊  | 60000/77409 [00:03<00:00, 17700.10 examples/s]Map:  81%|████████  | 62472/77409 [00:03<00:00, 17266.25 examples/s]Map:  84%|████████▍ | 65000/77409 [00:03<00:00, 17068.14 examples/s]Map:  87%|████████▋ | 67000/77409 [00:03<00:00, 17148.18 examples/s]Map:  89%|████████▉ | 69000/77409 [00:05<00:02, 3770.93 examples/s] Map:  92%|█████████▏| 71000/77409 [00:05<00:01, 4877.33 examples/s]Map:  94%|█████████▍| 73000/77409 [00:05<00:00, 6225.76 examples/s]Map:  97%|█████████▋| 75000/77409 [00:05<00:00, 7727.57 examples/s]Map:  99%|█████████▉| 77000/77409 [00:05<00:00, 9366.31 examples/s]Map: 100%|██████████| 77409/77409 [00:05<00:00, 13210.88 examples/s]
+Map:   0%|          | 0/9536 [00:00<?, ? examples/s]Map:  15%|█▍        | 1413/9536 [00:00<00:00, 14004.73 examples/s]Map:  31%|███       | 2909/9536 [00:00<00:00, 14560.25 examples/s]Map:  52%|█████▏    | 5000/9536 [00:00<00:00, 13871.29 examples/s]Map:  68%|██████▊   | 6472/9536 [00:00<00:00, 14157.28 examples/s]Map:  84%|████████▍ | 8000/9536 [00:00<00:00, 14128.43 examples/s]Map: 100%|██████████| 9536/9536 [00:00<00:00, 14433.28 examples/s]Map: 100%|██████████| 9536/9536 [00:00<00:00, 14223.31 examples/s]
+  0%|          | 0/300 [00:00<?, ?it/s]100%|██████████| 300/300 [00:00<00:00, 330781.07it/s]
+  0%|          | 0/300 [00:00<?, ?it/s]100%|██████████| 300/300 [00:00<00:00, 362619.94it/s]
+  0%|          | 0/300 [00:00<?, ?it/s]100%|██████████| 300/300 [00:00<00:00, 200237.30it/s]
+  0%|          | 0/300 [00:00<?, ?it/s] 92%|█████████▏| 277/300 [00:00<00:00, 2768.48it/s]100%|██████████| 300/300 [00:00<00:00, 2767.47it/s]
+  0%|          | 0/300 [00:00<?, ?it/s] 81%|████████  | 243/300 [00:00<00:00, 2426.31it/s]100%|██████████| 300/300 [00:00<00:00, 2428.40it/s]
+  0%|          | 0/300 [00:00<?, ?it/s] 74%|███████▍  | 222/300 [00:00<00:00, 2212.65it/s]100%|██████████| 300/300 [00:00<00:00, 2203.69it/s]
+Running generate_until requests:   0%|          | 0/1800 [00:00<?, ?it/s]Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/nemo9b_lmeval.py", line 105, in <module>
+    main()
+  File "/home/omin/nested_ssm/scale/nemo9b_lmeval.py", line 88, in main
+    results = lm_eval.simple_evaluate(model=lm, tasks=args.tasks, limit=args.limit,
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/utils.py", line 575, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/evaluator.py", line 358, in simple_evaluate
+    results = evaluate(
+              ^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/utils.py", line 575, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/evaluator.py", line 596, in evaluate
+    resps = getattr(lm, reqtype)(cloned_reqs)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/models/huggingface.py", line 1672, in generate_until
+    cont = self._model_generate(
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/models/huggingface.py", line 1185, in _model_generate
+    return self.model.generate(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/generation/utils.py", line 2645, in generate
+    result = decoding_method(
+             ^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/generation/utils.py", line 2845, in _sample
+    outputs = self._prefill(
+              ^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/generation/utils.py", line 3896, in _prefill
+    return self(**model_inputs, return_dict=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 911, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1190, in forward
+    outputs = self.model(
+              ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/generic.py", line 1040, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/utils/output_capturing.py", line 252, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 1124, in forward
+    hidden_states = mixer_block(
+                    ^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/modeling_layers.py", line 93, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 960, in forward
+    hidden_states = self.mixer(hidden_states, cache_params=past_key_values, attention_mask=attention_mask)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1783, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/torch/nn/modules/module.py", line 1794, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/integrations/accelerate.py", line 945, in wrapped
+    output = forward_func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 604, in forward
+    return self.torch_forward(hidden_states, cache_params, attention_mask)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/transformers/models/nemotron_h/modeling_nemotron_h.py", line 538, in torch_forward
+    Y_diag = (M[..., None] * hidden_states[:, :, None]).sum(3)
+              ~~~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 11.88 GiB. GPU 0 has a total capacity of 178.35 GiB of which 4.22 GiB is free. Process 3163792 has 734.00 MiB memory in use. Process 3164290 has 135.63 GiB memory in use. Including non-PyTorch memory, this process has 37.75 GiB memory in use. Of the allocated memory 36.82 GiB is allocated by PyTorch, and 168.32 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+Running generate_until requests:   0%|          | 0/1800 [00:03<?, ?it/s]
