@@ -20,7 +20,7 @@ from nemo9b_eval import naive_mixer_forward, CFG
 MODEL_ID = "nvidia/NVIDIA-Nemotron-Nano-9B-v2"
 
 
-def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0, warm=0):
+def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0, warm=0, cold_fp8=0):
     from transformers import AutoModelForCausalLM
     model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16).to(device)
     model.config.use_cache = False
@@ -41,7 +41,8 @@ def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0, warm=0):
     if config == "retro_v4":
         for m in mixers:
             m.forward = naive_mixer_forward.__get__(m)
-        CFG.update(mode="v4", c=c, pb=pb, lag=lag, cold_bf16=cold_bf16, warm=warm)
+        CFG.update(mode="v4", c=c, pb=pb, lag=lag, cold_bf16=cold_bf16, warm=warm,
+                   cold_fp8=cold_fp8)
     model.eval()
     return model
 
@@ -60,6 +61,8 @@ def main():
     ap.add_argument("--warm", type=int, default=0,
                     help="first W tokens run fresh before v4 kicks in (one-time "
                          "cold-tier ship; tiering targets long sequences)")
+    ap.add_argument("--cold_fp8", type=int, default=0,
+                    help="1 = scaled-fp8 cold snapshot (asymmetric precision license)")
     ap.add_argument("--bs", type=int, default=4)
     ap.add_argument("--limit", type=int, default=500)
     ap.add_argument("--tasks", nargs="+",
@@ -75,7 +78,8 @@ def main():
 
     tok = AutoTokenizer.from_pretrained(MODEL_ID)
     model = build_model(args.config, args.ckpt, args.c, args.pb, device,
-                        lag=args.lag, cold_bf16=args.cold_bf16, warm=args.warm)
+                        lag=args.lag, cold_bf16=args.cold_bf16, warm=args.warm,
+                        cold_fp8=args.cold_fp8)
     print(f"[{tag}] model built (config={args.config} ckpt={args.ckpt} c={args.c} "
           f"pb={args.pb} lag={args.lag} cold_bf16={args.cold_bf16} "
           f"bs={args.bs} limit={args.limit})", flush=True)

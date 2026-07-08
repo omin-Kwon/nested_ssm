@@ -10,8 +10,10 @@ import torch, torch.nn.functional as F
 from nemotron_retrofit import ActRotMask, get_wrappers, set_width
 
 CFG = {"mode": "fresh", "c": 16, "pb": 32, "lag": 0, "cold_bf16": 0, "warm": 0,
-       "state_bf16": 0}  # per-token bf16 rounding of the RUNNING state (fairness
+       "state_bf16": 0,  # per-token bf16 rounding of the RUNNING state (fairness
                          # probe: can the fresh baseline itself go bf16?)
+       "state_fp8": 0,   # per-token fp8(e4m3) rounding — expect BREAK (3 mantissa)
+       "cold_fp8": 0}    # fp8 cold snapshot (rounded once per chunk) — expect OK
 
 def naive_mixer_forward(self, input_states, cache_params=None, cache_position=None,
                         attention_mask=None, **kw):
@@ -49,12 +51,21 @@ def naive_mixer_forward(self, input_states, cache_params=None, cache_position=No
             + (dt[:, t][..., None] * x[:, t])[..., None] * B[:, t][:, :, None, :]
         if CFG.get("state_bf16"):
             S = S.to(torch.bfloat16).float()   # inject per-token rounding (T times)
+        if CFG.get("state_fp8"):                        # scaled per-token fp8
+            sc = S.abs().amax(-2, keepdim=True).clamp(min=1e-6) / 448.0
+            S = (S / sc).to(torch.float8_e4m3fn).float() * sc
         Gtot = Gtot + dA_log
         if mode != "fresh" and t % c == 0:
             SnapL = Snap; gSnapL = gSnap                          # readers lag one chunk
-            # cold_bf16: snapshot stored bf16 (values rounded, kept fp32 for einsum)
-            Snap = (S.to(torch.bfloat16).float() if CFG.get("cold_bf16")
-                    else S.clone())
+            # cold_bf16/fp8: snapshot stored low-precision (rounded ONCE per chunk,
+            # kept fp32 for einsum) — the tier-asymmetric precision license
+            if CFG.get("cold_fp8"):                     # scaled fp8, rounded 1x/chunk
+                sc = S.abs().amax(-2, keepdim=True).clamp(min=1e-6) / 448.0
+                Snap = (S / sc).to(torch.float8_e4m3fn).float() * sc
+            elif CFG.get("cold_bf16"):
+                Snap = S.to(torch.bfloat16).float()
+            else:
+                Snap = S.clone()
             gSnap = Gtot.clone()
         Rd, gRd = (SnapL, gSnapL) if lag else (Snap, gSnap)
         Glog = Gtot - gRd                                         # decay since read snapshot
@@ -138,8 +149,14 @@ def main():
     ap.add_argument("--state_bf16", type=int, default=0,
                     help="1 = per-token bf16 rounding of running state (baseline "
                          "precision-fairness probe)")
+    ap.add_argument("--state_fp8", type=int, default=0,
+                    help="1 = per-token fp8 rounding of running state")
+    ap.add_argument("--cold_fp8", type=int, default=0,
+                    help="1 = fp8 cold snapshot (rounded once per chunk)")
     args = ap.parse_args()
     CFG["state_bf16"] = args.state_bf16
+    CFG["state_fp8"] = args.state_fp8
+    CFG["cold_fp8"] = args.cold_fp8
     device = "cuda"
     val = np.load("wt103_val_nemo.npy")
     tok = AutoTokenizer.from_pretrained("nvidia/NVIDIA-Nemotron-Nano-9B-v2")
