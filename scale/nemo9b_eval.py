@@ -9,7 +9,7 @@ import numpy as np
 import torch, torch.nn.functional as F
 from nemotron_retrofit import ActRotMask, get_wrappers, set_width
 
-CFG = {"mode": "fresh", "c": 16, "pb": 32, "lag": 0, "cold_bf16": 0}
+CFG = {"mode": "fresh", "c": 16, "pb": 32, "lag": 0, "cold_bf16": 0, "warm": 0}
 
 def naive_mixer_forward(self, input_states, cache_params=None, cache_position=None,
                         attention_mask=None, **kw):
@@ -55,7 +55,9 @@ def naive_mixer_forward(self, input_states, cache_params=None, cache_position=No
         Rd, gRd = (SnapL, gSnapL) if lag else (Snap, gSnap)
         Glog = Gtot - gRd                                         # decay since read snapshot
         Ct = C[:, t]
-        if mode == "fresh":
+        if mode == "fresh" or t < CFG.get("warm", 0):
+            # warmup window: first W tokens run fresh (deployment analog: state
+            # ships to the cold tier once, after W; tiering targets LONG seqs)
             y = torch.einsum('bhpn,bhn->bhp', S, Ct)
         elif mode == "c1":
             y = torch.einsum('bhpn,bhn->bhp', Rd, Ct) * Glog.exp()[..., None]

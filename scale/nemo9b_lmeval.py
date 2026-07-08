@@ -20,7 +20,7 @@ from nemo9b_eval import naive_mixer_forward, CFG
 MODEL_ID = "nvidia/NVIDIA-Nemotron-Nano-9B-v2"
 
 
-def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0):
+def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0, warm=0):
     from transformers import AutoModelForCausalLM
     model = AutoModelForCausalLM.from_pretrained(MODEL_ID, dtype=torch.bfloat16).to(device)
     model.config.use_cache = False
@@ -41,7 +41,7 @@ def build_model(config, ckpt, c, pb, device, lag=0, cold_bf16=0):
     if config == "retro_v4":
         for m in mixers:
             m.forward = naive_mixer_forward.__get__(m)
-        CFG.update(mode="v4", c=c, pb=pb, lag=lag, cold_bf16=cold_bf16)
+        CFG.update(mode="v4", c=c, pb=pb, lag=lag, cold_bf16=cold_bf16, warm=warm)
     model.eval()
     return model
 
@@ -57,6 +57,9 @@ def main():
                     help="1 = async-flush semantics: readout snapshot lags one chunk (age (c,2c])")
     ap.add_argument("--cold_bf16", type=int, default=0,
                     help="1 = cold snapshot stored bf16 (halves cold readout bytes)")
+    ap.add_argument("--warm", type=int, default=0,
+                    help="first W tokens run fresh before v4 kicks in (one-time "
+                         "cold-tier ship; tiering targets long sequences)")
     ap.add_argument("--bs", type=int, default=4)
     ap.add_argument("--limit", type=int, default=500)
     ap.add_argument("--tasks", nargs="+",
@@ -72,7 +75,7 @@ def main():
 
     tok = AutoTokenizer.from_pretrained(MODEL_ID)
     model = build_model(args.config, args.ckpt, args.c, args.pb, device,
-                        lag=args.lag, cold_bf16=args.cold_bf16)
+                        lag=args.lag, cold_bf16=args.cold_bf16, warm=args.warm)
     print(f"[{tag}] model built (config={args.config} ckpt={args.ckpt} c={args.c} "
           f"pb={args.pb} lag={args.lag} cold_bf16={args.cold_bf16} "
           f"bs={args.bs} limit={args.limit})", flush=True)
@@ -87,7 +90,7 @@ def main():
         out[task] = {"acc": acc, "acc_norm": accn}
         print(f"[{tag}] {task}: acc={acc} acc_norm={accn}", flush=True)
     json.dump({"config": args.config, "ckpt": args.ckpt, "c": args.c, "pb": args.pb,
-               "lag": args.lag, "cold_bf16": args.cold_bf16,
+               "lag": args.lag, "cold_bf16": args.cold_bf16, "warm": args.warm,
                "limit": args.limit, "results": out},
               open(f"nemo9b_lmeval_{tag}.json", "w"), indent=1)
     print(f"[{tag}] DONE -> nemo9b_lmeval_{tag}.json", flush=True)
