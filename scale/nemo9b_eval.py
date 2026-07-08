@@ -9,7 +9,9 @@ import numpy as np
 import torch, torch.nn.functional as F
 from nemotron_retrofit import ActRotMask, get_wrappers, set_width
 
-CFG = {"mode": "fresh", "c": 16, "pb": 32, "lag": 0, "cold_bf16": 0, "warm": 0}
+CFG = {"mode": "fresh", "c": 16, "pb": 32, "lag": 0, "cold_bf16": 0, "warm": 0,
+       "state_bf16": 0}  # per-token bf16 rounding of the RUNNING state (fairness
+                         # probe: can the fresh baseline itself go bf16?)
 
 def naive_mixer_forward(self, input_states, cache_params=None, cache_position=None,
                         attention_mask=None, **kw):
@@ -45,6 +47,8 @@ def naive_mixer_forward(self, input_states, cache_params=None, cache_position=No
         dA_log = dt[:, t] * A                                     # (B,H) <= 0
         S = S * dA_log.exp()[..., None, None] \
             + (dt[:, t][..., None] * x[:, t])[..., None] * B[:, t][:, :, None, :]
+        if CFG.get("state_bf16"):
+            S = S.to(torch.bfloat16).float()   # inject per-token rounding (T times)
         Gtot = Gtot + dA_log
         if mode != "fresh" and t % c == 0:
             SnapL = Snap; gSnapL = gSnap                          # readers lag one chunk
@@ -131,7 +135,11 @@ def main():
     ap.add_argument("--pb", type=int, default=32)
     ap.add_argument("--cs", type=int, nargs="+", default=[16, 64])
     ap.add_argument("--skip_needle", action="store_true")
+    ap.add_argument("--state_bf16", type=int, default=0,
+                    help="1 = per-token bf16 rounding of running state (baseline "
+                         "precision-fairness probe)")
     args = ap.parse_args()
+    CFG["state_bf16"] = args.state_bf16
     device = "cuda"
     val = np.load("wt103_val_nemo.npy")
     tok = AutoTokenizer.from_pretrained("nvidia/NVIDIA-Nemotron-Nano-9B-v2")
