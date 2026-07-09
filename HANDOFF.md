@@ -117,6 +117,7 @@ python3 plot_grid.py                                       # -> poc_grid.png
 - 환경: 4× B200, torch 2.10, 순수 PyTorch(no fla). GPU 0/2는 타 유저와 공유될 수 있음(1/3 사용).
 
 ## 6. 파일 지도
+- `KEY_RESULTS.md` — **★ 논문 논리 흐름용 핵심 결과 정리 (2026-07-09):** 문제→아이디어→방법(3.5M retrofit)→속도(실측 2.42×, 분해표)→정확도(전 축 lossless)→비대칭 정밀도 면허→레시피 발견 3건→2단 배포 서사→정직한 한정. 헤드라인 수치의 단일 소스.
 - `TRAINING.md` — **학습 방법론(공통 레시피+가족별 norm 처리) + 전체 런 결과 원장(탄력성/tax 표, arms 판정 표, retrofit) + 안정화 인시던트 체크리스트.** 논문 §3.1/§4의 원장.
 - `BACKGROUND.md` — **초심자용 상세판 (합의된 서사 아크):** 공책→요약판→recall법칙→HW성격→통째-오프로딩 딜레마(A/B)→nesting+v4+계층배치→"10×/+120%/+2%" 인과 3숫자→payoff 두 얼굴→FAQ. 논문 intro/motivation의 모체.
 - `PROBLEM_SETTING.md` — Background/Motivation/Core Idea/Novelty/PoC결과/HW매핑/이득평가계획 (전체 논리).
