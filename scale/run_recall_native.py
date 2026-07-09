@@ -1,9 +1,10 @@
-"""Recall-intensive suite through the NATIVE engine (coherent generation),
-on the retrofitted 9B (R + tuned decay from ckpt).  Arms:
-  fresh : retrofitted model, native forward (deploy reference)
-  v4    : + v4_native_decode (prefill fresh, decode tiered pb/c, bf16 cold)
-Usage: run_recall_native.py <fresh|v4> [ckpt] [limit]"""
-import sys, json, torch
+"""Task suites through the NATIVE engine (coherent generation), on the
+retrofitted 9B (R + tuned decay from ckpt).  Arms:
+  fresh : retrofitted model via pb=128 dispatcher (R applies in decode too)
+  v4    : v4_native_decode (prefill fresh, decode tiered pb/c, bf16 cold)
+Usage: run_recall_native.py <fresh|v4> [--ckpt X] [--limit N] [--tasks ...]
+       [--tag T] [--maxlen 4096  # RULER haystack length]"""
+import sys, json, argparse, torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import lm_eval
 from lm_eval.models.huggingface import HFLM
@@ -11,13 +12,27 @@ from nemotron_retrofit import ActRotMask
 import v4_native_decode as V
 
 MID = "nvidia/NVIDIA-Nemotron-Nano-9B-v2"
-mode = sys.argv[1]
-ckpt = sys.argv[2] if len(sys.argv) > 2 else "nemo9b_rot_p4long.pt"
-limit = int(sys.argv[3]) if len(sys.argv) > 3 else 300
-TASKS = ["fda", "swde", "squad_completion", "triviaqa", "nq_open", "drop"]
+SHARED_HUB = "/NHNHOME/ARC/arclab/shared/hub"   # read-only shared cache: model
+# weights load from here explicitly; env HF_HUB_CACHE should point to a WRITABLE
+# local hub so dataset downloads (gsm8k etc.) don't hit shared .lock PermissionError
+ap = argparse.ArgumentParser()
+ap.add_argument("mode", choices=["fresh", "v4"])
+ap.add_argument("--ckpt", default="nemo9b_rot_p4long.pt")
+ap.add_argument("--limit", type=int, default=300)
+ap.add_argument("--tasks", nargs="+",
+                default=["fda", "swde", "squad_completion", "triviaqa",
+                         "nq_open", "drop"])
+ap.add_argument("--tag", default=None)
+ap.add_argument("--maxlen", type=int, default=0,
+                help="RULER max_seq_lengths metadata (0 = not a RULER run)")
+ap.add_argument("--pb", type=int, default=32)
+ap.add_argument("--c", type=int, default=16)
+args = ap.parse_args()
+mode, ckpt, limit, TASKS = args.mode, args.ckpt, args.limit, args.tasks
 
-tok = AutoTokenizer.from_pretrained(MID)
-model = AutoModelForCausalLM.from_pretrained(MID, dtype=torch.bfloat16).to("cuda")
+tok = AutoTokenizer.from_pretrained(MID, cache_dir=SHARED_HUB)
+model = AutoModelForCausalLM.from_pretrained(
+    MID, dtype=torch.bfloat16, cache_dir=SHARED_HUB).to("cuda")
 model.config.use_cache = True
 mixers = [m for m in model.modules() if type(m).__name__ == "NemotronHMamba2Mixer"]
 for m in mixers:
@@ -30,10 +45,11 @@ if "decay" in saved:
         m.A_log.data.copy_(saved["decay"]["A_log"][i].to("cuda"))
         m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to("cuda"))
 model.eval()
-tag = f"nat_{mode}"
+tag = args.tag or f"nat_{mode}"
 if mode == "v4":
-    n = V.install(model, pb=32, c=16, cold_bf16=1)
-    print(f"[{tag}] v4 installed on {n} mixers (pb=32 c=16 bf16cold)", flush=True)
+    n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1)
+    print(f"[{tag}] v4 installed on {n} mixers (pb={args.pb} c={args.c} bf16cold)",
+          flush=True)
 else:
     # rotation caveat: native decode branch calls act on 2D -> ActRotMask would
     # skip R. Route ALL mixers through the v4 dispatcher with pb=128 (all-hot),
@@ -41,8 +57,14 @@ else:
     n = V.install(model, pb=128, c=16, cold_bf16=0)
     print(f"[{tag}] fresh via pb=128 dispatcher on {n} mixers (R applies in decode)",
           flush=True)
-lm = HFLM(pretrained=model, tokenizer=tok, batch_size=1)
-res = lm_eval.simple_evaluate(model=lm, tasks=TASKS, limit=limit, bootstrap_iters=0)
+lm = HFLM(pretrained=model, tokenizer=tok, batch_size=1,
+          max_length=args.maxlen + 1024 if args.maxlen else None)
+kw = {}
+if args.maxlen:
+    kw["metadata"] = {"max_seq_lengths": [args.maxlen], "pretrained": MID,
+                      "tokenizer": MID}
+res = lm_eval.simple_evaluate(model=lm, tasks=TASKS, limit=limit,
+                              bootstrap_iters=0, **kw)
 out = {}
 for t, m in res["results"].items():
     out[t] = {k.split(",")[0]: v for k, v in m.items()

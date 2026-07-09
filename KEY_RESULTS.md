@@ -62,6 +62,19 @@
 - **학습 전 대비**: v4 ppl +5.9~10.9% → 0%, needle 0.67(c64) → 1.00 — "비용이 학습 예산의 함수"임을 확정.
 - 다운스트림의 마지막 −1pt는 **짧은-시퀀스 아티팩트**였고(§2 배포 의미론의 warmup이 해소), 긴-시퀀스 증거(ppl/needle/recall 스위트)는 독립 성립.
 
+### §5b. RULER + GSM8K — decode-heavy에서 첫 실측 비용 (2026-07-09, native decode, c=16)
+| task | fresh | v4-c16 | Δ |
+|---|---|---|---|
+| RULER S-NIAH-1 (@4096) | 77.3 | 76.7 | −0.6 |
+| RULER S-NIAH-2 | 86.7 | 86.7 | 0 |
+| RULER S-NIAH-3 | 80.7 | 77.3 | −3.4 |
+| RULER multikey-1 | 52.0 | 51.3 | −0.7 |
+| **GSM8K (5-shot CoT)** | **75.3** | **66.0** | **−9.3 (−12%)** |
+
+- **RULER(장문 needle)은 lossless** — 긴 프롬프트는 prefill(fresh)로 읽히고 답이 짧음.
+- **GSM8K만 유의 하락**: 수백 토큰 CoT 생성 = 유일한 decode-heavy 태스크 → **긴 decode 동안 자기생성 추론이 cold로 밀려 stale.** 이론이 예측한 실패 모드의 첫 실측(staleness가 decode 길이에 비례해 누적).
+- **판정/처방 (진행 예정)**: ① c-다이얼(c=4/8)로 회복되면 → "추론엔 낮은 c, 짧은답엔 높은 c"라는 elastic dial이 정상 작동(= 우리 "c는 recall SLA 노브" 논지의 실증, 긍정 결과). ② c로 안 되면 → 재학습(v4aware가 teacher-forcing 1024만 봄 → 장문/추론 코퍼스 또는 pb 증대 필요). ③ pb 증대(hot 항상 fresh)도 후보. **이것이 "acc 떨어지면 재학습" 루프의 첫 트리거.**
+
 ## §6. 비대칭 정밀도 면허 (실측) — "tiering이 quant를 공짜로 만든다"
 
 같은 scaled-fp8을 어디에 넣느냐:

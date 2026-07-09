@@ -1,0 +1,15 @@
+{
+ "mode": "fresh",
+ "ckpt": "nemo9b_rot_p4long.pt",
+ "limit": 4,
+ "results": {
+  "niah_single_1": {
+   "sample_len": 4,
+   "4096": 0.75
+  },
+  "gsm8k": {
+   "sample_len": 4,
+   "exact_match": 0.75
+  }
+ }
+}
