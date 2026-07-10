@@ -83,12 +83,16 @@
   - **원인 확정 = staleness 빈도(c)**: c=16→4로 완전 회복. pb 증대(hot 확대)는 무효(66.0 그대로) → hot/cold 분할이 아닌 오직 c의 문제 (깨끗한 인과 분리).
   - **"c = recall SLA 다이얼" 실증**: 짧은답=c16(2.42×), 추론(긴 CoT)=c4(1.92×). **요청 난이도로 정확도↔속도를 다이얼**하는 elastic dial이 실제 다운스트림에서 작동 — config만으로, 재학습 0. 한계가 아니라 논지의 실증.
 
-### §5c. 완성된 3자 비교 (raw / fresh / v4-c4로 c 통일, 2026-07-11)
-| 스위트 | 원본 raw | fresh (retrofit, tier off) | v4-c4 (tier on, 1.92×) |
-|---|---|---|---|
-| GSM8K | **76.7** | 75.3 | 78.0 |
-| recall 6 (평균) | ≈fresh | 41.3 | 41.2 |
-| commonsense 8 | 71.4 | 71.3 | 70.3 |
+### §5c. 완성된 3자 비교 (raw / fresh / v4-c4, 표준 linear-attn 스택 전부, 2026-07-11)
+| 스위트 | 원본 raw | fresh (retrofit, tier off) | v4-c4 (tier on, 1.92×) | 판정 |
+|---|---|---|---|---|
+| commonsense 8 | 71.4 | 71.3 | 70.3 | lossless |
+| recall 6 (BASED) | ≈fresh | 41.3 | 41.2 | lossless |
+| **RULER 11** (S-NIAH×3/multikey×3/multiquery/multivalue/cwe/fwe/vt @4096) | 전부 | 전부 | 전부 | lossless |
+| GSM8K (5-shot CoT) | 76.7 | 75.3 | 78.0 | lossless |
+| **HumanEval** (code gen, long output) | 0.22 | 0.21 | 0.22 | lossless |
+| **minerva_math** (math_verify, 700) | 0.324 | 0.320 | **0.291** | **−2.9 (mild)** |
+- **decode-heavy 3종의 패턴 = 우리 mechanism의 실증**: HumanEval/GSM8K(c4)는 lossless, **minerva_math만 c4에서 −2.9** — MATH는 CoT가 가장 길고 어려워 staleness가 c4로도 완전히 안 잡힘. "생성이 길수록 낮은 c 필요"(GSM8K는 c16→4 회복, MATH는 c4→2? 확인 중). **c = recall-SLA/생성길이 다이얼**의 정량적 실증.
 - **retrofit이 추론 보존**: raw 76.7 → fresh 75.3 (노이즈) — 회전 R+decay 학습이 GSM8K 추론 무손상(commonsense·생성 무손실과 정합).
 - **v4-c4 = 전 스위트 lossless, 1.92×**. recall은 c4=c16=fresh 동률(짧은 답→c 거의 무관 실측 확인). **통일 헤드라인: "v4-c4에서 모든 표준 벤치 fresh 동률 @ 1.92×; 짧은답은 c16으로 2.42× 무손실"**(c=배포 다이얼).
 

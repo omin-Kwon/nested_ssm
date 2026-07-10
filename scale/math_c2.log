@@ -1,0 +1,15 @@
+GPU 2 for minerva c2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 5589.76it/s]
+[math_v4c2] v4 installed on 27 mixers (pb=32 c=2 bf16cold)
+`pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+  0%|          | 0/100 [00:00<?, ?it/s] 68%|██████▊   | 68/100 [00:00<00:00, 678.53it/s]100%|██████████| 100/100 [00:00<00:00, 690.14it/s]
+  0%|          | 0/100 [00:00<?, ?it/s] 72%|███████▏  | 72/100 [00:00<00:00, 713.01it/s]100%|██████████| 100/100 [00:00<00:00, 713.39it/s]
+  0%|          | 0/100 [00:00<?, ?it/s] 72%|███████▏  | 72/100 [00:00<00:00, 716.22it/s]100%|██████████| 100/100 [00:00<00:00, 716.72it/s]
+  0%|          | 0/100 [00:00<?, ?it/s] 72%|███████▏  | 72/100 [00:00<00:00, 719.39it/s]100%|██████████| 100/100 [00:00<00:00, 721.04it/s]
+  0%|          | 0/100 [00:00<?, ?it/s] 73%|███████▎  | 73/100 [00:00<00:00, 720.77it/s]100%|██████████| 100/100 [00:00<00:00, 722.75it/s]
+  0%|          | 0/100 [00:00<?, ?it/s] 73%|███████▎  | 73/100 [00:00<00:00, 725.27it/s]100%|██████████| 100/100 [00:00<00:00, 725.04it/s]
+  0%|          | 0/100 [00:00<?, ?it/s] 73%|███████▎  | 73/100 [00:00<00:00, 723.36it/s]100%|██████████| 100/100 [00:00<00:00, 724.08it/s]
+Running generate_until requests:   0%|          | 0/700 [00:00<?, ?it/s]Running generate_until requests:   0%|          | 1/700 [00:13<2:39:56, 13.73s/it]Running generate_until requests:   0%|          | 2/700 [00:22<2:03:47, 10.64s/it]

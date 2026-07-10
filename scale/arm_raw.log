@@ -1,0 +1,959 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19456.38it/s]
+[ruler2_raw] RAW un-retrofitted 9B (native forward, no R/decay)
+`pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+niah_multikey_2: Custom kwargs can be passed to `--metadata` in console (as json string) or to the TaskManager.
+For example --metadata='{"max_seq_lengths":[4096, 8192]}'. For details see task Readme.
+Generating synthetic samples: needle | 4096:   0%|          | 0/500 [00:00<?, ?it/s]Generating synthetic samples: needle | 4096:   6%|▌         | 29/500 [00:00<00:01, 281.12it/s]Generating synthetic samples: needle | 4096:  12%|█▏        | 58/500 [00:00<00:01, 280.76it/s]Generating synthetic samples: needle | 4096:  17%|█▋        | 87/500 [00:00<00:01, 282.33it/s]Generating synthetic samples: needle | 4096:  23%|██▎       | 116/500 [00:00<00:01, 283.73it/s]Generating synthetic samples: needle | 4096:  29%|██▉       | 145/500 [00:00<00:01, 284.38it/s]Generating synthetic samples: needle | 4096:  35%|███▍      | 174/500 [00:00<00:01, 280.77it/s]Generating synthetic samples: needle | 4096:  41%|████      | 203/500 [00:00<00:01, 269.90it/s]Generating synthetic samples: needle | 4096:  46%|████▌     | 231/500 [00:00<00:01, 268.07it/s]Generating synthetic samples: needle | 4096:  52%|█████▏    | 258/500 [00:00<00:00, 268.30it/s]Generating synthetic samples: needle | 4096:  57%|█████▋    | 286/500 [00:01<00:00, 269.62it/s]Generating synthetic samples: needle | 4096:  63%|██████▎   | 313/500 [00:01<00:00, 269.24it/s]Generating synthetic samples: needle | 4096:  68%|██████▊   | 340/500 [00:01<00:00, 268.32it/s]Generating synthetic samples: needle | 4096:  73%|███████▎  | 367/500 [00:01<00:00, 268.00it/s]Generating synthetic samples: needle | 4096:  79%|███████▉  | 395/500 [00:01<00:00, 269.48it/s]Generating synthetic samples: needle | 4096:  84%|████████▍ | 422/500 [00:01<00:00, 266.93it/s]Generating synthetic samples: needle | 4096:  90%|█████████ | 450/500 [00:01<00:00, 268.01it/s]Generating synthetic samples: needle | 4096:  95%|█████████▌| 477/500 [00:01<00:00, 264.34it/s]Generating synthetic samples: needle | 4096: 100%|██████████| 500/500 [00:01<00:00, 270.90it/s]
+niah_multikey_3: Custom kwargs can be passed to `--metadata` in console (as json string) or to the TaskManager.
+For example --metadata='{"max_seq_lengths":[4096, 8192]}'. For details see task Readme.
+Generating synthetic samples: needle | 4096:   0%|          | 0/500 [00:00<?, ?it/s]Generating synthetic samples: needle | 4096:  13%|█▎        | 64/500 [00:00<00:00, 638.59it/s]Generating synthetic samples: needle | 4096:  26%|██▌       | 130/500 [00:00<00:00, 646.13it/s]Generating synthetic samples: needle | 4096:  39%|███▉      | 196/500 [00:00<00:00, 649.25it/s]Generating synthetic samples: needle | 4096:  52%|█████▏    | 262/500 [00:00<00:00, 649.63it/s]Generating synthetic samples: needle | 4096:  65%|██████▌   | 327/500 [00:00<00:00, 648.32it/s]Generating synthetic samples: needle | 4096:  78%|███████▊  | 392/500 [00:00<00:00, 646.70it/s]Generating synthetic samples: needle | 4096:  91%|█████████▏| 457/500 [00:00<00:00, 643.48it/s]Generating synthetic samples: needle | 4096: 100%|██████████| 500/500 [00:00<00:00, 642.82it/s]
+niah_multiquery: Custom kwargs can be passed to `--metadata` in console (as json string) or to the TaskManager.
+For example --metadata='{"max_seq_lengths":[4096, 8192]}'. For details see task Readme.
+Generating synthetic samples: essay | 4096:   0%|          | 0/500 [00:00<?, ?it/s]Generating synthetic samples: essay | 4096:   5%|▍         | 23/500 [00:00<00:02, 223.44it/s]Generating synthetic samples: essay | 4096:   9%|▉         | 46/500 [00:00<00:02, 224.25it/s]Generating synthetic samples: essay | 4096:  14%|█▍        | 69/500 [00:00<00:01, 223.66it/s]Generating synthetic samples: essay | 4096:  18%|█▊        | 92/500 [00:00<00:01, 223.65it/s]Generating synthetic samples: essay | 4096:  23%|██▎       | 115/500 [00:00<00:01, 220.55it/s]Generating synthetic samples: essay | 4096:  28%|██▊       | 138/500 [00:00<00:01, 220.88it/s]Generating synthetic samples: essay | 4096:  32%|███▏      | 161/500 [00:00<00:01, 220.18it/s]Generating synthetic samples: essay | 4096:  37%|███▋      | 184/500 [00:00<00:01, 220.09it/s]Generating synthetic samples: essay | 4096:  41%|████▏     | 207/500 [00:00<00:01, 220.37it/s]Generating synthetic samples: essay | 4096:  46%|████▌     | 230/500 [00:01<00:01, 220.84it/s]Generating synthetic samples: essay | 4096:  51%|█████     | 253/500 [00:01<00:01, 221.30it/s]Generating synthetic samples: essay | 4096:  55%|█████▌    | 276/500 [00:01<00:01, 221.42it/s]Generating synthetic samples: essay | 4096:  60%|█████▉    | 299/500 [00:01<00:00, 220.85it/s]Generating synthetic samples: essay | 4096:  64%|██████▍   | 322/500 [00:01<00:00, 220.21it/s]Generating synthetic samples: essay | 4096:  69%|██████▉   | 345/500 [00:01<00:00, 218.01it/s]Generating synthetic samples: essay | 4096:  73%|███████▎  | 367/500 [00:01<00:00, 211.86it/s]Generating synthetic samples: essay | 4096:  78%|███████▊  | 389/500 [00:01<00:00, 212.17it/s]Generating synthetic samples: essay | 4096:  82%|████████▏ | 411/500 [00:01<00:00, 211.80it/s]Generating synthetic samples: essay | 4096:  87%|████████▋ | 433/500 [00:01<00:00, 213.27it/s]Generating synthetic samples: essay | 4096:  91%|█████████ | 455/500 [00:02<00:00, 213.07it/s]Generating synthetic samples: essay | 4096:  95%|█████████▌| 477/500 [00:02<00:00, 212.80it/s]Generating synthetic samples: essay | 4096: 100%|█████████▉| 499/500 [00:02<00:00, 214.54it/s]Generating synthetic samples: essay | 4096: 100%|██████████| 500/500 [00:02<00:00, 217.68it/s]
+niah_multivalue: Custom kwargs can be passed to `--metadata` in console (as json string) or to the TaskManager.
+For example --metadata='{"max_seq_lengths":[4096, 8192]}'. For details see task Readme.
+Generating synthetic samples: essay | 4096:   0%|          | 0/500 [00:00<?, ?it/s]Generating synthetic samples: essay | 4096:   4%|▍         | 21/500 [00:00<00:02, 208.48it/s]Generating synthetic samples: essay | 4096:   8%|▊         | 42/500 [00:00<00:02, 208.93it/s]Generating synthetic samples: essay | 4096:  13%|█▎        | 63/500 [00:00<00:02, 209.34it/s]Generating synthetic samples: essay | 4096:  17%|█▋        | 84/500 [00:00<00:01, 208.88it/s]Generating synthetic samples: essay | 4096:  21%|██        | 105/500 [00:00<00:01, 207.24it/s]Generating synthetic samples: essay | 4096:  25%|██▌       | 126/500 [00:00<00:01, 207.53it/s]Generating synthetic samples: essay | 4096:  29%|██▉       | 147/500 [00:00<00:01, 207.94it/s]Generating synthetic samples: essay | 4096:  34%|███▎      | 168/500 [00:00<00:01, 206.65it/s]Generating synthetic samples: essay | 4096:  38%|███▊      | 189/500 [00:00<00:01, 206.21it/s]Generating synthetic samples: essay | 4096:  42%|████▏     | 210/500 [00:01<00:01, 206.93it/s]Generating synthetic samples: essay | 4096:  46%|████▌     | 231/500 [00:01<00:01, 207.02it/s]Generating synthetic samples: essay | 4096:  50%|█████     | 252/500 [00:01<00:01, 207.52it/s]Generating synthetic samples: essay | 4096:  55%|█████▍    | 273/500 [00:01<00:01, 207.66it/s]Generating synthetic samples: essay | 4096:  59%|█████▉    | 294/500 [00:01<00:00, 206.84it/s]Generating synthetic samples: essay | 4096:  63%|██████▎   | 315/500 [00:01<00:00, 206.19it/s]Generating synthetic samples: essay | 4096:  67%|██████▋   | 337/500 [00:01<00:00, 207.53it/s]Generating synthetic samples: essay | 4096:  72%|███████▏  | 358/500 [00:01<00:00, 205.14it/s]Generating synthetic samples: essay | 4096:  76%|███████▌  | 379/500 [00:01<00:00, 203.98it/s]Generating synthetic samples: essay | 4096:  80%|████████  | 400/500 [00:01<00:00, 204.38it/s]Generating synthetic samples: essay | 4096:  84%|████████▍ | 421/500 [00:02<00:00, 205.22it/s]Generating synthetic samples: essay | 4096:  88%|████████▊ | 442/500 [00:02<00:00, 205.42it/s]Generating synthetic samples: essay | 4096:  93%|█████████▎| 463/500 [00:02<00:00, 203.98it/s]Generating synthetic samples: essay | 4096:  97%|█████████▋| 484/500 [00:02<00:00, 204.41it/s]Generating synthetic samples: essay | 4096: 100%|██████████| 500/500 [00:02<00:00, 206.11it/s]
+ruler_cwe: Custom kwargs can be passed to `--metadata` in console (as json string) or to the TaskManager.
+For example --metadata='{"max_seq_lengths":[4096, 8192]}'. For details see task Readme.
+Generating CWE Samples | 4096:   0%|          | 0/500 [00:00<?, ?it/s]Generating CWE Samples | 4096:   7%|▋         | 37/500 [00:00<00:01, 364.22it/s]Generating CWE Samples | 4096:  15%|█▍        | 74/500 [00:00<00:01, 363.07it/s]Generating CWE Samples | 4096:  22%|██▏       | 111/500 [00:00<00:01, 362.23it/s]Generating CWE Samples | 4096:  30%|██▉       | 148/500 [00:00<00:01, 349.82it/s]Generating CWE Samples | 4096:  37%|███▋      | 184/500 [00:00<00:00, 347.34it/s]Generating CWE Samples | 4096:  44%|████▍     | 220/500 [00:00<00:00, 349.37it/s]Generating CWE Samples | 4096:  51%|█████▏    | 257/500 [00:00<00:00, 354.39it/s]Generating CWE Samples | 4096:  59%|█████▊    | 293/500 [00:00<00:00, 355.75it/s]Generating CWE Samples | 4096:  66%|██████▌   | 329/500 [00:00<00:00, 353.42it/s]Generating CWE Samples | 4096:  73%|███████▎  | 366/500 [00:01<00:00, 356.87it/s]Generating CWE Samples | 4096:  81%|████████  | 403/500 [00:01<00:00, 360.05it/s]Generating CWE Samples | 4096:  88%|████████▊ | 440/500 [00:01<00:00, 362.78it/s]Generating CWE Samples | 4096:  95%|█████████▌| 477/500 [00:01<00:00, 363.47it/s]Generating CWE Samples | 4096: 100%|██████████| 500/500 [00:01<00:00, 358.20it/s]
+ruler_fwe: Custom kwargs can be passed to `--metadata` in console (as json string) or to the TaskManager.
+For example --metadata='{"max_seq_lengths":[4096, 8192]}'. For details see task Readme.
+Generating FWE Samples | 4096:   0%|          | 0/500 [00:00<?, ?it/s]Generating FWE Samples | 4096:   3%|▎         | 15/500 [00:00<00:03, 146.92it/s]Generating FWE Samples | 4096:   6%|▌         | 30/500 [00:00<00:03, 143.75it/s]Generating FWE Samples | 4096:   9%|▉         | 45/500 [00:00<00:03, 131.89it/s]Generating FWE Samples | 4096:  12%|█▏        | 59/500 [00:00<00:03, 130.42it/s]Generating FWE Samples | 4096:  15%|█▍        | 74/500 [00:00<00:03, 134.92it/s]Generating FWE Samples | 4096:  18%|█▊        | 90/500 [00:00<00:02, 140.89it/s]Generating FWE Samples | 4096:  21%|██        | 105/500 [00:00<00:02, 143.08it/s]Generating FWE Samples | 4096:  24%|██▍       | 120/500 [00:00<00:02, 138.56it/s]Generating FWE Samples | 4096:  27%|██▋       | 135/500 [00:00<00:02, 139.72it/s]Generating FWE Samples | 4096:  30%|███       | 150/500 [00:01<00:02, 139.01it/s]Generating FWE Samples | 4096:  33%|███▎      | 165/500 [00:01<00:02, 141.23it/s]Generating FWE Samples | 4096:  36%|███▌      | 180/500 [00:01<00:02, 137.54it/s]Generating FWE Samples | 4096:  39%|███▉      | 195/500 [00:01<00:02, 139.95it/s]Generating FWE Samples | 4096:  42%|████▏     | 210/500 [00:01<00:02, 138.79it/s]Generating FWE Samples | 4096:  45%|████▌     | 225/500 [00:01<00:01, 139.11it/s]Generating FWE Samples | 4096:  48%|████▊     | 239/500 [00:01<00:01, 136.14it/s]Generating FWE Samples | 4096:  51%|█████     | 253/500 [00:01<00:01, 134.00it/s]Generating FWE Samples | 4096:  53%|█████▎    | 267/500 [00:01<00:01, 135.02it/s]Generating FWE Samples | 4096:  56%|█████▌    | 281/500 [00:02<00:01, 135.78it/s]Generating FWE Samples | 4096:  59%|█████▉    | 295/500 [00:02<00:01, 133.91it/s]Generating FWE Samples | 4096:  62%|██████▏   | 309/500 [00:02<00:01, 132.13it/s]Generating FWE Samples | 4096:  65%|██████▍   | 323/500 [00:02<00:01, 132.46it/s]Generating FWE Samples | 4096:  67%|██████▋   | 337/500 [00:02<00:01, 134.34it/s]Generating FWE Samples | 4096:  70%|███████   | 351/500 [00:02<00:01, 133.69it/s]Generating FWE Samples | 4096:  73%|███████▎  | 365/500 [00:02<00:01, 134.74it/s]Generating FWE Samples | 4096:  76%|███████▌  | 379/500 [00:02<00:00, 135.25it/s]Generating FWE Samples | 4096:  79%|███████▉  | 394/500 [00:02<00:00, 137.52it/s]Generating FWE Samples | 4096:  82%|████████▏ | 408/500 [00:02<00:00, 136.69it/s]Generating FWE Samples | 4096:  84%|████████▍ | 422/500 [00:03<00:00, 134.99it/s]Generating FWE Samples | 4096:  87%|████████▋ | 436/500 [00:03<00:00, 136.28it/s]Generating FWE Samples | 4096:  90%|█████████ | 450/500 [00:03<00:00, 133.93it/s]Generating FWE Samples | 4096:  93%|█████████▎| 464/500 [00:03<00:00, 133.55it/s]Generating FWE Samples | 4096:  96%|█████████▌| 479/500 [00:03<00:00, 135.93it/s]Generating FWE Samples | 4096:  99%|█████████▊| 493/500 [00:03<00:00, 133.90it/s]Generating FWE Samples | 4096: 100%|██████████| 500/500 [00:03<00:00, 136.27it/s]
+ruler_vt: Custom kwargs can be passed to `--metadata` in console (as json string) or to the TaskManager.
+For example --metadata='{"max_seq_lengths":[4096, 8192]}'. For details see task Readme.
+Max length 500 | Current length 305 | Noises: 5
+Max length 500 | Current length 410 | Noises: 10
+Max length 500 | Current length 528 | Noises: 15
+Num noises: 10
+  0%|          | 0/1 [00:00<?, ?it/s]100%|██████████| 1/1 [00:00<00:00, 1698.10it/s]
+Max length 4096 | Current length 793 | Noises: 10
+Max length 4096 | Current length 1043 | Noises: 20
+Max length 4096 | Current length 1282 | Noises: 30
+Max length 4096 | Current length 1519 | Noises: 40
+Max length 4096 | Current length 1761 | Noises: 50
+Max length 4096 | Current length 2001 | Noises: 60
+Max length 4096 | Current length 2246 | Noises: 70
+Max length 4096 | Current length 2479 | Noises: 80
+Max length 4096 | Current length 2723 | Noises: 90
+Max length 4096 | Current length 2965 | Noises: 100
+Max length 4096 | Current length 3197 | Noises: 110
+Max length 4096 | Current length 3439 | Noises: 120
+Max length 4096 | Current length 3688 | Noises: 130
+Max length 4096 | Current length 3921 | Noises: 140
+Max length 4096 | Current length 4161 | Noises: 150
+Num noises: 140
+  0%|          | 0/500 [00:00<?, ?it/s]  5%|▍         | 24/500 [00:00<00:01, 238.40it/s] 10%|▉         | 49/500 [00:00<00:01, 243.82it/s] 15%|█▍        | 74/500 [00:00<00:01, 244.77it/s] 20%|█▉        | 99/500 [00:00<00:01, 244.39it/s] 25%|██▍       | 124/500 [00:00<00:01, 244.50it/s] 30%|██▉       | 149/500 [00:00<00:01, 245.17it/s] 35%|███▍      | 174/500 [00:00<00:01, 246.29it/s] 40%|███▉      | 199/500 [00:00<00:01, 245.14it/s] 45%|████▍     | 224/500 [00:00<00:01, 243.76it/s] 50%|████▉     | 249/500 [00:01<00:01, 244.17it/s] 55%|█████▍    | 274/500 [00:01<00:00, 245.39it/s] 60%|██████    | 300/500 [00:01<00:00, 249.49it/s] 65%|██████▌   | 327/500 [00:01<00:00, 252.83it/s] 71%|███████   | 353/500 [00:01<00:00, 254.57it/s] 76%|███████▌  | 379/500 [00:01<00:00, 255.39it/s] 81%|████████  | 405/500 [00:01<00:00, 255.53it/s] 86%|████████▋ | 432/500 [00:01<00:00, 257.06it/s] 92%|█████████▏| 458/500 [00:01<00:00, 255.42it/s] 97%|█████████▋| 485/500 [00:01<00:00, 257.43it/s]100%|██████████| 500/500 [00:01<00:00, 250.56it/s]
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2501.39it/s]
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2569.43it/s]
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2537.39it/s]
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2572.51it/s]
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2561.02it/s]
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2621.00it/s]
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2610.38it/s]
+Running generate_until requests:   0%|          | 0/700 [00:00<?, ?it/s]Running generate_until requests:   0%|          | 1/700 [00:07<1:22:05,  7.05s/it]Running generate_until requests:   0%|          | 2/700 [00:10<57:26,  4.94s/it]  Running generate_until requests:   0%|          | 3/700 [00:14<50:36,  4.36s/it]Running generate_until requests:   1%|          | 4/700 [00:21<1:03:09,  5.44s/it]Running generate_until requests:   1%|          | 5/700 [00:27<1:07:26,  5.82s/it]Running generate_until requests:   1%|          | 6/700 [00:33<1:06:05,  5.71s/it]Running generate_until requests:   1%|          | 7/700 [00:39<1:09:24,  6.01s/it]Running generate_until requests:   1%|          | 8/700 [00:46<1:11:16,  6.18s/it]Running generate_until requests:   1%|▏         | 9/700 [00:53<1:12:33,  6.30s/it]Running generate_until requests:   1%|▏         | 10/700 [00:59<1:14:06,  6.44s/it]Running generate_until requests:   2%|▏         | 11/700 [01:06<1:14:47,  6.51s/it]Running generate_until requests:   2%|▏         | 12/700 [01:13<1:15:33,  6.59s/it]Running generate_until requests:   2%|▏         | 13/700 [01:19<1:15:57,  6.63s/it]Running generate_until requests:   2%|▏         | 14/700 [01:26<1:16:00,  6.65s/it]Running generate_until requests:   2%|▏         | 15/700 [01:33<1:16:15,  6.68s/it]Running generate_until requests:   2%|▏         | 16/700 [01:40<1:16:14,  6.69s/it]Running generate_until requests:   2%|▏         | 17/700 [01:46<1:16:10,  6.69s/it]Running generate_until requests:   3%|▎         | 18/700 [01:53<1:16:05,  6.69s/it]Running generate_until requests:   3%|▎         | 19/700 [02:00<1:15:43,  6.67s/it]Running generate_until requests:   3%|▎         | 20/700 [02:06<1:15:49,  6.69s/it]Running generate_until requests:   3%|▎         | 21/700 [02:13<1:15:33,  6.68s/it]Running generate_until requests:   3%|▎         | 22/700 [02:20<1:15:18,  6.66s/it]Running generate_until requests:   3%|▎         | 23/700 [02:26<1:15:47,  6.72s/it]Running generate_until requests:   3%|▎         | 24/700 [02:33<1:15:35,  6.71s/it]Running generate_until requests:   4%|▎         | 25/700 [02:40<1:15:25,  6.70s/it]Running generate_until requests:   4%|▎         | 26/700 [02:47<1:15:39,  6.74s/it]Running generate_until requests:   4%|▍         | 27/700 [02:53<1:15:01,  6.69s/it]Running generate_until requests:   4%|▍         | 28/700 [03:00<1:14:50,  6.68s/it]Running generate_until requests:   4%|▍         | 29/700 [03:07<1:15:00,  6.71s/it]Running generate_until requests:   4%|▍         | 30/700 [03:13<1:14:58,  6.71s/it]Running generate_until requests:   4%|▍         | 31/700 [03:20<1:14:56,  6.72s/it]Running generate_until requests:   5%|▍         | 32/700 [03:27<1:14:53,  6.73s/it]Running generate_until requests:   5%|▍         | 33/700 [03:33<1:14:23,  6.69s/it]Running generate_until requests:   5%|▍         | 34/700 [03:40<1:14:29,  6.71s/it]Running generate_until requests:   5%|▌         | 35/700 [03:47<1:14:11,  6.69s/it]Running generate_until requests:   5%|▌         | 36/700 [03:54<1:14:04,  6.69s/it]Running generate_until requests:   5%|▌         | 37/700 [04:00<1:14:08,  6.71s/it]Running generate_until requests:   5%|▌         | 38/700 [04:07<1:14:06,  6.72s/it]Running generate_until requests:   6%|▌         | 39/700 [04:14<1:13:55,  6.71s/it]Running generate_until requests:   6%|▌         | 40/700 [04:20<1:13:47,  6.71s/it]Running generate_until requests:   6%|▌         | 41/700 [04:27<1:13:36,  6.70s/it]Running generate_until requests:   6%|▌         | 42/700 [04:34<1:13:22,  6.69s/it]Running generate_until requests:   6%|▌         | 43/700 [04:40<1:13:04,  6.67s/it]Running generate_until requests:   6%|▋         | 44/700 [04:47<1:12:54,  6.67s/it]Running generate_until requests:   6%|▋         | 45/700 [04:54<1:13:02,  6.69s/it]Running generate_until requests:   7%|▋         | 46/700 [05:01<1:12:56,  6.69s/it]Running generate_until requests:   7%|▋         | 47/700 [05:07<1:13:14,  6.73s/it]Running generate_until requests:   7%|▋         | 48/700 [05:14<1:13:13,  6.74s/it]Running generate_until requests:   7%|▋         | 49/700 [05:21<1:13:02,  6.73s/it]Running generate_until requests:   7%|▋         | 50/700 [05:27<1:12:40,  6.71s/it]Running generate_until requests:   7%|▋         | 51/700 [05:34<1:12:17,  6.68s/it]Running generate_until requests:   7%|▋         | 52/700 [05:41<1:12:05,  6.67s/it]Running generate_until requests:   8%|▊         | 53/700 [05:47<1:12:06,  6.69s/it]Running generate_until requests:   8%|▊         | 54/700 [05:54<1:12:08,  6.70s/it]Running generate_until requests:   8%|▊         | 55/700 [06:01<1:11:56,  6.69s/it]Running generate_until requests:   8%|▊         | 56/700 [06:08<1:11:51,  6.69s/it]Running generate_until requests:   8%|▊         | 57/700 [06:14<1:12:02,  6.72s/it]Running generate_until requests:   8%|▊         | 58/700 [06:21<1:11:55,  6.72s/it]Running generate_until requests:   8%|▊         | 59/700 [06:28<1:11:43,  6.71s/it]Running generate_until requests:   9%|▊         | 60/700 [06:34<1:11:37,  6.71s/it]Running generate_until requests:   9%|▊         | 61/700 [06:41<1:11:23,  6.70s/it]Running generate_until requests:   9%|▉         | 62/700 [06:48<1:11:04,  6.68s/it]Running generate_until requests:   9%|▉         | 63/700 [06:55<1:11:01,  6.69s/it]Running generate_until requests:   9%|▉         | 64/700 [07:01<1:10:56,  6.69s/it]Running generate_until requests:   9%|▉         | 65/700 [07:08<1:11:01,  6.71s/it]Running generate_until requests:   9%|▉         | 66/700 [07:15<1:10:54,  6.71s/it]Running generate_until requests:  10%|▉         | 67/700 [07:21<1:10:42,  6.70s/it]Running generate_until requests:  10%|▉         | 68/700 [07:28<1:10:32,  6.70s/it]Running generate_until requests:  10%|▉         | 69/700 [07:35<1:10:32,  6.71s/it]Running generate_until requests:  10%|█         | 70/700 [07:41<1:10:24,  6.71s/it]Running generate_until requests:  10%|█         | 71/700 [07:48<1:10:10,  6.69s/it]Running generate_until requests:  10%|█         | 72/700 [07:55<1:10:06,  6.70s/it]Running generate_until requests:  10%|█         | 73/700 [08:02<1:09:58,  6.70s/it]Running generate_until requests:  11%|█         | 74/700 [08:08<1:09:47,  6.69s/it]Running generate_until requests:  11%|█         | 75/700 [08:15<1:09:39,  6.69s/it]Running generate_until requests:  11%|█         | 76/700 [08:22<1:09:28,  6.68s/it]Running generate_until requests:  11%|█         | 77/700 [08:28<1:09:25,  6.69s/it]Running generate_until requests:  11%|█         | 78/700 [08:35<1:09:32,  6.71s/it]Running generate_until requests:  11%|█▏        | 79/700 [08:42<1:09:21,  6.70s/it]Running generate_until requests:  11%|█▏        | 80/700 [08:48<1:09:28,  6.72s/it]Running generate_until requests:  12%|█▏        | 81/700 [08:55<1:09:08,  6.70s/it]Running generate_until requests:  12%|█▏        | 82/700 [09:02<1:09:05,  6.71s/it]Running generate_until requests:  12%|█▏        | 83/700 [09:09<1:08:51,  6.70s/it]Running generate_until requests:  12%|█▏        | 84/700 [09:15<1:08:42,  6.69s/it]Running generate_until requests:  12%|█▏        | 85/700 [09:22<1:08:39,  6.70s/it]Running generate_until requests:  12%|█▏        | 86/700 [09:29<1:08:28,  6.69s/it]Running generate_until requests:  12%|█▏        | 87/700 [09:35<1:08:25,  6.70s/it]Running generate_until requests:  13%|█▎        | 88/700 [09:42<1:08:15,  6.69s/it]Running generate_until requests:  13%|█▎        | 89/700 [09:49<1:08:01,  6.68s/it]Running generate_until requests:  13%|█▎        | 90/700 [09:55<1:08:03,  6.69s/it]Running generate_until requests:  13%|█▎        | 91/700 [10:02<1:07:57,  6.70s/it]Running generate_until requests:  13%|█▎        | 92/700 [10:09<1:07:57,  6.71s/it]Running generate_until requests:  13%|█▎        | 93/700 [10:16<1:08:04,  6.73s/it]Running generate_until requests:  13%|█▎        | 94/700 [10:22<1:07:58,  6.73s/it]Running generate_until requests:  14%|█▎        | 95/700 [10:29<1:07:50,  6.73s/it]Running generate_until requests:  14%|█▎        | 96/700 [10:36<1:07:17,  6.68s/it]Running generate_until requests:  14%|█▍        | 97/700 [10:42<1:07:23,  6.71s/it]Running generate_until requests:  14%|█▍        | 98/700 [10:49<1:07:02,  6.68s/it]Running generate_until requests:  14%|█▍        | 99/700 [10:56<1:06:33,  6.64s/it]Running generate_until requests:  14%|█▍        | 100/700 [11:02<1:06:52,  6.69s/it]Running generate_until requests:  14%|█▍        | 101/700 [11:10<1:09:08,  6.93s/it]Running generate_until requests:  15%|█▍        | 102/700 [11:17<1:10:42,  7.09s/it]Running generate_until requests:  15%|█▍        | 103/700 [11:24<1:09:45,  7.01s/it]Running generate_until requests:  15%|█▍        | 104/700 [11:31<1:08:44,  6.92s/it]Running generate_until requests:  15%|█▌        | 105/700 [11:37<1:05:24,  6.60s/it]Running generate_until requests:  15%|█▌        | 106/700 [11:43<1:04:57,  6.56s/it]Running generate_until requests:  15%|█▌        | 107/700 [11:50<1:05:45,  6.65s/it]Running generate_until requests:  15%|█▌        | 108/700 [11:57<1:06:00,  6.69s/it]Running generate_until requests:  16%|█▌        | 109/700 [12:04<1:06:12,  6.72s/it]Running generate_until requests:  16%|█▌        | 110/700 [12:13<1:13:58,  7.52s/it]Running generate_until requests:  16%|█▌        | 111/700 [12:20<1:12:57,  7.43s/it]Running generate_until requests:  16%|█▌        | 112/700 [12:27<1:09:42,  7.11s/it]Running generate_until requests:  16%|█▌        | 113/700 [12:34<1:10:28,  7.20s/it]Running generate_until requests:  16%|█▋        | 114/700 [12:41<1:09:11,  7.08s/it]Running generate_until requests:  16%|█▋        | 115/700 [12:48<1:08:00,  6.98s/it]Running generate_until requests:  17%|█▋        | 116/700 [12:54<1:07:05,  6.89s/it]Running generate_until requests:  17%|█▋        | 117/700 [13:02<1:08:25,  7.04s/it]Running generate_until requests:  17%|█▋        | 118/700 [13:08<1:06:33,  6.86s/it]Running generate_until requests:  17%|█▋        | 119/700 [13:16<1:10:58,  7.33s/it]Running generate_until requests:  17%|█▋        | 120/700 [13:26<1:16:34,  7.92s/it]Running generate_until requests:  17%|█▋        | 121/700 [13:33<1:12:58,  7.56s/it]Running generate_until requests:  17%|█▋        | 122/700 [13:42<1:17:41,  8.06s/it]Running generate_until requests:  18%|█▊        | 123/700 [13:48<1:12:39,  7.56s/it]Running generate_until requests:  18%|█▊        | 124/700 [13:54<1:09:03,  7.19s/it]Running generate_until requests:  18%|█▊        | 125/700 [14:03<1:12:02,  7.52s/it]Running generate_until requests:  18%|█▊        | 126/700 [14:09<1:09:03,  7.22s/it]Running generate_until requests:  18%|█▊        | 127/700 [14:16<1:07:42,  7.09s/it]Running generate_until requests:  18%|█▊        | 128/700 [14:23<1:07:52,  7.12s/it]Running generate_until requests:  18%|█▊        | 129/700 [14:31<1:08:18,  7.18s/it]Running generate_until requests:  19%|█▊        | 130/700 [14:37<1:07:06,  7.06s/it]Running generate_until requests:  19%|█▊        | 131/700 [14:47<1:13:03,  7.70s/it]Running generate_until requests:  19%|█▉        | 132/700 [14:55<1:13:53,  7.81s/it]Running generate_until requests:  19%|█▉        | 133/700 [15:02<1:12:08,  7.63s/it]Running generate_until requests:  19%|█▉        | 134/700 [15:10<1:13:01,  7.74s/it]Running generate_until requests:  19%|█▉        | 135/700 [15:17<1:10:01,  7.44s/it]Running generate_until requests:  19%|█▉        | 136/700 [15:25<1:14:06,  7.88s/it]Running generate_until requests:  20%|█▉        | 137/700 [15:32<1:10:50,  7.55s/it]Running generate_until requests:  20%|█▉        | 138/700 [15:39<1:07:18,  7.19s/it]Running generate_until requests:  20%|█▉        | 139/700 [15:46<1:08:41,  7.35s/it]Running generate_until requests:  20%|██        | 140/700 [15:53<1:08:03,  7.29s/it]Running generate_until requests:  20%|██        | 141/700 [16:00<1:05:53,  7.07s/it]Running generate_until requests:  20%|██        | 142/700 [16:07<1:06:31,  7.15s/it]Running generate_until requests:  20%|██        | 143/700 [16:17<1:12:20,  7.79s/it]Running generate_until requests:  21%|██        | 144/700 [16:23<1:08:47,  7.42s/it]Running generate_until requests:  21%|██        | 145/700 [16:30<1:06:40,  7.21s/it]Running generate_until requests:  21%|██        | 146/700 [16:39<1:11:28,  7.74s/it]Running generate_until requests:  21%|██        | 147/700 [16:46<1:08:23,  7.42s/it]Running generate_until requests:  21%|██        | 148/700 [16:52<1:06:33,  7.23s/it]Running generate_until requests:  21%|██▏       | 149/700 [16:59<1:03:58,  6.97s/it]Running generate_until requests:  21%|██▏       | 150/700 [17:06<1:03:28,  6.92s/it]Running generate_until requests:  22%|██▏       | 151/700 [17:12<1:03:00,  6.89s/it]Running generate_until requests:  22%|██▏       | 152/700 [17:19<1:03:35,  6.96s/it]Running generate_until requests:  22%|██▏       | 153/700 [17:27<1:04:53,  7.12s/it]Running generate_until requests:  22%|██▏       | 154/700 [17:36<1:10:38,  7.76s/it]Running generate_until requests:  22%|██▏       | 155/700 [17:45<1:14:19,  8.18s/it]Running generate_until requests:  22%|██▏       | 156/700 [17:52<1:10:27,  7.77s/it]Running generate_until requests:  22%|██▏       | 157/700 [18:00<1:09:09,  7.64s/it]Running generate_until requests:  23%|██▎       | 158/700 [18:07<1:07:42,  7.49s/it]Running generate_until requests:  23%|██▎       | 159/700 [18:16<1:11:29,  7.93s/it]Running generate_until requests:  23%|██▎       | 160/700 [18:23<1:09:52,  7.76s/it]Running generate_until requests:  23%|██▎       | 161/700 [18:29<1:06:03,  7.35s/it]Running generate_until requests:  23%|██▎       | 162/700 [18:37<1:05:33,  7.31s/it]Running generate_until requests:  23%|██▎       | 163/700 [18:44<1:06:53,  7.47s/it]Running generate_until requests:  23%|██▎       | 164/700 [18:54<1:11:47,  8.04s/it]Running generate_until requests:  24%|██▎       | 165/700 [19:03<1:14:08,  8.32s/it]Running generate_until requests:  24%|██▎       | 166/700 [19:10<1:09:48,  7.84s/it]Running generate_until requests:  24%|██▍       | 167/700 [19:16<1:06:53,  7.53s/it]Running generate_until requests:  24%|██▍       | 168/700 [19:23<1:04:37,  7.29s/it]Running generate_until requests:  24%|██▍       | 169/700 [19:30<1:02:22,  7.05s/it]Running generate_until requests:  24%|██▍       | 170/700 [19:37<1:03:52,  7.23s/it]Running generate_until requests:  24%|██▍       | 171/700 [19:44<1:02:32,  7.09s/it]Running generate_until requests:  25%|██▍       | 172/700 [19:51<1:01:37,  7.00s/it]Running generate_until requests:  25%|██▍       | 173/700 [19:58<1:02:09,  7.08s/it]Running generate_until requests:  25%|██▍       | 174/700 [20:06<1:04:55,  7.41s/it]Running generate_until requests:  25%|██▌       | 175/700 [20:15<1:09:26,  7.94s/it]Running generate_until requests:  25%|██▌       | 176/700 [20:25<1:12:32,  8.31s/it]Running generate_until requests:  25%|██▌       | 177/700 [20:31<1:08:15,  7.83s/it]Running generate_until requests:  25%|██▌       | 178/700 [20:38<1:04:26,  7.41s/it]Running generate_until requests:  26%|██▌       | 179/700 [20:47<1:09:06,  7.96s/it]Running generate_until requests:  26%|██▌       | 180/700 [20:55<1:09:00,  7.96s/it]Running generate_until requests:  26%|██▌       | 181/700 [21:04<1:11:22,  8.25s/it]Running generate_until requests:  26%|██▌       | 182/700 [21:12<1:11:58,  8.34s/it]Running generate_until requests:  26%|██▌       | 183/700 [21:22<1:14:10,  8.61s/it]Running generate_until requests:  26%|██▋       | 184/700 [21:31<1:15:11,  8.74s/it]Running generate_until requests:  26%|██▋       | 185/700 [21:38<1:12:22,  8.43s/it]Running generate_until requests:  27%|██▋       | 186/700 [21:47<1:13:31,  8.58s/it]Running generate_until requests:  27%|██▋       | 187/700 [21:56<1:14:15,  8.69s/it]Running generate_until requests:  27%|██▋       | 188/700 [22:03<1:10:15,  8.23s/it]Running generate_until requests:  27%|██▋       | 189/700 [22:10<1:06:18,  7.79s/it]Running generate_until requests:  27%|██▋       | 190/700 [22:16<1:01:46,  7.27s/it]Running generate_until requests:  27%|██▋       | 191/700 [22:25<1:06:34,  7.85s/it]Running generate_until requests:  27%|██▋       | 192/700 [22:34<1:09:27,  8.20s/it]Running generate_until requests:  28%|██▊       | 193/700 [22:44<1:11:47,  8.50s/it]Running generate_until requests:  28%|██▊       | 194/700 [22:50<1:07:23,  7.99s/it]Running generate_until requests:  28%|██▊       | 195/700 [22:58<1:05:18,  7.76s/it]Running generate_until requests:  28%|██▊       | 196/700 [23:05<1:04:46,  7.71s/it]Running generate_until requests:  28%|██▊       | 197/700 [23:14<1:07:39,  8.07s/it]Running generate_until requests:  28%|██▊       | 198/700 [23:21<1:05:02,  7.77s/it]Running generate_until requests:  28%|██▊       | 199/700 [23:30<1:07:46,  8.12s/it]Running generate_until requests:  29%|██▊       | 200/700 [23:39<1:09:41,  8.36s/it]Running generate_until requests:  29%|██▊       | 201/700 [23:49<1:13:22,  8.82s/it]Running generate_until requests:  29%|██▉       | 202/700 [23:56<1:07:44,  8.16s/it]Running generate_until requests:  29%|██▉       | 203/700 [24:03<1:05:27,  7.90s/it]Running generate_until requests:  29%|██▉       | 204/700 [24:08<59:04,  7.15s/it]  Running generate_until requests:  29%|██▉       | 205/700 [24:15<58:27,  7.09s/it]Running generate_until requests:  29%|██▉       | 206/700 [24:22<57:40,  7.01s/it]Running generate_until requests:  30%|██▉       | 207/700 [24:29<56:30,  6.88s/it]Running generate_until requests:  30%|██▉       | 208/700 [24:37<1:00:40,  7.40s/it]Running generate_until requests:  30%|██▉       | 209/700 [24:44<59:45,  7.30s/it]  Running generate_until requests:  30%|███       | 210/700 [24:52<59:30,  7.29s/it]Running generate_until requests:  30%|███       | 211/700 [24:58<58:31,  7.18s/it]Running generate_until requests:  30%|███       | 212/700 [25:04<55:17,  6.80s/it]Running generate_until requests:  30%|███       | 213/700 [25:11<55:42,  6.86s/it]Running generate_until requests:  31%|███       | 214/700 [25:18<55:53,  6.90s/it]Running generate_until requests:  31%|███       | 215/700 [25:27<1:00:22,  7.47s/it]Running generate_until requests:  31%|███       | 216/700 [25:34<59:07,  7.33s/it]  Running generate_until requests:  31%|███       | 217/700 [25:41<56:34,  7.03s/it]Running generate_until requests:  31%|███       | 218/700 [25:48<56:24,  7.02s/it]Running generate_until requests:  31%|███▏      | 219/700 [25:54<53:55,  6.73s/it]Running generate_until requests:  31%|███▏      | 220/700 [26:01<54:34,  6.82s/it]Running generate_until requests:  32%|███▏      | 221/700 [26:08<54:52,  6.87s/it]Running generate_until requests:  32%|███▏      | 222/700 [26:15<55:09,  6.92s/it]Running generate_until requests:  32%|███▏      | 223/700 [26:21<54:09,  6.81s/it]Running generate_until requests:  32%|███▏      | 224/700 [26:28<54:28,  6.87s/it]Running generate_until requests:  32%|███▏      | 225/700 [26:35<54:40,  6.91s/it]Running generate_until requests:  32%|███▏      | 226/700 [26:42<55:00,  6.96s/it]Running generate_until requests:  32%|███▏      | 227/700 [26:49<54:57,  6.97s/it]Running generate_until requests:  33%|███▎      | 228/700 [26:57<57:13,  7.27s/it]Running generate_until requests:  33%|███▎      | 229/700 [27:04<55:10,  7.03s/it]Running generate_until requests:  33%|███▎      | 230/700 [27:11<55:54,  7.14s/it]Running generate_until requests:  33%|███▎      | 231/700 [27:20<1:00:24,  7.73s/it]Running generate_until requests:  33%|███▎      | 232/700 [27:29<1:03:02,  8.08s/it]Running generate_until requests:  33%|███▎      | 233/700 [27:38<1:05:03,  8.36s/it]Running generate_until requests:  33%|███▎      | 234/700 [27:47<1:05:28,  8.43s/it]Running generate_until requests:  34%|███▎      | 235/700 [27:54<1:02:13,  8.03s/it]Running generate_until requests:  34%|███▎      | 236/700 [28:00<57:47,  7.47s/it]  Running generate_until requests:  34%|███▍      | 237/700 [28:07<55:53,  7.24s/it]Running generate_until requests:  34%|███▍      | 238/700 [28:15<59:15,  7.70s/it]Running generate_until requests:  34%|███▍      | 239/700 [28:24<1:01:32,  8.01s/it]Running generate_until requests:  34%|███▍      | 240/700 [28:31<57:46,  7.54s/it]  Running generate_until requests:  34%|███▍      | 241/700 [28:37<56:04,  7.33s/it]Running generate_until requests:  35%|███▍      | 242/700 [28:46<59:36,  7.81s/it]Running generate_until requests:  35%|███▍      | 243/700 [28:53<56:28,  7.42s/it]Running generate_until requests:  35%|███▍      | 244/700 [29:00<56:07,  7.39s/it]Running generate_until requests:  35%|███▌      | 245/700 [29:07<54:54,  7.24s/it]Running generate_until requests:  35%|███▌      | 246/700 [29:13<50:50,  6.72s/it]Running generate_until requests:  35%|███▌      | 247/700 [29:19<50:52,  6.74s/it]Running generate_until requests:  35%|███▌      | 248/700 [29:26<50:12,  6.67s/it]Running generate_until requests:  36%|███▌      | 249/700 [29:33<50:46,  6.76s/it]Running generate_until requests:  36%|███▌      | 250/700 [29:42<55:10,  7.36s/it]Running generate_until requests:  36%|███▌      | 251/700 [29:48<53:08,  7.10s/it]Running generate_until requests:  36%|███▌      | 252/700 [29:55<52:31,  7.03s/it]Running generate_until requests:  36%|███▌      | 253/700 [30:04<57:16,  7.69s/it]Running generate_until requests:  36%|███▋      | 254/700 [30:11<55:36,  7.48s/it]Running generate_until requests:  36%|███▋      | 255/700 [30:18<54:33,  7.36s/it]Running generate_until requests:  37%|███▋      | 256/700 [30:25<53:35,  7.24s/it]Running generate_until requests:  37%|███▋      | 257/700 [30:31<50:30,  6.84s/it]Running generate_until requests:  37%|███▋      | 258/700 [30:38<49:40,  6.74s/it]Running generate_until requests:  37%|███▋      | 259/700 [30:45<50:01,  6.81s/it]Running generate_until requests:  37%|███▋      | 260/700 [30:51<48:40,  6.64s/it]Running generate_until requests:  37%|███▋      | 261/700 [30:57<48:22,  6.61s/it]Running generate_until requests:  37%|███▋      | 262/700 [31:03<46:09,  6.32s/it]Running generate_until requests:  38%|███▊      | 263/700 [31:09<45:04,  6.19s/it]Running generate_until requests:  38%|███▊      | 264/700 [31:15<44:21,  6.10s/it]Running generate_until requests:  38%|███▊      | 265/700 [31:24<51:13,  7.07s/it]Running generate_until requests:  38%|███▊      | 266/700 [31:31<50:58,  7.05s/it]Running generate_until requests:  38%|███▊      | 267/700 [31:40<54:48,  7.59s/it]Running generate_until requests:  38%|███▊      | 268/700 [31:49<58:09,  8.08s/it]Running generate_until requests:  38%|███▊      | 269/700 [31:58<1:00:29,  8.42s/it]Running generate_until requests:  39%|███▊      | 270/700 [32:06<57:53,  8.08s/it]  Running generate_until requests:  39%|███▊      | 271/700 [32:12<54:34,  7.63s/it]Running generate_until requests:  39%|███▉      | 272/700 [32:19<53:03,  7.44s/it]Running generate_until requests:  39%|███▉      | 273/700 [32:25<49:31,  6.96s/it]Running generate_until requests:  39%|███▉      | 274/700 [32:32<49:01,  6.90s/it]Running generate_until requests:  39%|███▉      | 275/700 [32:39<48:18,  6.82s/it]Running generate_until requests:  39%|███▉      | 276/700 [32:45<47:44,  6.76s/it]Running generate_until requests:  40%|███▉      | 277/700 [32:51<45:27,  6.45s/it]Running generate_until requests:  40%|███▉      | 278/700 [32:58<46:25,  6.60s/it]Running generate_until requests:  40%|███▉      | 279/700 [33:05<46:57,  6.69s/it]Running generate_until requests:  40%|████      | 280/700 [33:12<47:23,  6.77s/it]Running generate_until requests:  40%|████      | 281/700 [33:19<48:07,  6.89s/it]Running generate_until requests:  40%|████      | 282/700 [33:26<47:51,  6.87s/it]Running generate_until requests:  40%|████      | 283/700 [33:33<47:54,  6.89s/it]Running generate_until requests:  41%|████      | 284/700 [33:39<47:28,  6.85s/it]Running generate_until requests:  41%|████      | 285/700 [33:49<52:31,  7.59s/it]Running generate_until requests:  41%|████      | 286/700 [33:56<51:07,  7.41s/it]Running generate_until requests:  41%|████      | 287/700 [34:03<50:04,  7.27s/it]Running generate_until requests:  41%|████      | 288/700 [34:12<53:26,  7.78s/it]Running generate_until requests:  41%|████▏     | 289/700 [34:19<51:35,  7.53s/it]Running generate_until requests:  41%|████▏     | 290/700 [34:26<50:18,  7.36s/it]Running generate_until requests:  42%|████▏     | 291/700 [34:31<47:11,  6.92s/it]Running generate_until requests:  42%|████▏     | 292/700 [34:38<47:10,  6.94s/it]Running generate_until requests:  42%|████▏     | 293/700 [34:45<47:05,  6.94s/it]Running generate_until requests:  42%|████▏     | 294/700 [34:52<45:49,  6.77s/it]Running generate_until requests:  42%|████▏     | 295/700 [34:57<42:33,  6.30s/it]Running generate_until requests:  42%|████▏     | 296/700 [35:03<41:56,  6.23s/it]Running generate_until requests:  42%|████▏     | 297/700 [35:09<42:21,  6.31s/it]Running generate_until requests:  43%|████▎     | 298/700 [35:15<40:53,  6.10s/it]Running generate_until requests:  43%|████▎     | 299/700 [35:24<46:39,  6.98s/it]Running generate_until requests:  43%|████▎     | 300/700 [35:33<50:54,  7.64s/it]Running generate_until requests:  43%|████▎     | 301/700 [35:42<53:30,  8.05s/it]Running generate_until requests:  43%|████▎     | 302/700 [35:49<50:44,  7.65s/it]Running generate_until requests:  43%|████▎     | 303/700 [35:56<48:22,  7.31s/it]Running generate_until requests:  43%|████▎     | 304/700 [36:03<47:54,  7.26s/it]Running generate_until requests:  44%|████▎     | 305/700 [36:09<45:01,  6.84s/it]Running generate_until requests:  44%|████▎     | 306/700 [36:15<43:13,  6.58s/it]Running generate_until requests:  44%|████▍     | 307/700 [36:20<40:17,  6.15s/it]Running generate_until requests:  44%|████▍     | 308/700 [36:24<35:58,  5.51s/it]Running generate_until requests:  44%|████▍     | 309/700 [36:30<37:04,  5.69s/it]Running generate_until requests:  44%|████▍     | 310/700 [36:36<38:06,  5.86s/it]Running generate_until requests:  44%|████▍     | 311/700 [36:42<38:17,  5.91s/it]Running generate_until requests:  45%|████▍     | 312/700 [36:48<37:45,  5.84s/it]Running generate_until requests:  45%|████▍     | 313/700 [36:54<38:11,  5.92s/it]Running generate_until requests:  45%|████▍     | 314/700 [37:00<38:37,  6.00s/it]Running generate_until requests:  45%|████▌     | 315/700 [37:06<39:11,  6.11s/it]Running generate_until requests:  45%|████▌     | 316/700 [37:13<39:30,  6.17s/it]Running generate_until requests:  45%|████▌     | 317/700 [37:19<39:37,  6.21s/it]Running generate_until requests:  45%|████▌     | 318/700 [37:25<39:08,  6.15s/it]Running generate_until requests:  46%|████▌     | 319/700 [37:31<38:40,  6.09s/it]Running generate_until requests:  46%|████▌     | 320/700 [37:37<38:53,  6.14s/it]Running generate_until requests:  46%|████▌     | 321/700 [37:43<38:45,  6.13s/it]Running generate_until requests:  46%|████▌     | 322/700 [37:49<38:07,  6.05s/it]Running generate_until requests:  46%|████▌     | 323/700 [37:55<38:14,  6.09s/it]Running generate_until requests:  46%|████▋     | 324/700 [38:02<38:25,  6.13s/it]Running generate_until requests:  46%|████▋     | 325/700 [38:08<38:13,  6.12s/it]Running generate_until requests:  47%|████▋     | 326/700 [38:14<38:26,  6.17s/it]Running generate_until requests:  47%|████▋     | 327/700 [38:20<38:28,  6.19s/it]Running generate_until requests:  47%|████▋     | 328/700 [38:26<38:05,  6.14s/it]Running generate_until requests:  47%|████▋     | 329/700 [38:32<37:53,  6.13s/it]Running generate_until requests:  47%|████▋     | 330/700 [38:38<37:45,  6.12s/it]Running generate_until requests:  47%|████▋     | 331/700 [38:45<37:32,  6.10s/it]Running generate_until requests:  47%|████▋     | 332/700 [38:51<37:23,  6.10s/it]Running generate_until requests:  48%|████▊     | 333/700 [38:57<37:34,  6.14s/it]Running generate_until requests:  48%|████▊     | 334/700 [39:03<37:23,  6.13s/it]Running generate_until requests:  48%|████▊     | 335/700 [39:09<37:19,  6.14s/it]Running generate_until requests:  48%|████▊     | 336/700 [39:15<36:57,  6.09s/it]Running generate_until requests:  48%|████▊     | 337/700 [39:21<36:35,  6.05s/it]Running generate_until requests:  48%|████▊     | 338/700 [39:27<36:31,  6.05s/it]Running generate_until requests:  48%|████▊     | 339/700 [39:33<36:48,  6.12s/it]Running generate_until requests:  49%|████▊     | 340/700 [39:40<36:49,  6.14s/it]Running generate_until requests:  49%|████▊     | 341/700 [39:45<36:07,  6.04s/it]Running generate_until requests:  49%|████▉     | 342/700 [39:51<35:47,  6.00s/it]Running generate_until requests:  49%|████▉     | 343/700 [39:58<36:09,  6.08s/it]Running generate_until requests:  49%|████▉     | 344/700 [40:03<35:48,  6.03s/it]Running generate_until requests:  49%|████▉     | 345/700 [40:10<36:04,  6.10s/it]Running generate_until requests:  49%|████▉     | 346/700 [40:16<35:31,  6.02s/it]Running generate_until requests:  50%|████▉     | 347/700 [40:22<35:37,  6.05s/it]Running generate_until requests:  50%|████▉     | 348/700 [40:28<35:25,  6.04s/it]Running generate_until requests:  50%|████▉     | 349/700 [40:34<34:56,  5.97s/it]Running generate_until requests:  50%|█████     | 350/700 [40:40<35:13,  6.04s/it]Running generate_until requests:  50%|█████     | 351/700 [40:46<35:22,  6.08s/it]Running generate_until requests:  50%|█████     | 352/700 [40:52<34:57,  6.03s/it]Running generate_until requests:  50%|█████     | 353/700 [40:58<35:13,  6.09s/it]Running generate_until requests:  51%|█████     | 354/700 [41:04<34:58,  6.06s/it]Running generate_until requests:  51%|█████     | 355/700 [41:10<35:08,  6.11s/it]Running generate_until requests:  51%|█████     | 356/700 [41:16<34:54,  6.09s/it]Running generate_until requests:  51%|█████     | 357/700 [41:22<34:33,  6.05s/it]Running generate_until requests:  51%|█████     | 358/700 [41:28<34:04,  5.98s/it]Running generate_until requests:  51%|█████▏    | 359/700 [41:34<34:28,  6.06s/it]Running generate_until requests:  51%|█████▏    | 360/700 [41:40<34:16,  6.05s/it]Running generate_until requests:  52%|█████▏    | 361/700 [41:46<34:06,  6.04s/it]Running generate_until requests:  52%|█████▏    | 362/700 [41:52<33:45,  5.99s/it]Running generate_until requests:  52%|█████▏    | 363/700 [41:58<33:42,  6.00s/it]Running generate_until requests:  52%|█████▏    | 364/700 [42:04<33:42,  6.02s/it]Running generate_until requests:  52%|█████▏    | 365/700 [42:10<33:14,  5.95s/it]Running generate_until requests:  52%|█████▏    | 366/700 [42:16<33:40,  6.05s/it]Running generate_until requests:  52%|█████▏    | 367/700 [42:22<33:31,  6.04s/it]Running generate_until requests:  53%|█████▎    | 368/700 [42:28<33:21,  6.03s/it]Running generate_until requests:  53%|█████▎    | 369/700 [42:35<33:23,  6.05s/it]Running generate_until requests:  53%|█████▎    | 370/700 [42:40<33:02,  6.01s/it]Running generate_until requests:  53%|█████▎    | 371/700 [42:46<33:00,  6.02s/it]Running generate_until requests:  53%|█████▎    | 372/700 [42:53<33:06,  6.06s/it]Running generate_until requests:  53%|█████▎    | 373/700 [42:59<32:46,  6.01s/it]Running generate_until requests:  53%|█████▎    | 374/700 [43:05<32:44,  6.03s/it]Running generate_until requests:  54%|█████▎    | 375/700 [43:11<32:50,  6.06s/it]Running generate_until requests:  54%|█████▎    | 376/700 [43:17<32:49,  6.08s/it]Running generate_until requests:  54%|█████▍    | 377/700 [43:23<32:25,  6.02s/it]Running generate_until requests:  54%|█████▍    | 378/700 [43:29<32:07,  5.99s/it]Running generate_until requests:  54%|█████▍    | 379/700 [43:35<32:07,  6.01s/it]Running generate_until requests:  54%|█████▍    | 380/700 [43:41<32:03,  6.01s/it]Running generate_until requests:  54%|█████▍    | 381/700 [43:47<32:02,  6.03s/it]Running generate_until requests:  55%|█████▍    | 382/700 [43:53<32:15,  6.09s/it]Running generate_until requests:  55%|█████▍    | 383/700 [43:59<31:40,  6.00s/it]Running generate_until requests:  55%|█████▍    | 384/700 [44:05<31:34,  6.00s/it]Running generate_until requests:  55%|█████▌    | 385/700 [44:11<31:39,  6.03s/it]Running generate_until requests:  55%|█████▌    | 386/700 [44:17<31:18,  5.98s/it]Running generate_until requests:  55%|█████▌    | 387/700 [44:23<31:15,  5.99s/it]Running generate_until requests:  55%|█████▌    | 388/700 [44:29<31:18,  6.02s/it]Running generate_until requests:  56%|█████▌    | 389/700 [44:35<31:15,  6.03s/it]Running generate_until requests:  56%|█████▌    | 390/700 [44:41<30:46,  5.96s/it]Running generate_until requests:  56%|█████▌    | 391/700 [44:47<30:47,  5.98s/it]Running generate_until requests:  56%|█████▌    | 392/700 [44:53<30:43,  5.99s/it]Running generate_until requests:  56%|█████▌    | 393/700 [44:59<30:57,  6.05s/it]Running generate_until requests:  56%|█████▋    | 394/700 [45:05<30:42,  6.02s/it]Running generate_until requests:  56%|█████▋    | 395/700 [45:11<30:20,  5.97s/it]Running generate_until requests:  57%|█████▋    | 396/700 [45:17<30:27,  6.01s/it]Running generate_until requests:  57%|█████▋    | 397/700 [45:23<30:18,  6.00s/it]Running generate_until requests:  57%|█████▋    | 398/700 [45:29<30:16,  6.02s/it]Running generate_until requests:  57%|█████▋    | 399/700 [45:35<30:03,  5.99s/it]Running generate_until requests:  57%|█████▋    | 400/700 [45:41<29:52,  5.98s/it]Running generate_until requests:  57%|█████▋    | 401/700 [45:51<35:53,  7.20s/it]Running generate_until requests:  57%|█████▋    | 402/700 [45:57<34:38,  6.98s/it]Running generate_until requests:  58%|█████▊    | 403/700 [46:04<34:46,  7.03s/it]Running generate_until requests:  58%|█████▊    | 404/700 [46:12<35:09,  7.13s/it]Running generate_until requests:  58%|█████▊    | 405/700 [46:17<32:53,  6.69s/it]Running generate_until requests:  58%|█████▊    | 406/700 [46:22<29:38,  6.05s/it]Running generate_until requests:  58%|█████▊    | 407/700 [46:28<29:08,  5.97s/it]Running generate_until requests:  58%|█████▊    | 408/700 [46:31<24:55,  5.12s/it]Running generate_until requests:  58%|█████▊    | 409/700 [46:36<24:10,  4.99s/it]Running generate_until requests:  59%|█████▊    | 410/700 [46:42<26:35,  5.50s/it]Running generate_until requests:  59%|█████▊    | 411/700 [46:48<26:29,  5.50s/it]Running generate_until requests:  59%|█████▉    | 412/700 [46:53<26:03,  5.43s/it]Running generate_until requests:  59%|█████▉    | 413/700 [46:58<25:21,  5.30s/it]Running generate_until requests:  59%|█████▉    | 414/700 [47:02<23:39,  4.96s/it]Running generate_until requests:  59%|█████▉    | 415/700 [47:07<22:49,  4.80s/it]Running generate_until requests:  59%|█████▉    | 416/700 [47:13<24:15,  5.13s/it]Running generate_until requests:  60%|█████▉    | 417/700 [47:20<27:18,  5.79s/it]Running generate_until requests:  60%|█████▉    | 418/700 [47:26<26:58,  5.74s/it]Running generate_until requests:  60%|█████▉    | 419/700 [47:30<25:29,  5.44s/it]Running generate_until requests:  60%|██████    | 420/700 [47:35<24:21,  5.22s/it]Running generate_until requests:  60%|██████    | 421/700 [47:40<24:42,  5.31s/it]Running generate_until requests:  60%|██████    | 422/700 [47:46<25:34,  5.52s/it]Running generate_until requests:  60%|██████    | 423/700 [47:52<25:19,  5.49s/it]Running generate_until requests:  61%|██████    | 424/700 [47:56<23:52,  5.19s/it]Running generate_until requests:  61%|██████    | 425/700 [48:02<23:41,  5.17s/it]Running generate_until requests:  61%|██████    | 426/700 [48:08<25:58,  5.69s/it]Running generate_until requests:  61%|██████    | 427/700 [48:14<26:12,  5.76s/it]Running generate_until requests:  61%|██████    | 428/700 [48:20<26:23,  5.82s/it]Running generate_until requests:  61%|██████▏   | 429/700 [48:26<25:58,  5.75s/it]Running generate_until requests:  61%|██████▏   | 430/700 [48:33<27:26,  6.10s/it]Running generate_until requests:  62%|██████▏   | 431/700 [48:38<26:23,  5.89s/it]Running generate_until requests:  62%|██████▏   | 432/700 [48:44<26:21,  5.90s/it]Running generate_until requests:  62%|██████▏   | 433/700 [48:50<25:54,  5.82s/it]Running generate_until requests:  62%|██████▏   | 434/700 [48:57<27:22,  6.17s/it]Running generate_until requests:  62%|██████▏   | 435/700 [49:04<28:21,  6.42s/it]Running generate_until requests:  62%|██████▏   | 436/700 [49:10<27:39,  6.28s/it]Running generate_until requests:  62%|██████▏   | 437/700 [49:15<26:24,  6.02s/it]Running generate_until requests:  63%|██████▎   | 438/700 [49:22<27:35,  6.32s/it]Running generate_until requests:  63%|██████▎   | 439/700 [49:29<28:34,  6.57s/it]Running generate_until requests:  63%|██████▎   | 440/700 [49:36<28:52,  6.67s/it]Running generate_until requests:  63%|██████▎   | 441/700 [49:43<28:36,  6.63s/it]Running generate_until requests:  63%|██████▎   | 442/700 [49:48<26:57,  6.27s/it]Running generate_until requests:  63%|██████▎   | 443/700 [49:55<27:48,  6.49s/it]Running generate_until requests:  63%|██████▎   | 444/700 [50:01<26:53,  6.30s/it]Running generate_until requests:  64%|██████▎   | 445/700 [50:09<28:17,  6.66s/it]Running generate_until requests:  64%|██████▎   | 446/700 [50:15<27:32,  6.51s/it]Running generate_until requests:  64%|██████▍   | 447/700 [50:20<25:32,  6.06s/it]Running generate_until requests:  64%|██████▍   | 448/700 [50:25<25:03,  5.97s/it]Running generate_until requests:  64%|██████▍   | 449/700 [50:31<24:07,  5.77s/it]Running generate_until requests:  64%|██████▍   | 450/700 [50:36<23:31,  5.64s/it]Running generate_until requests:  64%|██████▍   | 451/700 [50:41<23:02,  5.55s/it]Running generate_until requests:  65%|██████▍   | 452/700 [50:48<24:24,  5.91s/it]Running generate_until requests:  65%|██████▍   | 453/700 [50:53<22:21,  5.43s/it]Running generate_until requests:  65%|██████▍   | 454/700 [50:57<20:33,  5.01s/it]Running generate_until requests:  65%|██████▌   | 455/700 [51:04<23:08,  5.67s/it]Running generate_until requests:  65%|██████▌   | 456/700 [51:09<23:00,  5.66s/it]Running generate_until requests:  65%|██████▌   | 457/700 [51:16<24:14,  5.98s/it]Running generate_until requests:  65%|██████▌   | 458/700 [51:23<24:59,  6.20s/it]Running generate_until requests:  66%|██████▌   | 459/700 [51:28<23:47,  5.92s/it]Running generate_until requests:  66%|██████▌   | 460/700 [51:34<23:28,  5.87s/it]Running generate_until requests:  66%|██████▌   | 461/700 [51:41<24:30,  6.15s/it]Running generate_until requests:  66%|██████▌   | 462/700 [51:46<23:34,  5.94s/it]Running generate_until requests:  66%|██████▌   | 463/700 [51:53<24:39,  6.24s/it]Running generate_until requests:  66%|██████▋   | 464/700 [52:00<25:04,  6.37s/it]Running generate_until requests:  66%|██████▋   | 465/700 [52:06<25:00,  6.39s/it]Running generate_until requests:  67%|██████▋   | 466/700 [52:13<25:15,  6.48s/it]Running generate_until requests:  67%|██████▋   | 467/700 [52:19<25:16,  6.51s/it]Running generate_until requests:  67%|██████▋   | 468/700 [52:25<24:10,  6.25s/it]Running generate_until requests:  67%|██████▋   | 469/700 [52:30<22:56,  5.96s/it]Running generate_until requests:  67%|██████▋   | 470/700 [52:37<23:14,  6.06s/it]Running generate_until requests:  67%|██████▋   | 471/700 [52:41<21:13,  5.56s/it]Running generate_until requests:  67%|██████▋   | 472/700 [52:45<19:07,  5.03s/it]Running generate_until requests:  68%|██████▊   | 473/700 [52:52<21:02,  5.56s/it]Running generate_until requests:  68%|██████▊   | 474/700 [52:57<20:43,  5.50s/it]Running generate_until requests:  68%|██████▊   | 475/700 [53:01<19:16,  5.14s/it]Running generate_until requests:  68%|██████▊   | 476/700 [53:07<20:01,  5.37s/it]Running generate_until requests:  68%|██████▊   | 477/700 [53:12<19:38,  5.29s/it]Running generate_until requests:  68%|██████▊   | 478/700 [53:19<21:29,  5.81s/it]Running generate_until requests:  68%|██████▊   | 479/700 [53:25<21:45,  5.91s/it]Running generate_until requests:  69%|██████▊   | 480/700 [53:31<21:16,  5.80s/it]Running generate_until requests:  69%|██████▊   | 481/700 [53:38<22:19,  6.12s/it]Running generate_until requests:  69%|██████▉   | 482/700 [53:45<23:22,  6.43s/it]Running generate_until requests:  69%|██████▉   | 483/700 [53:52<23:44,  6.56s/it]Running generate_until requests:  69%|██████▉   | 484/700 [53:57<22:16,  6.19s/it]Running generate_until requests:  69%|██████▉   | 485/700 [54:04<22:50,  6.37s/it]Running generate_until requests:  69%|██████▉   | 486/700 [54:11<23:34,  6.61s/it]Running generate_until requests:  70%|██████▉   | 487/700 [54:18<23:40,  6.67s/it]Running generate_until requests:  70%|██████▉   | 488/700 [54:23<21:46,  6.16s/it]Running generate_until requests:  70%|██████▉   | 489/700 [54:28<20:42,  5.89s/it]Running generate_until requests:  70%|███████   | 490/700 [54:35<21:20,  6.10s/it]Running generate_until requests:  70%|███████   | 491/700 [54:40<20:34,  5.91s/it]Running generate_until requests:  70%|███████   | 492/700 [54:47<21:10,  6.11s/it]Running generate_until requests:  70%|███████   | 493/700 [54:52<20:07,  5.83s/it]Running generate_until requests:  71%|███████   | 494/700 [54:59<21:19,  6.21s/it]Running generate_until requests:  71%|███████   | 495/700 [55:05<21:12,  6.21s/it]Running generate_until requests:  71%|███████   | 496/700 [55:11<20:05,  5.91s/it]Running generate_until requests:  71%|███████   | 497/700 [55:17<20:38,  6.10s/it]Running generate_until requests:  71%|███████   | 498/700 [55:22<19:25,  5.77s/it]Running generate_until requests:  71%|███████▏  | 499/700 [55:27<18:40,  5.58s/it]Running generate_until requests:  71%|███████▏  | 500/700 [55:34<19:53,  5.97s/it]Running generate_until requests:  72%|███████▏  | 501/700 [55:42<21:35,  6.51s/it]Running generate_until requests:  72%|███████▏  | 502/700 [55:49<21:40,  6.57s/it]Running generate_until requests:  72%|███████▏  | 503/700 [55:56<22:09,  6.75s/it]Running generate_until requests:  72%|███████▏  | 504/700 [56:02<21:41,  6.64s/it]Running generate_until requests:  72%|███████▏  | 505/700 [56:09<22:02,  6.78s/it]Running generate_until requests:  72%|███████▏  | 506/700 [56:16<21:39,  6.70s/it]Running generate_until requests:  72%|███████▏  | 507/700 [56:22<21:20,  6.64s/it]Running generate_until requests:  73%|███████▎  | 508/700 [56:28<20:35,  6.43s/it]Running generate_until requests:  73%|███████▎  | 509/700 [56:35<21:18,  6.69s/it]Running generate_until requests:  73%|███████▎  | 510/700 [56:43<21:40,  6.84s/it]Running generate_until requests:  73%|███████▎  | 511/700 [56:50<21:33,  6.84s/it]Running generate_until requests:  73%|███████▎  | 512/700 [56:57<21:38,  6.91s/it]Running generate_until requests:  73%|███████▎  | 513/700 [57:04<21:38,  6.95s/it]Running generate_until requests:  73%|███████▎  | 514/700 [57:11<21:34,  6.96s/it]Running generate_until requests:  74%|███████▎  | 515/700 [57:18<21:36,  7.01s/it]Running generate_until requests:  74%|███████▎  | 516/700 [57:25<21:30,  7.01s/it]Running generate_until requests:  74%|███████▍  | 517/700 [57:32<21:25,  7.02s/it]Running generate_until requests:  74%|███████▍  | 518/700 [57:39<21:16,  7.01s/it]Running generate_until requests:  74%|███████▍  | 519/700 [57:46<21:03,  6.98s/it]Running generate_until requests:  74%|███████▍  | 520/700 [57:53<21:02,  7.01s/it]Running generate_until requests:  74%|███████▍  | 521/700 [58:00<21:06,  7.08s/it]Running generate_until requests:  75%|███████▍  | 522/700 [58:07<21:06,  7.11s/it]Running generate_until requests:  75%|███████▍  | 523/700 [58:14<21:07,  7.16s/it]Running generate_until requests:  75%|███████▍  | 524/700 [58:22<21:04,  7.18s/it]Running generate_until requests:  75%|███████▌  | 525/700 [58:29<20:59,  7.20s/it]Running generate_until requests:  75%|███████▌  | 526/700 [58:36<20:54,  7.21s/it]Running generate_until requests:  75%|███████▌  | 527/700 [58:43<20:22,  7.07s/it]Running generate_until requests:  75%|███████▌  | 528/700 [58:50<20:08,  7.03s/it]Running generate_until requests:  76%|███████▌  | 529/700 [58:57<19:52,  6.98s/it]Running generate_until requests:  76%|███████▌  | 530/700 [59:03<19:20,  6.83s/it]Running generate_until requests:  76%|███████▌  | 531/700 [59:10<19:17,  6.85s/it]Running generate_until requests:  76%|███████▌  | 532/700 [59:17<19:14,  6.87s/it]Running generate_until requests:  76%|███████▌  | 533/700 [59:24<19:07,  6.87s/it]Running generate_until requests:  76%|███████▋  | 534/700 [59:31<19:01,  6.88s/it]Running generate_until requests:  76%|███████▋  | 535/700 [59:38<18:53,  6.87s/it]Running generate_until requests:  77%|███████▋  | 536/700 [59:45<18:54,  6.92s/it]Running generate_until requests:  77%|███████▋  | 537/700 [59:51<18:43,  6.89s/it]Running generate_until requests:  77%|███████▋  | 538/700 [59:58<18:37,  6.90s/it]Running generate_until requests:  77%|███████▋  | 539/700 [1:00:05<18:30,  6.90s/it]Running generate_until requests:  77%|███████▋  | 540/700 [1:00:12<18:30,  6.94s/it]Running generate_until requests:  77%|███████▋  | 541/700 [1:00:19<18:05,  6.83s/it]Running generate_until requests:  77%|███████▋  | 542/700 [1:00:26<18:02,  6.85s/it]Running generate_until requests:  78%|███████▊  | 543/700 [1:00:33<17:57,  6.86s/it]Running generate_until requests:  78%|███████▊  | 544/700 [1:00:40<17:54,  6.89s/it]Running generate_until requests:  78%|███████▊  | 545/700 [1:00:47<17:50,  6.91s/it]Running generate_until requests:  78%|███████▊  | 546/700 [1:00:54<17:47,  6.93s/it]Running generate_until requests:  78%|███████▊  | 547/700 [1:01:01<17:45,  6.97s/it]Running generate_until requests:  78%|███████▊  | 548/700 [1:01:08<17:37,  6.96s/it]Running generate_until requests:  78%|███████▊  | 549/700 [1:01:14<17:23,  6.91s/it]Running generate_until requests:  79%|███████▊  | 550/700 [1:01:21<17:04,  6.83s/it]Running generate_until requests:  79%|███████▊  | 551/700 [1:01:28<16:55,  6.81s/it]Running generate_until requests:  79%|███████▉  | 552/700 [1:01:35<16:48,  6.81s/it]Running generate_until requests:  79%|███████▉  | 553/700 [1:01:42<16:56,  6.92s/it]Running generate_until requests:  79%|███████▉  | 554/700 [1:01:48<16:35,  6.82s/it]Running generate_until requests:  79%|███████▉  | 555/700 [1:01:55<16:23,  6.78s/it]Running generate_until requests:  79%|███████▉  | 556/700 [1:02:01<15:55,  6.64s/it]Running generate_until requests:  80%|███████▉  | 557/700 [1:02:08<15:54,  6.67s/it]Running generate_until requests:  80%|███████▉  | 558/700 [1:02:15<15:52,  6.71s/it]Running generate_until requests:  80%|███████▉  | 559/700 [1:02:22<15:47,  6.72s/it]Running generate_until requests:  80%|████████  | 560/700 [1:02:29<15:53,  6.81s/it]Running generate_until requests:  80%|████████  | 561/700 [1:02:35<15:17,  6.60s/it]Running generate_until requests:  80%|████████  | 562/700 [1:02:42<15:25,  6.70s/it]Running generate_until requests:  80%|████████  | 563/700 [1:02:49<15:27,  6.77s/it]Running generate_until requests:  81%|████████  | 564/700 [1:02:56<15:49,  6.98s/it]Running generate_until requests:  81%|████████  | 565/700 [1:03:03<15:31,  6.90s/it]Running generate_until requests:  81%|████████  | 566/700 [1:03:09<15:01,  6.73s/it]Running generate_until requests:  81%|████████  | 567/700 [1:03:16<14:45,  6.66s/it]Running generate_until requests:  81%|████████  | 568/700 [1:03:21<13:58,  6.35s/it]Running generate_until requests:  81%|████████▏ | 569/700 [1:03:28<13:56,  6.38s/it]Running generate_until requests:  81%|████████▏ | 570/700 [1:03:34<13:49,  6.38s/it]Running generate_until requests:  82%|████████▏ | 571/700 [1:03:40<13:39,  6.35s/it]Running generate_until requests:  82%|████████▏ | 572/700 [1:03:46<13:21,  6.26s/it]Running generate_until requests:  82%|████████▏ | 573/700 [1:03:53<13:19,  6.30s/it]Running generate_until requests:  82%|████████▏ | 574/700 [1:03:59<13:13,  6.30s/it]Running generate_until requests:  82%|████████▏ | 575/700 [1:04:06<13:25,  6.45s/it]Running generate_until requests:  82%|████████▏ | 576/700 [1:04:13<13:30,  6.53s/it]Running generate_until requests:  82%|████████▏ | 577/700 [1:04:18<12:53,  6.29s/it]Running generate_until requests:  83%|████████▎ | 578/700 [1:04:25<12:51,  6.32s/it]Running generate_until requests:  83%|████████▎ | 579/700 [1:04:32<13:01,  6.46s/it]Running generate_until requests:  83%|████████▎ | 580/700 [1:04:38<12:59,  6.50s/it]Running generate_until requests:  83%|████████▎ | 581/700 [1:04:45<12:53,  6.50s/it]Running generate_until requests:  83%|████████▎ | 582/700 [1:04:52<13:08,  6.68s/it]Running generate_until requests:  83%|████████▎ | 583/700 [1:04:58<12:46,  6.55s/it]Running generate_until requests:  83%|████████▎ | 584/700 [1:05:04<12:35,  6.51s/it]Running generate_until requests:  84%|████████▎ | 585/700 [1:05:11<12:24,  6.47s/it]Running generate_until requests:  84%|████████▎ | 586/700 [1:05:18<12:30,  6.58s/it]Running generate_until requests:  84%|████████▍ | 587/700 [1:05:24<12:28,  6.62s/it]Running generate_until requests:  84%|████████▍ | 588/700 [1:05:31<12:12,  6.54s/it]Running generate_until requests:  84%|████████▍ | 589/700 [1:05:37<11:52,  6.42s/it]Running generate_until requests:  84%|████████▍ | 590/700 [1:05:42<11:18,  6.17s/it]Running generate_until requests:  84%|████████▍ | 591/700 [1:05:49<11:27,  6.31s/it]Running generate_until requests:  85%|████████▍ | 592/700 [1:05:56<11:28,  6.38s/it]Running generate_until requests:  85%|████████▍ | 593/700 [1:06:03<11:44,  6.59s/it]Running generate_until requests:  85%|████████▍ | 594/700 [1:06:09<11:18,  6.40s/it]Running generate_until requests:  85%|████████▌ | 595/700 [1:06:16<11:28,  6.56s/it]Running generate_until requests:  85%|████████▌ | 596/700 [1:06:22<11:05,  6.40s/it]Running generate_until requests:  85%|████████▌ | 597/700 [1:06:28<11:05,  6.46s/it]Running generate_until requests:  85%|████████▌ | 598/700 [1:06:35<10:55,  6.42s/it]Running generate_until requests:  86%|████████▌ | 599/700 [1:06:41<10:54,  6.48s/it]Running generate_until requests:  86%|████████▌ | 600/700 [1:06:48<10:50,  6.50s/it]Running generate_until requests:  86%|████████▌ | 601/700 [1:06:54<10:26,  6.32s/it]Running generate_until requests:  86%|████████▌ | 602/700 [1:07:00<10:23,  6.36s/it]Running generate_until requests:  86%|████████▌ | 603/700 [1:07:05<09:48,  6.07s/it]Running generate_until requests:  86%|████████▋ | 604/700 [1:07:12<09:46,  6.11s/it]Running generate_until requests:  86%|████████▋ | 605/700 [1:07:18<09:41,  6.12s/it]Running generate_until requests:  87%|████████▋ | 606/700 [1:07:24<09:42,  6.19s/it]Running generate_until requests:  87%|████████▋ | 607/700 [1:07:30<09:36,  6.20s/it]Running generate_until requests:  87%|████████▋ | 608/700 [1:07:37<09:29,  6.19s/it]Running generate_until requests:  87%|████████▋ | 609/700 [1:07:42<09:01,  5.95s/it]Running generate_until requests:  87%|████████▋ | 610/700 [1:07:48<09:11,  6.12s/it]Running generate_until requests:  87%|████████▋ | 611/700 [1:07:55<09:16,  6.25s/it]Running generate_until requests:  87%|████████▋ | 612/700 [1:08:01<09:17,  6.33s/it]Running generate_until requests:  88%|████████▊ | 613/700 [1:08:08<09:15,  6.39s/it]Running generate_until requests:  88%|████████▊ | 614/700 [1:08:15<09:13,  6.43s/it]Running generate_until requests:  88%|████████▊ | 615/700 [1:08:21<09:09,  6.46s/it]Running generate_until requests:  88%|████████▊ | 616/700 [1:08:28<09:04,  6.48s/it]Running generate_until requests:  88%|████████▊ | 617/700 [1:08:34<08:58,  6.49s/it]Running generate_until requests:  88%|████████▊ | 618/700 [1:08:41<08:53,  6.50s/it]Running generate_until requests:  88%|████████▊ | 619/700 [1:08:47<08:47,  6.51s/it]Running generate_until requests:  89%|████████▊ | 620/700 [1:08:54<08:41,  6.51s/it]Running generate_until requests:  89%|████████▊ | 621/700 [1:09:00<08:35,  6.52s/it]Running generate_until requests:  89%|████████▉ | 622/700 [1:09:07<08:28,  6.52s/it]Running generate_until requests:  89%|████████▉ | 623/700 [1:09:13<08:22,  6.53s/it]Running generate_until requests:  89%|████████▉ | 624/700 [1:09:20<08:15,  6.53s/it]Running generate_until requests:  89%|████████▉ | 625/700 [1:09:26<08:09,  6.53s/it]Running generate_until requests:  89%|████████▉ | 626/700 [1:09:33<08:02,  6.52s/it]Running generate_until requests:  90%|████████▉ | 627/700 [1:09:39<07:56,  6.53s/it]Running generate_until requests:  90%|████████▉ | 628/700 [1:09:46<07:49,  6.53s/it]Running generate_until requests:  90%|████████▉ | 629/700 [1:09:52<07:43,  6.53s/it]Running generate_until requests:  90%|█████████ | 630/700 [1:09:59<07:37,  6.53s/it]Running generate_until requests:  90%|█████████ | 631/700 [1:10:06<07:30,  6.53s/it]Running generate_until requests:  90%|█████████ | 632/700 [1:10:12<07:24,  6.53s/it]Running generate_until requests:  90%|█████████ | 633/700 [1:10:19<07:17,  6.53s/it]Running generate_until requests:  91%|█████████ | 634/700 [1:10:25<07:10,  6.53s/it]Running generate_until requests:  91%|█████████ | 635/700 [1:10:32<07:04,  6.53s/it]Running generate_until requests:  91%|█████████ | 636/700 [1:10:38<06:57,  6.53s/it]Running generate_until requests:  91%|█████████ | 637/700 [1:10:45<06:51,  6.53s/it]Running generate_until requests:  91%|█████████ | 638/700 [1:10:51<06:44,  6.53s/it]Running generate_until requests:  91%|█████████▏| 639/700 [1:10:58<06:38,  6.53s/it]Running generate_until requests:  91%|█████████▏| 640/700 [1:11:04<06:31,  6.53s/it]Running generate_until requests:  92%|█████████▏| 641/700 [1:11:11<06:25,  6.53s/it]Running generate_until requests:  92%|█████████▏| 642/700 [1:11:17<06:18,  6.53s/it]Running generate_until requests:  92%|█████████▏| 643/700 [1:11:24<06:12,  6.53s/it]Running generate_until requests:  92%|█████████▏| 644/700 [1:11:30<06:05,  6.53s/it]Running generate_until requests:  92%|█████████▏| 645/700 [1:11:37<05:59,  6.53s/it]Running generate_until requests:  92%|█████████▏| 646/700 [1:11:43<05:52,  6.53s/it]Running generate_until requests:  92%|█████████▏| 647/700 [1:11:50<05:46,  6.53s/it]Running generate_until requests:  93%|█████████▎| 648/700 [1:11:57<05:39,  6.53s/it]Running generate_until requests:  93%|█████████▎| 649/700 [1:12:03<05:33,  6.53s/it]Running generate_until requests:  93%|█████████▎| 650/700 [1:12:10<05:26,  6.53s/it]Running generate_until requests:  93%|█████████▎| 651/700 [1:12:16<05:19,  6.53s/it]Running generate_until requests:  93%|█████████▎| 652/700 [1:12:23<05:13,  6.53s/it]Running generate_until requests:  93%|█████████▎| 653/700 [1:12:29<05:06,  6.53s/it]Running generate_until requests:  93%|█████████▎| 654/700 [1:12:36<05:00,  6.53s/it]Running generate_until requests:  94%|█████████▎| 655/700 [1:12:42<04:53,  6.53s/it]Running generate_until requests:  94%|█████████▎| 656/700 [1:12:49<04:47,  6.53s/it]Running generate_until requests:  94%|█████████▍| 657/700 [1:12:55<04:40,  6.53s/it]Running generate_until requests:  94%|█████████▍| 658/700 [1:13:02<04:34,  6.52s/it]Running generate_until requests:  94%|█████████▍| 659/700 [1:13:08<04:27,  6.53s/it]Running generate_until requests:  94%|█████████▍| 660/700 [1:13:15<04:21,  6.53s/it]Running generate_until requests:  94%|█████████▍| 661/700 [1:13:21<04:14,  6.53s/it]Running generate_until requests:  95%|█████████▍| 662/700 [1:13:28<04:07,  6.52s/it]Running generate_until requests:  95%|█████████▍| 663/700 [1:13:34<04:01,  6.52s/it]Running generate_until requests:  95%|█████████▍| 664/700 [1:13:41<03:54,  6.52s/it]Running generate_until requests:  95%|█████████▌| 665/700 [1:13:47<03:48,  6.52s/it]Running generate_until requests:  95%|█████████▌| 666/700 [1:13:54<03:41,  6.52s/it]Running generate_until requests:  95%|█████████▌| 667/700 [1:14:01<03:35,  6.52s/it]Running generate_until requests:  95%|█████████▌| 668/700 [1:14:07<03:28,  6.52s/it]Running generate_until requests:  96%|█████████▌| 669/700 [1:14:14<03:22,  6.52s/it]Running generate_until requests:  96%|█████████▌| 670/700 [1:14:20<03:15,  6.52s/it]Running generate_until requests:  96%|█████████▌| 671/700 [1:14:27<03:09,  6.52s/it]Running generate_until requests:  96%|█████████▌| 672/700 [1:14:33<03:02,  6.52s/it]Running generate_until requests:  96%|█████████▌| 673/700 [1:14:40<02:56,  6.52s/it]Running generate_until requests:  96%|█████████▋| 674/700 [1:14:46<02:49,  6.52s/it]Running generate_until requests:  96%|█████████▋| 675/700 [1:14:53<02:42,  6.52s/it]Running generate_until requests:  97%|█████████▋| 676/700 [1:14:59<02:36,  6.52s/it]Running generate_until requests:  97%|█████████▋| 677/700 [1:15:06<02:30,  6.53s/it]Running generate_until requests:  97%|█████████▋| 678/700 [1:15:12<02:23,  6.52s/it]Running generate_until requests:  97%|█████████▋| 679/700 [1:15:19<02:17,  6.53s/it]Running generate_until requests:  97%|█████████▋| 680/700 [1:15:25<02:10,  6.53s/it]Running generate_until requests:  97%|█████████▋| 681/700 [1:15:32<02:04,  6.53s/it]Running generate_until requests:  97%|█████████▋| 682/700 [1:15:38<01:57,  6.53s/it]Running generate_until requests:  98%|█████████▊| 683/700 [1:15:45<01:51,  6.53s/it]Running generate_until requests:  98%|█████████▊| 684/700 [1:15:51<01:44,  6.53s/it]Running generate_until requests:  98%|█████████▊| 685/700 [1:15:58<01:38,  6.54s/it]Running generate_until requests:  98%|█████████▊| 686/700 [1:16:05<01:31,  6.54s/it]Running generate_until requests:  98%|█████████▊| 687/700 [1:16:11<01:24,  6.54s/it]Running generate_until requests:  98%|█████████▊| 688/700 [1:16:18<01:18,  6.53s/it]Running generate_until requests:  98%|█████████▊| 689/700 [1:16:24<01:11,  6.53s/it]Running generate_until requests:  99%|█████████▊| 690/700 [1:16:31<01:05,  6.53s/it]Running generate_until requests:  99%|█████████▊| 691/700 [1:16:37<00:58,  6.53s/it]Running generate_until requests:  99%|█████████▉| 692/700 [1:16:44<00:52,  6.53s/it]Running generate_until requests:  99%|█████████▉| 693/700 [1:16:50<00:45,  6.54s/it]Running generate_until requests:  99%|█████████▉| 694/700 [1:16:57<00:39,  6.53s/it]Running generate_until requests:  99%|█████████▉| 695/700 [1:17:03<00:32,  6.53s/it]Running generate_until requests:  99%|█████████▉| 696/700 [1:17:10<00:26,  6.53s/it]Running generate_until requests: 100%|█████████▉| 697/700 [1:17:16<00:19,  6.53s/it]Running generate_until requests: 100%|█████████▉| 698/700 [1:17:23<00:13,  6.53s/it]Running generate_until requests: 100%|█████████▉| 699/700 [1:17:29<00:06,  6.53s/it]Running generate_until requests: 100%|██████████| 700/700 [1:17:36<00:00,  6.53s/it]Running generate_until requests: 100%|██████████| 700/700 [1:17:36<00:00,  6.65s/it]
+[ruler2_raw] niah_multikey_2: sample_len=100 4096=0.5
+[ruler2_raw] niah_multikey_3: sample_len=100 4096=0.33
+[ruler2_raw] niah_multiquery: sample_len=100 4096=0.3225
+[ruler2_raw] niah_multivalue: sample_len=100 4096=0.3475
+[ruler2_raw] ruler_cwe: sample_len=100 4096=0.256
+[ruler2_raw] ruler_fwe: sample_len=100 4096=0.6467
+[ruler2_raw] ruler_vt: sample_len=100 4096=0.064
+[ruler2_raw] DONE
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 7019.26it/s]
+[math_raw] RAW un-retrofitted 9B (native forward, no R/decay)
+`pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+Traceback (most recent call last):
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/minerva_math/utils.py", line 16, in <module>
+    from math_verify import parse, verify
+ModuleNotFoundError: No module named 'math_verify'
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/run_recall_native.py", line 72, in <module>
+    res = lm_eval.simple_evaluate(model=lm, tasks=TASKS, limit=limit,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/utils.py", line 575, in _wrapper
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/evaluator.py", line 302, in simple_evaluate
+    loaded = task_manager.load(tasks)
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/manager.py", line 208, in load
+    obj = self._load_spec(spec) if not isinstance(spec, (Task, Group)) else spec  # type:ignore[invalid-argument-type]
+          ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/manager.py", line 154, in _load_spec
+    return self._factory.build(
+           ^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_factory.py", line 58, in build
+    return self._build_group(entry.name, raw_cfg, overrides, registry)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_factory.py", line 120, in _build_group
+    for child in self._build_group_members(
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_factory.py", line 224, in _build_group_members
+    child_obj = self.build(
+                ^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_factory.py", line 61, in build
+    return self._build_task(entry, overrides)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_factory.py", line 67, in _build_task
+    cfg = self._load_full_config(entry, overrides)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_factory.py", line 261, in _load_full_config
+    cfg = deepcopy(load_yaml(entry.yaml_path, resolve_func=True))
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_yaml_loader.py", line 185, in load_yaml
+    cfg = yaml.load(fh, Loader=loader_cls)  # noqa: S506
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/yaml/__init__.py", line 81, in load
+    return loader.get_single_data()
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/yaml/constructor.py", line 51, in get_single_data
+    return self.construct_document(node)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/yaml/constructor.py", line 60, in construct_document
+    for dummy in generator:
+  File "/usr/local/lib/python3.12/dist-packages/yaml/constructor.py", line 413, in construct_yaml_map
+    value = self.construct_mapping(node)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/yaml/constructor.py", line 218, in construct_mapping
+    return super().construct_mapping(node, deep=deep)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/yaml/constructor.py", line 143, in construct_mapping
+    value = self.construct_object(value_node, deep=deep)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/yaml/constructor.py", line 100, in construct_object
+    data = constructor(self, node)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_yaml_loader.py", line 22, in ctor
+    return _import_func_in_yml(spec, base_dir)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_yaml_loader.py", line 109, in _import_func_in_yml
+    module = _load_module_with_cache(rel)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/_yaml_loader.py", line 88, in _load_module_with_cache
+    spec.loader.exec_module(module)  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 995, in exec_module
+  File "<frozen importlib._bootstrap>", line 488, in _call_with_frames_removed
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/lm_eval/tasks/minerva_math/utils.py", line 21, in <module>
+    raise type(e)(
+ModuleNotFoundError: `sympy`, `math_verify` and `antlr4-python3-runtime==4.11` are required for generating translation task prompt templates. Please install the required packages via pip install lm-eval[math] or pip install -e .[math]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[transformers] The fast path is not available because one of `(selective_state_update, causal_conv1d_fn, causal_conv1d_update)` is None. Falling back to the naive implementation. To install follow https://github.com/state-spaces/mamba/#installation and https://github.com/Dao-AILab/causal-conv1d
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 21030.11it/s]
+[code_raw] RAW un-retrofitted 9B (native forward, no R/decay)
+`pretrained` model kwarg is not of type `str`. Many other model arguments may be ignored. Please do not launch via accelerate or use `parallelize=True` if passing an existing model this way.
+Passed an already-initialized model through `pretrained`, assuming single-process call to evaluate() or custom distributed integration
+  0%|          | 0/100 [00:00<?, ?it/s]100%|██████████| 100/100 [00:00<00:00, 2944.76it/s]
+Running generate_until requests:   0%|          | 0/100 [00:00<?, ?it/s]Running generate_until requests:   1%|          | 1/100 [00:24<40:50, 24.76s/it]Running generate_until requests:   2%|▏         | 2/100 [00:45<36:09, 22.14s/it]Running generate_until requests:   3%|▎         | 3/100 [00:46<20:50, 12.89s/it]Running generate_until requests:   4%|▍         | 4/100 [00:49<14:02,  8.78s/it]Running generate_until requests:   5%|▌         | 5/100 [01:13<22:48, 14.41s/it]Running generate_until requests:   6%|▌         | 6/100 [01:15<16:03, 10.25s/it]Running generate_until requests:   7%|▋         | 7/100 [01:35<20:46, 13.40s/it]Running generate_until requests:   8%|▊         | 8/100 [01:39<15:58, 10.42s/it]Running generate_until requests:   9%|▉         | 9/100 [01:51<16:33, 10.92s/it]Running generate_until requests:  10%|█         | 10/100 [01:56<13:39,  9.10s/it]Running generate_until requests:  11%|█         | 11/100 [02:02<12:02,  8.12s/it]Running generate_until requests:  12%|█▏        | 12/100 [02:15<14:03,  9.58s/it]Running generate_until requests:  13%|█▎        | 13/100 [02:37<19:05, 13.17s/it]Running generate_until requests:  14%|█▍        | 14/100 [02:37<13:26,  9.38s/it]Running generate_until requests:  15%|█▌        | 15/100 [02:51<15:00, 10.60s/it]Running generate_until requests:  16%|█▌        | 16/100 [02:53<11:21,  8.12s/it]Running generate_until requests:  17%|█▋        | 17/100 [03:20<19:02, 13.77s/it]Running generate_until requests:  18%|█▊        | 18/100 [03:23<14:11, 10.39s/it]Running generate_until requests:  19%|█▉        | 19/100 [03:50<20:47, 15.41s/it]Running generate_until requests:  20%|██        | 20/100 [04:16<25:07, 18.85s/it]Running generate_until requests:  21%|██        | 21/100 [04:19<18:26, 14.01s/it]Running generate_until requests:  22%|██▏       | 22/100 [04:46<23:18, 17.93s/it]Running generate_until requests:  23%|██▎       | 23/100 [05:13<26:28, 20.63s/it]Running generate_until requests:  24%|██▍       | 24/100 [05:40<28:30, 22.51s/it]Running generate_until requests:  25%|██▌       | 25/100 [05:41<20:08, 16.11s/it]Running generate_until requests:  26%|██▌       | 26/100 [06:07<23:19, 18.92s/it]Running generate_until requests:  27%|██▋       | 27/100 [06:07<16:19, 13.42s/it]Running generate_until requests:  28%|██▊       | 28/100 [06:24<17:06, 14.26s/it]Running generate_until requests:  29%|██▉       | 29/100 [06:26<12:39, 10.69s/it]Running generate_until requests:  30%|███       | 30/100 [06:53<18:06, 15.51s/it]Running generate_until requests:  31%|███       | 31/100 [07:20<21:47, 18.94s/it]Running generate_until requests:  32%|███▏      | 32/100 [07:21<15:30, 13.68s/it]Running generate_until requests:  33%|███▎      | 33/100 [07:23<11:11, 10.02s/it]Running generate_until requests:  34%|███▍      | 34/100 [07:24<08:16,  7.52s/it]Running generate_until requests:  35%|███▌      | 35/100 [07:26<06:15,  5.78s/it]Running generate_until requests:  36%|███▌      | 36/100 [07:28<04:51,  4.56s/it]Running generate_until requests:  37%|███▋      | 37/100 [07:30<04:00,  3.81s/it]Running generate_until requests:  38%|███▊      | 38/100 [07:53<10:07,  9.79s/it]Running generate_until requests:  39%|███▉      | 39/100 [08:20<15:07, 14.87s/it]Running generate_until requests:  40%|████      | 40/100 [08:22<11:04, 11.07s/it]Running generate_until requests:  41%|████      | 41/100 [08:24<08:00,  8.15s/it]Running generate_until requests:  42%|████▏     | 42/100 [08:24<05:39,  5.86s/it]Running generate_until requests:  43%|████▎     | 43/100 [08:26<04:26,  4.68s/it]Running generate_until requests:  44%|████▍     | 44/100 [08:29<03:49,  4.09s/it]Running generate_until requests:  45%|████▌     | 45/100 [08:29<02:47,  3.04s/it]Running generate_until requests:  46%|████▌     | 46/100 [08:30<02:07,  2.36s/it]Running generate_until requests:  47%|████▋     | 47/100 [08:44<05:07,  5.79s/it]Running generate_until requests:  48%|████▊     | 48/100 [08:45<03:47,  4.37s/it]Running generate_until requests:  49%|████▉     | 49/100 [08:46<02:43,  3.21s/it]Running generate_until requests:  50%|█████     | 50/100 [08:48<02:26,  2.92s/it]Running generate_until requests:  51%|█████     | 51/100 [09:15<08:13, 10.07s/it]Running generate_until requests:  52%|█████▏    | 52/100 [09:17<06:18,  7.88s/it]Running generate_until requests:  53%|█████▎    | 53/100 [09:19<04:39,  5.94s/it]Running generate_until requests:  54%|█████▍    | 54/100 [09:43<08:51, 11.56s/it]Running generate_until requests:  55%|█████▌    | 55/100 [09:45<06:21,  8.47s/it]Running generate_until requests:  56%|█████▌    | 56/100 [09:47<04:47,  6.53s/it]Running generate_until requests:  57%|█████▋    | 57/100 [09:48<03:33,  4.95s/it]Running generate_until requests:  58%|█████▊    | 58/100 [09:49<02:34,  3.68s/it]Running generate_until requests:  59%|█████▉    | 59/100 [10:15<07:12, 10.54s/it]Running generate_until requests:  60%|██████    | 60/100 [10:16<05:06,  7.67s/it]Running generate_until requests:  61%|██████    | 61/100 [10:18<03:45,  5.78s/it]Running generate_until requests:  62%|██████▏   | 62/100 [10:44<07:38, 12.05s/it]Running generate_until requests:  63%|██████▎   | 63/100 [10:46<05:33,  9.02s/it]Running generate_until requests:  64%|██████▍   | 64/100 [10:48<04:01,  6.71s/it]Running generate_until requests:  65%|██████▌   | 65/100 [10:49<02:58,  5.10s/it]Running generate_until requests:  66%|██████▌   | 66/100 [11:01<04:07,  7.27s/it]Running generate_until requests:  67%|██████▋   | 67/100 [11:03<03:04,  5.59s/it]Running generate_until requests:  68%|██████▊   | 68/100 [11:03<02:10,  4.07s/it]Running generate_until requests:  69%|██████▉   | 69/100 [11:05<01:42,  3.32s/it]Running generate_until requests:  70%|███████   | 70/100 [11:06<01:19,  2.64s/it]Running generate_until requests:  71%|███████   | 71/100 [11:08<01:06,  2.29s/it]Running generate_until requests:  72%|███████▏  | 72/100 [11:10<01:07,  2.40s/it]Running generate_until requests:  73%|███████▎  | 73/100 [11:37<04:21,  9.68s/it]Running generate_until requests:  74%|███████▍  | 74/100 [11:38<03:06,  7.19s/it]Running generate_until requests:  75%|███████▌  | 75/100 [11:50<03:37,  8.71s/it]Running generate_until requests:  76%|███████▌  | 76/100 [12:06<04:14, 10.61s/it]Running generate_until requests:  77%|███████▋  | 77/100 [12:07<03:02,  7.93s/it]Running generate_until requests:  78%|███████▊  | 78/100 [12:08<02:04,  5.67s/it]Running generate_until requests:  79%|███████▉  | 79/100 [12:08<01:28,  4.23s/it]Running generate_until requests:  80%|████████  | 80/100 [12:09<01:03,  3.18s/it]Running generate_until requests:  81%|████████  | 81/100 [12:11<00:49,  2.63s/it]Running generate_until requests:  82%|████████▏ | 82/100 [12:12<00:41,  2.29s/it]Running generate_until requests:  83%|████████▎ | 83/100 [12:14<00:35,  2.09s/it]Running generate_until requests:  84%|████████▍ | 84/100 [12:15<00:31,  1.96s/it]Running generate_until requests:  85%|████████▌ | 85/100 [12:16<00:22,  1.51s/it]Running generate_until requests:  86%|████████▌ | 86/100 [12:16<00:16,  1.15s/it]Running generate_until requests:  87%|████████▋ | 87/100 [12:17<00:13,  1.04s/it]Running generate_until requests:  88%|████████▊ | 88/100 [12:17<00:10,  1.13it/s]Running generate_until requests:  89%|████████▉ | 89/100 [12:44<01:33,  8.55s/it]Running generate_until requests:  90%|█████████ | 90/100 [12:44<01:01,  6.15s/it]Running generate_until requests:  91%|█████████ | 91/100 [12:46<00:43,  4.89s/it]Running generate_until requests:  92%|█████████▏| 92/100 [12:56<00:50,  6.33s/it]Running generate_until requests:  93%|█████████▎| 93/100 [12:57<00:33,  4.72s/it]Running generate_until requests:  94%|█████████▍| 94/100 [12:58<00:21,  3.62s/it]Running generate_until requests:  95%|█████████▌| 95/100 [13:02<00:18,  3.65s/it]Running generate_until requests:  96%|█████████▌| 96/100 [13:02<00:10,  2.62s/it]Running generate_until requests:  97%|█████████▋| 97/100 [13:02<00:05,  1.94s/it]Running generate_until requests:  98%|█████████▊| 98/100 [13:03<00:02,  1.44s/it]Running generate_until requests:  99%|█████████▉| 99/100 [13:03<00:01,  1.19s/it]Running generate_until requests: 100%|██████████| 100/100 [13:03<00:00,  1.11it/s]Running generate_until requests: 100%|██████████| 100/100 [13:03<00:00,  7.84s/it]
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+huggingface/tokenizers: The current process just got forked, after parallelism has already been used. Disabling parallelism to avoid deadlocks...
+To disable this warning, you can either:
+	- Avoid using `tokenizers` before the fork if possible
+	- Explicitly set the environment variable TOKENIZERS_PARALLELISM=(true | false)
+[code_raw] humaneval: sample_len=100 pass@1=0.22
+[code_raw] DONE
+3ARM raw DONE

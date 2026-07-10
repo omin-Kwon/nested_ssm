@@ -1,0 +1,11 @@
+{
+ "mode": "v4",
+ "ckpt": "nemo9b_rot_p4long.pt",
+ "limit": 100,
+ "results": {
+  "humaneval": {
+   "sample_len": 100,
+   "pass@1": 0.22
+  }
+ }
+}

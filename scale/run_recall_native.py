@@ -16,7 +16,7 @@ SHARED_HUB = "/NHNHOME/ARC/arclab/shared/hub"   # read-only shared cache: model
 # weights load from here explicitly; env HF_HUB_CACHE should point to a WRITABLE
 # local hub so dataset downloads (gsm8k etc.) don't hit shared .lock PermissionError
 ap = argparse.ArgumentParser()
-ap.add_argument("mode", choices=["fresh", "v4"])
+ap.add_argument("mode", choices=["raw", "fresh", "v4"])
 ap.add_argument("--ckpt", default="nemo9b_rot_p4long.pt")
 ap.add_argument("--limit", type=int, default=300)
 ap.add_argument("--tasks", nargs="+",
@@ -34,23 +34,29 @@ tok = AutoTokenizer.from_pretrained(MID, cache_dir=SHARED_HUB)
 model = AutoModelForCausalLM.from_pretrained(
     MID, dtype=torch.bfloat16, cache_dir=SHARED_HUB).to("cuda")
 model.config.use_cache = True
-mixers = [m for m in model.modules() if type(m).__name__ == "NemotronHMamba2Mixer"]
-for m in mixers:
-    m.act = ActRotMask(m.act, m.intermediate_size, m.n_groups, m.ssm_state_size).to("cuda")
-saved = torch.load(ckpt)
-for i, m in enumerate(mixers):
-    m.act.R.data.copy_(saved[i].to("cuda").float())
-if "decay" in saved:
-    for i, m in enumerate(mixers):
-        m.A_log.data.copy_(saved["decay"]["A_log"][i].to("cuda"))
-        m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to("cuda"))
-model.eval()
 tag = args.tag or f"nat_{mode}"
+if mode == "raw":
+    # stock public 9B: no ActRotMask, no ckpt, pure native forward
+    model.eval()
+    print(f"[{tag}] RAW un-retrofitted 9B (native forward, no R/decay)", flush=True)
+else:
+    mixers = [m for m in model.modules() if type(m).__name__ == "NemotronHMamba2Mixer"]
+    for m in mixers:
+        m.act = ActRotMask(m.act, m.intermediate_size, m.n_groups,
+                           m.ssm_state_size).to("cuda")
+    saved = torch.load(ckpt)
+    for i, m in enumerate(mixers):
+        m.act.R.data.copy_(saved[i].to("cuda").float())
+    if "decay" in saved:
+        for i, m in enumerate(mixers):
+            m.A_log.data.copy_(saved["decay"]["A_log"][i].to("cuda"))
+            m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to("cuda"))
+    model.eval()
 if mode == "v4":
     n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1)
     print(f"[{tag}] v4 installed on {n} mixers (pb={args.pb} c={args.c} bf16cold)",
           flush=True)
-else:
+elif mode == "fresh":
     # rotation caveat: native decode branch calls act on 2D -> ActRotMask would
     # skip R. Route ALL mixers through the v4 dispatcher with pb=128 (all-hot),
     # which mirrors native semantics but applies R in decode as well.
@@ -64,7 +70,7 @@ if args.maxlen:
     kw["metadata"] = {"max_seq_lengths": [args.maxlen], "pretrained": MID,
                       "tokenizer": MID}
 res = lm_eval.simple_evaluate(model=lm, tasks=TASKS, limit=limit,
-                              bootstrap_iters=0, **kw)
+                              bootstrap_iters=0, confirm_run_unsafe_code=True, **kw)
 out = {}
 for t, m in res["results"].items():
     out[t] = {k.split(",")[0]: v for k, v in m.items()

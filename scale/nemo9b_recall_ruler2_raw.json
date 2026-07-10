@@ -1,0 +1,35 @@
+{
+ "mode": "raw",
+ "ckpt": "nemo9b_rot_p4long.pt",
+ "limit": 100,
+ "results": {
+  "niah_multikey_2": {
+   "sample_len": 100,
+   "4096": 0.5
+  },
+  "niah_multikey_3": {
+   "sample_len": 100,
+   "4096": 0.33
+  },
+  "niah_multiquery": {
+   "sample_len": 100,
+   "4096": 0.3225
+  },
+  "niah_multivalue": {
+   "sample_len": 100,
+   "4096": 0.3475
+  },
+  "ruler_cwe": {
+   "sample_len": 100,
+   "4096": 0.256
+  },
+  "ruler_fwe": {
+   "sample_len": 100,
+   "4096": 0.6466666666666667
+  },
+  "ruler_vt": {
+   "sample_len": 100,
+   "4096": 0.064
+  }
+ }
+}

@@ -1,0 +1,47 @@
+{
+ "mode": "v4",
+ "ckpt": "nemo9b_rot_p4long.pt",
+ "limit": 100,
+ "results": {
+  "minerva_math_algebra": {
+   "sample_len": 100,
+   "exact_match": 0.03,
+   "math_verify": 0.52
+  },
+  "minerva_math_counting_and_prob": {
+   "sample_len": 100,
+   "exact_match": 0.07,
+   "math_verify": 0.23
+  },
+  "minerva_math_geometry": {
+   "sample_len": 100,
+   "exact_match": 0.02,
+   "math_verify": 0.23
+  },
+  "minerva_math_intermediate_algebra": {
+   "sample_len": 100,
+   "exact_match": 0.03,
+   "math_verify": 0.14
+  },
+  "minerva_math_num_theory": {
+   "sample_len": 100,
+   "exact_match": 0.04,
+   "math_verify": 0.23
+  },
+  "minerva_math_prealgebra": {
+   "sample_len": 100,
+   "exact_match": 0.04,
+   "math_verify": 0.54
+  },
+  "minerva_math_precalc": {
+   "sample_len": 100,
+   "exact_match": 0.02,
+   "math_verify": 0.15
+  },
+  "minerva_math": {
+   "sample_len": 700,
+   "exact_match": 0.03571428571428571,
+   "math_verify": 0.2914285714285714
+  }
+ }
+}
