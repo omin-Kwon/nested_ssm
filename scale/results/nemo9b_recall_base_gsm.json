@@ -1,0 +1,11 @@
+{
+ "mode": "raw",
+ "ckpt": "nemo9b_rot_p4long.pt",
+ "limit": 150,
+ "results": {
+  "gsm8k": {
+   "sample_len": 150,
+   "exact_match": 0.68
+  }
+ }
+}

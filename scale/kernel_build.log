@@ -1,0 +1,11 @@
+Installing collected packages: causal-conv1d
+Successfully installed causal-conv1d-1.6.2.post1
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/causal_conv1d/__init__.py", line 3, in <module>
+    from causal_conv1d.causal_conv1d_interface import causal_conv1d_fn, causal_conv1d_update
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/causal_conv1d/causal_conv1d_interface.py", line 6, in <module>
+    from causal_conv1d.cpp_functions import causal_conv1d_fwd_function, causal_conv1d_bwd_function, causal_conv1d_update_function
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/causal_conv1d/cpp_functions.py", line 5, in <module>
+    import causal_conv1d_cuda
+ImportError: /home/omin/nemo_env/lib/python3.12/site-packages/causal_conv1d_cuda.cpython-312-x86_64-linux-gnu.so: undefined symbol: _ZNK3c1010TensorImpl15incref_pyobjectEv

@@ -1,0 +1,51 @@
+GPU 3 for speed suite
+== [1/2] state-op bench B=256,448 (incl fp8 arm, fixed flush sampling) ==
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+B=  256 pb=32 c=  4 | state   36.2GB | fresh   29.46ms (    8,690 tok/s, BW~2.46TB/s) | v4   22.79ms (   11,232 tok/s) | v4-ASYNC   22.66ms | v4-BF16COLD   15.58ms (   16,435 tok/s) | hot-only   8.41ms | eager3   65.85ms | speedup: sync 1.29x ASYNC 1.30x BF16COLD 1.89x FP8COLD 0.68x (vs fused-fresh)
+B=  256 pb=32 c=  8 | state   36.2GB | fresh   29.49ms (    8,680 tok/s, BW~2.46TB/s) | v4   18.79ms (   13,623 tok/s) | v4-ASYNC   18.69ms | v4-BF16COLD   13.57ms (   18,862 tok/s) | hot-only   8.47ms | eager3   65.84ms | speedup: sync 1.57x ASYNC 1.58x BF16COLD 2.17x FP8COLD 0.91x (vs fused-fresh)
+B=  256 pb=32 c= 16 | state   36.2GB | fresh   29.58ms (    8,656 tok/s, BW~2.45TB/s) | v4   16.95ms (   15,106 tok/s) | v4-ASYNC   16.90ms | v4-BF16COLD   12.53ms (   20,423 tok/s) | hot-only   8.44ms | eager3   65.85ms | speedup: sync 1.75x ASYNC 1.75x BF16COLD 2.36x FP8COLD 1.10x (vs fused-fresh)
+B=  256 pb=32 c= 64 | state   36.2GB | fresh   29.58ms (    8,655 tok/s, BW~2.45TB/s) | v4   15.55ms (   16,464 tok/s) | v4-ASYNC   15.51ms | v4-BF16COLD   11.79ms (   21,720 tok/s) | hot-only   8.44ms | eager3   65.85ms | speedup: sync 1.90x ASYNC 1.91x BF16COLD 2.51x FP8COLD 1.29x (vs fused-fresh)
+B=  448 pb=32 c=  4 | state   63.4GB | fresh   51.21ms (    8,749 tok/s, BW~2.48TB/s) | v4   39.34ms (   11,387 tok/s) | v4-ASYNC   39.13ms | v4-BF16COLD   26.77ms (   16,733 tok/s) | hot-only  14.55ms | eager3  115.08ms | speedup: sync 1.30x ASYNC 1.31x BF16COLD 1.91x FP8COLD 0.68x (vs fused-fresh)
+B=  448 pb=32 c=  8 | state   63.4GB | fresh   51.18ms (    8,753 tok/s, BW~2.48TB/s) | v4   32.25ms (   13,893 tok/s) | v4-ASYNC   32.13ms | v4-BF16COLD   23.31ms (   19,216 tok/s) | hot-only  14.54ms | eager3  115.06ms | speedup: sync 1.59x ASYNC 1.59x BF16COLD 2.20x FP8COLD 0.91x (vs fused-fresh)
+B=  448 pb=32 c= 16 | state   63.4GB | fresh   51.24ms (    8,744 tok/s, BW~2.48TB/s) | v4   29.10ms (   15,394 tok/s) | v4-ASYNC   29.03ms | v4-BF16COLD   21.56ms (   20,777 tok/s) | hot-only  14.55ms | eager3  115.06ms | speedup: sync 1.76x ASYNC 1.76x BF16COLD 2.38x FP8COLD 1.09x (vs fused-fresh)
+B=  448 pb=32 c= 64 | state   63.4GB | fresh   51.18ms (    8,753 tok/s, BW~2.48TB/s) | v4   26.75ms (   16,747 tok/s) | v4-ASYNC   26.61ms | v4-BF16COLD   20.27ms (   22,106 tok/s) | hot-only  14.54ms | eager3  115.07ms | speedup: sync 1.91x ASYNC 1.92x BF16COLD 2.53x FP8COLD 1.28x (vs fused-fresh)
+saved bench_v4_decode.json
+== [2/2] E2E decode bench B=256 (raw/fresh/v4c16/v4c4) ==
+Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/e2e_decode_bench.py", line 25, in <module>
+    assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: fused kernels (causal_conv1d, mamba_ssm) missing!
+Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/e2e_decode_bench.py", line 25, in <module>
+    assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: fused kernels (causal_conv1d, mamba_ssm) missing!
+Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/e2e_decode_bench.py", line 25, in <module>
+    assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: fused kernels (causal_conv1d, mamba_ssm) missing!
+Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/e2e_decode_bench.py", line 25, in <module>
+    assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: fused kernels (causal_conv1d, mamba_ssm) missing!
+Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/e2e_decode_bench.py", line 25, in <module>
+    assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: fused kernels (causal_conv1d, mamba_ssm) missing!
+Traceback (most recent call last):
+  File "/home/omin/nested_ssm/scale/e2e_decode_bench.py", line 25, in <module>
+    assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: fused kernels (causal_conv1d, mamba_ssm) missing!
+SPEED SUITE DONE

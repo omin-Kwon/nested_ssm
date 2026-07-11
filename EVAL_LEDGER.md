@@ -89,6 +89,17 @@
 
 ---
 
+## 절대값 신뢰성 판정 (raw sanity, 2026-07-12)
+공식 -Base 수치 대비 우리 raw(aligned) 갭의 원인 분해 — **-Base probe 실측**:
+| task | 공식 -Base | -Base@우리harness | aligned@우리harness | 원인 |
+|---|---|---|---|---|
+| HumanEval | 58.5(avg@32) | **0.47**(pass@1) | 0.22 | **aligned 패널티 실재** (완성형 코드에서 Base가 2×) |
+| GSM8K | 91.4(자체CoT) | 0.68 | 0.77 | harness 차이 (lm-eval 5-shot strict) |
+| minerva_math | 80.5(자체채점) | 0.22 | 0.32 | harness 차이 (lm-eval minerva 0.3대 = 이 급 정상) |
+| RULER niah_1@4k | ~1.0 기대 | 0.79 | 0.77 | harness/설정 이슈 (양 ckpt 동일) — 추후 점검 |
+| winogrande/piqa | 75.3/81.8 | — | 75.4/81.6 | ✅ 일치 (likelihood형) |
+**판정: -Base 계보 전환 불필요** — 갭 대부분이 평가 스택 차이(NeMo-Skills vs lm-eval). 3-arm 델타는 동일 harness라 전부 유효. 논문엔 harness 스펙 명기 + 각주. HumanEval은 -Base 참조 행 병기 권장. json `scale/results/nemo9b_recall_base_*.json`.
+
 ## 이전 CKPT (부분 기록 — 3-arm 미완, 참고용)
 - `nemo9b_rot_qr` / `v4aware` / `p4mixed`: ppl-vs-width·needle·일부 lm-eval만 측정(당시 3-arm 원칙 이전). 상세는 메모리 research-direction §T12·NIGHT. 완전한 3-arm은 **p4long부터** 확립.
 - 밤샘 후보(v4aware6k/tdecay/tdecay2/p3/p3mixed): in-domain 우세·다운스트림 열세로 폐기, p4long이 승자. lm-eval json은 `nemo9b_lmeval_p*_c4_bf16.json`.

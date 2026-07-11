@@ -18,3 +18,5 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [nemo9b-rot] VALIDATION original=10.64 patched-full=6.98 (patched = OUR chunked scan engine)
 [nemo9b-rot] PRE-FT ppl vs width: k16:257.66 k32:292.32 k64:2071.79 k128:6.98
 [nemo9b-rot] resumed R from nemo9b_rot_p4long.pt: k16:7.84 k32:7.29 k64:7.09 k128:6.98
+[nemo9b-rot] step 200 loss 2.545 orth 0.0000 (2348s) k16:8.64 k32:7.94 k64:7.50 k128:6.99
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot.pt @ step 200
