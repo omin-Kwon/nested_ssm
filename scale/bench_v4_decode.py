@@ -33,11 +33,13 @@ L, H, P, N = 27, 128, 80, 128     # Nemotron-9B mamba2 mixer dims
 @triton.jit
 def _fp8_matvec(Q, S8, SC, Y, Nc: tl.constexpr, Pd: tl.constexpr,
                 BLOCK_N: tl.constexpr, BLOCK_P: tl.constexpr):
-    """y[bh, p] = sum_n q[bh, n] * scale[bh, n] * fp8(S8[bh, n, p]).
-    Fused dequant-matvec: reads cold snapshot at 1 byte/elem — the kernel that
-    turns the analytic fp8-cold speedup into a measured one."""
-    pid = tl.program_id(0)                                # over B*H
-    offs_p = tl.arange(0, BLOCK_P)
+    """y[r, p] = sum_n q[r, n] * scale[r, n] * fp8(S8[r, n, p]).
+    2D grid: rows x P-tiles — supports per-head (Pd=80) and group (Pd=HG*P)
+    layouts. Reads the cold snapshot at 1 byte/elem."""
+    pid = tl.program_id(0)
+    pt = tl.program_id(1)
+    offs_p = pt * BLOCK_P + tl.arange(0, BLOCK_P)
+    m_p = offs_p < Pd
     acc = tl.zeros([BLOCK_P], dtype=tl.float32)
     for n0 in range(0, Nc, BLOCK_N):
         offs_n = n0 + tl.arange(0, BLOCK_N)
@@ -45,16 +47,16 @@ def _fp8_matvec(Q, S8, SC, Y, Nc: tl.constexpr, Pd: tl.constexpr,
         qv = tl.load(Q + pid * Nc + offs_n, mask=m_n, other=0.).to(tl.float32)
         sc = tl.load(SC + pid * Nc + offs_n, mask=m_n, other=0.).to(tl.float32)
         s8 = tl.load(S8 + pid * Nc * Pd + offs_n[:, None] * Pd + offs_p[None, :],
-                     mask=m_n[:, None] & (offs_p[None, :] < Pd),
-                     other=0.).to(tl.float32)
+                     mask=m_n[:, None] & m_p[None, :], other=0.).to(tl.float32)
         acc += tl.sum((qv * sc)[:, None] * s8, 0)
-    tl.store(Y + pid * Pd + offs_p, acc, mask=offs_p < Pd)
+    tl.store(Y + pid * Pd + offs_p, acc, mask=m_p)
 
 
 def fp8_cold_readout(qc, S8, scale, out):
-    BH = qc.shape[0]
-    _fp8_matvec[(BH,)](qc, S8, scale, out, Nc=S8.shape[1], Pd=S8.shape[2],
-                       BLOCK_N=32, BLOCK_P=128)
+    R, Nc, Pd = S8.shape
+    grid = (R, triton.cdiv(Pd, 256))
+    _fp8_matvec[grid](qc, S8, scale, out, Nc=Nc, Pd=Pd,
+                      BLOCK_N=128 if Nc <= 128 else 32, BLOCK_P=256, num_warps=4)
     return out
 
 

@@ -46,57 +46,64 @@ def _v4_fused_decode(self, hidden_states, cache_params, attention_mask):
     if R is not None:                       # rotated ckpt: apply R post-conv
         Bv = torch.einsum('bgn,gmn->bgm', Bv.view(B_, G, N).float(), R).reshape(B_, G * N).to(hBC.dtype)
         Cv = torch.einsum('bgn,gmn->bgm', Cv.view(B_, G, N).float(), R).reshape(B_, G * N).to(hBC.dtype)
-    A = -torch.exp(self.A_log.float())                       # (H,)
     Bg = Bv.view(B_, G, N); Cg = Cv.view(B_, G, N)
     xh = x.view(B_, H, P)
-    dt_e = dt[:, :, None].expand(-1, -1, P)
-    dtb_e = self.dt_bias[:, None].expand(-1, P)
-    D_e = self.D[:, None].expand(-1, P)
     # ---- hot tier: official fused kernel on the narrow slice ----
-    A_hot = A[:, None, None].expand(H, P, pb).to(torch.float32)
-    y = selective_state_update(st["hot"], xh, dt_e, A_hot,
-                               Bg[..., :pb].contiguous(), Cg[..., :pb].contiguous(),
-                               D_e, z=None, dt_bias=dtb_e, dt_softplus=True)
+    y = selective_state_update(st["hot"], xh, st["dt_e"].copy_(
+            dt[:, :, None].expand(-1, -1, P)), st["A_hot"],
+            Bg[..., :pb].contiguous(), Cg[..., :pb].contiguous(),
+            st["D_e"], z=None, dt_bias=st["dtb_e"], dt_softplus=True)
     y = y.view(B_, H, P).float()
     if pb < N:
-        # ---- cold tier: quantized stale readout + decay compensation ----
-        qc = Cg[..., pb:].repeat_interleave(H // G, dim=1)   # (B,H,Nc)
-        comp = torch.exp(st["glog"])[..., None]              # (B,H,1)
+        HG = H // G
+        # ---- cold readout: per-head bmm on the SNAPSHOT-RESIDENT master ----
+        qc = Cg[..., pb:].repeat_interleave(HG, dim=1)               # (B,H,Nc)
         if cfg["cold"] == "fp8":
-            fp8_cold_readout(qc.float().reshape(B_ * H, Nc).contiguous(),
+            fp8_cold_readout(qc.reshape(B_ * H, Nc).float().contiguous(),
                              st["snap8"], st["scale8"], st["y8"])
-            y = y + st["y8"].view(B_, H, P) * comp
-        else:                                                # bf16 snapshot, cuBLAS
-            yc = torch.bmm(qc.reshape(B_ * H, 1, Nc).to(torch.bfloat16),
-                           st["snapH"]).view(B_, H, P).float()
-            y = y + yc * comp
-        # ---- staleness bookkeeping + amortized exact flush ----
-        dta = (F.softplus(dt.float() + self.dt_bias.float()) * A)   # (B,H) log-decay
+            yc = st["y8"].view(B_, H, P)
+        else:
+            yc = torch.bmm(qc.reshape(B_ * H, 1, Nc).to(st["snapH"].dtype),
+                           st["snapH"].view(B_ * H, Nc, P)).view(B_, H, P).float()
+        sp = F.softplus(dt.float() + self.dt_bias.float())           # ONCE (B,H)
+        dta = sp * (-torch.exp(self.A_log.float()))
+        y.addcmul_(yc, torch.exp(st["glog"]).unsqueeze(-1))          # fused comp+add
         t = st["t"]
-        st["bufB"][t % c].copy_(Bg[..., pb:].repeat_interleave(H // G, dim=1))
-        st["bufX"][t % c].copy_(xh * F.softplus(dt.float() + self.dt_bias.float())[..., None])
+        st["bufB"][t % c].copy_(Bg[..., pb:])                        # (B,G,Nc)
+        st["bufX"][t % c].copy_(xh * sp.unsqueeze(-1))
         st["bufA"][t % c].copy_(dta)
         st["t"] = t + 1
         if (t + 1) % c == 0:
-            cold = cache_params.layers[self.layer_idx].recurrent_states[..., pb:]
-            suf = torch.flip(torch.cumsum(torch.flip(st["bufA"], [0]), 0), [0])  # (c,B,H)
-            suf = suf - st["bufA"]                            # decay AFTER token j
-            Wx = st["bufX"] * torch.exp(suf)[..., None]       # (c,B,H,P)
-            cold.mul_(torch.exp(st["bufA"].sum(0))[..., None, None])
-            cold.add_(torch.einsum('cbhp,cbhn->bhpn', Wx, st["bufB"]))
+            # flush INTO the bf16 snapshot master (chunk-rounded semantics ==
+            # the acc-validated bf16-cold ablation). No cache writes, no requant.
+            suf = torch.flip(torch.cumsum(torch.flip(st["bufA"], [0]), 0), [0]) - st["bufA"]
+            Wx = (st["bufX"] * torch.exp(suf).unsqueeze(-1)).to(torch.bfloat16)
+            Bh = st["bufB"].repeat_interleave(HG, dim=2).to(torch.bfloat16)
+            upd = torch.einsum('cbhp,cbhn->bhnp', Wx, Bh)            # bf16 cuBLAS
+            m = st["snapH"] if cfg["cold"] != "fp8" else st["shadow"]
+            m.mul_(torch.exp(st["bufA"].sum(0))[..., None, None].to(m.dtype))
+            m.add_(upd.to(m.dtype))
             st["glog"].zero_()
-            if cfg["cold"] == "fp8":
-                sc = cold.abs().amax(-2).clamp(min=1e-6).div(448.)       # (B,H,Nc)
+            if cfg["cold"] == "fp8":                                 # fp8 copy for reads
+                sc = m.float().abs().amax(-1).clamp(min=1e-6).div(448.)
                 st["scale8"].copy_(sc.reshape(B_ * H, Nc))
-                st["snap8"].copy_((cold.permute(0, 1, 3, 2) / sc[..., None])
+                st["snap8"].copy_((m / sc.to(m.dtype)[..., None])
                                   .reshape(B_ * H, Nc, P).to(torch.float8_e4m3fn))
-            else:
-                st["snapH"].copy_(cold.permute(0, 1, 3, 2)
-                                  .reshape(B_ * H, Nc, P).to(torch.bfloat16))
         else:
-            st["glog"] = st["glog"] + dta
+            st["glog"] += dta
     y = self.norm(y.view(B_, H * P).to(hidden_states.dtype), gate)
     return self.out_proj(y.to(self.out_proj.weight.dtype))[:, None, ...]
+
+
+def _requant(st, cold, B_, G, HG, Nc, P, mode):
+    """cold (B,H,P,Nc) fp32 master -> group-layout snapshot (BG, Nc, HG*P)."""
+    snap = cold.view(B_, G, HG, P, Nc).permute(0, 1, 4, 2, 3).reshape(B_ * G, Nc, HG * P)
+    if mode == "fp8":
+        sc = snap.abs().amax(-1).clamp(min=1e-6).div(448.)           # (BG,Nc)
+        st["scale8"].copy_(sc)
+        st["snap8"].copy_((snap / sc[..., None]).to(torch.float8_e4m3fn))
+    else:                                        # bf16 (default) or fp32
+        st["snapH"].copy_(snap.to(st["snapH"].dtype))
 
 
 def _dispatch(self, hidden_states, cache_params=None, attention_mask=None, **kw):
@@ -115,25 +122,37 @@ def _dispatch(self, hidden_states, cache_params=None, attention_mask=None, **kw)
         B_ = hidden_states.shape[0]
         H, P, N, G = (self.num_heads, self.head_dim, self.ssm_state_size,
                       self.n_groups)
-        cfg = self.v4cfg; pb = cfg["pb"]; Nc = N - pb; c = cfg["c"]
+        cfg = self.v4cfg; pb = cfg["pb"]; Nc = N - pb; c = cfg["c"]; HG = H // G
         rec = cache_params.layers[self.layer_idx].recurrent_states
         dev = rec.device
+        A = -torch.exp(self.A_log.float())
         st = {"hot": rec[..., :pb].contiguous().float(),
               "glog": torch.zeros(B_, H, device=dev),
               "t": 0,
-              "bufB": torch.zeros(c, B_, H, Nc, device=dev),
+              # preallocated constants (avoid per-step expand/alloc)
+              "dt_e": torch.empty(B_, H, P, device=dev, dtype=rec.dtype
+                                  if rec.dtype != torch.float32 else torch.bfloat16),
+              "A_hot": A[:, None, None].expand(H, P, pb).contiguous(),
+              "dtb_e": self.dt_bias[:, None].expand(H, P).contiguous(),
+              "D_e": self.D[:, None].expand(H, P).contiguous(),
+              # flush buffers: B at GROUP level (16x smaller), X per head
+              "bufB": torch.zeros(c, B_, G, Nc, device=dev),
               "bufX": torch.zeros(c, B_, H, P, device=dev),
               "bufA": torch.zeros(c, B_, H, device=dev)}
-        cold = rec[..., pb:].float()
+        st["dt_e"] = torch.empty(B_, H, P, device=dev,
+                                 dtype=st["dtb_e"].dtype)
+        cold = rec[..., pb:].float().permute(0, 1, 3, 2).contiguous()  # (B,H,Nc,P)
         if cfg["cold"] == "fp8":
-            sc = cold.abs().amax(-2).clamp(min=1e-6).div(448.)
+            st["shadow"] = cold.to(torch.bfloat16)                   # bf16 master
+            sc = cold.abs().amax(-1).clamp(min=1e-6).div(448.)
             st["scale8"] = sc.reshape(B_ * H, Nc).contiguous()
-            st["snap8"] = ((cold.permute(0, 1, 3, 2) / sc[..., None])
-                           .reshape(B_ * H, Nc, P).to(torch.float8_e4m3fn).contiguous())
+            st["snap8"] = ((cold / sc[..., None]).reshape(B_ * H, Nc, P)
+                           .to(torch.float8_e4m3fn).contiguous())
             st["y8"] = torch.empty(B_ * H, P, device=dev)
+        elif cfg["cold"] == "fp32":
+            st["snapH"] = cold                                       # fp32 master
         else:
-            st["snapH"] = (cold.permute(0, 1, 3, 2).reshape(B_ * H, Nc, P)
-                           .to(torch.bfloat16).contiguous())
+            st["snapH"] = cold.to(torch.bfloat16)                    # bf16 master
         self._v4state = st
     return out
 

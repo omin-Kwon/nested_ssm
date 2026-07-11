@@ -14,7 +14,8 @@ MID = "nvidia/NVIDIA-Nemotron-Nano-9B-v2"
 SHARED = "/NHNHOME/ARC/arclab/shared/hub"
 ARMS = {"raw": None, "fresh": (128, 16, "bf16"),
         "v4c16": (32, 16, "bf16"), "v4c4": (32, 4, "bf16"),
-        "v4c16fp8": (32, 16, "fp8"), "v4c4fp8": (32, 4, "fp8")}
+        "v4c16fp8": (32, 16, "fp8"), "v4c4fp8": (32, 4, "fp8"),
+        "v4c16fp32": (32, 16, "fp32"), "v4c4fp32": (32, 4, "fp32")}
 ap = argparse.ArgumentParser()
 ap.add_argument("arm", choices=list(ARMS))
 ap.add_argument("--B", type=int, default=256)

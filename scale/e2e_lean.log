@@ -1,0 +1,96 @@
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 10619.04it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[e2e_raw] B=256 gen=128: 43.81 ms/step, 5,844 tok/s aggregate
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19340.09it/s]
+[e2e_fresh] fused v4 on 27 mixers (pb=128 c=16 cold=bf16)
+[e2e_fresh] B=256 gen=128: 47.19 ms/step, 5,425 tok/s aggregate
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19794.04it/s]
+[e2e_v4c4fp32] fused v4 on 27 mixers (pb=32 c=4 cold=fp32)
+[e2e_v4c4fp32] B=256 gen=128: 70.37 ms/step, 3,638 tok/s aggregate
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 18867.34it/s]
+[e2e_v4c4] fused v4 on 27 mixers (pb=32 c=4 cold=bf16)
+[e2e_v4c4] B=256 gen=128: 62.53 ms/step, 4,094 tok/s aggregate
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 20223.66it/s]
+[e2e_v4c4fp8] fused v4 on 27 mixers (pb=32 c=4 cold=fp8)
+[e2e_v4c4fp8] B=256 gen=128: 75.37 ms/step, 3,397 tok/s aggregate
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 22202.07it/s]
+[e2e_v4c16fp32] fused v4 on 27 mixers (pb=32 c=16 cold=fp32)
+[e2e_v4c16fp32] B=256 gen=128: 49.52 ms/step, 5,170 tok/s aggregate
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 19246.92it/s]
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[e2e_v4c16] fused v4 on 27 mixers (pb=32 c=16 cold=bf16)
+[e2e_v4c16] B=256 gen=128: 46.59 ms/step, 5,495 tok/s aggregate
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 35175.17it/s]
+[e2e_v4c16fp8] fused v4 on 27 mixers (pb=32 c=16 cold=fp8)
+[e2e_v4c16fp8] B=256 gen=128: 48.83 ms/step, 5,243 tok/s aggregate
+E2E LEAN DONE
