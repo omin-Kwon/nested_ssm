@@ -117,6 +117,7 @@ python3 plot_grid.py                                       # -> poc_grid.png
 - 환경: 4× B200, torch 2.10, 순수 PyTorch(no fla). GPU 0/2는 타 유저와 공유될 수 있음(1/3 사용).
 
 ## 6. 파일 지도
+- `EVAL_LEDGER.md` — **★ 체크포인트 단계별 3-arm(raw/fresh/v4-c4) 정확도 원장 (전 태스크별 값):** 유지규칙(항상 3-arm, 방법론 바뀔 때마다 갱신) + p4long 전 스택 완비(commonsense/recall/RULER11/GSM8K/HumanEval/minerva) + minerva만 −2.9 잔존(long-CoT 재학습 처방) + longcot ckpt 예약 슬롯.
 - `TRAIN_REPRO.md` — **★ 9B retrofit 처음부터 재현 레시피 (단일 소스):** 환경·데이터prep·ckpt 4단계 resume 체인(raw→qr→v4aware→p4mixed→p4long) 정확한 커맨드+계보표+평가재현+함정. `.pt`가 git 미포함이라 유일 재현 경로.
 - `KEY_RESULTS.md` — **★ 논문 논리 흐름용 핵심 결과 정리 (2026-07-09):** 문제→아이디어→방법(3.5M retrofit)→속도(실측 2.42×, 분해표)→정확도(전 축 lossless)→비대칭 정밀도 면허→레시피 발견 3건→2단 배포 서사→정직한 한정. 헤드라인 수치의 단일 소스.
 - `TRAINING.md` — **학습 방법론(공통 레시피+가족별 norm 처리) + 전체 런 결과 원장(탄력성/tax 표, arms 판정 표, retrofit) + 안정화 인시던트 체크리스트.** 논문 §3.1/§4의 원장.

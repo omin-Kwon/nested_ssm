@@ -180,6 +180,9 @@ def main():
                    help="unfreeze A_log/dt_bias at 0.05x lr (staleness-adaptive decay). "
                         "BREAKS exact full-width preservation -> watch k128 gate")
     p.add_argument("--log_every", type=int, default=100)
+    p.add_argument("--save_every", type=int, default=0,
+                   help="checkpoint to <save> every N steps (crash/GPU-reclaim safety "
+                        "on contended GPUs; 0 = only at end)")
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--data", default="wt103_train_nemo.npy",
                    help="tokenized train corpus (night finding: wikitext-only FT "
@@ -321,6 +324,13 @@ def main():
                   f"({time.time()-t0:.0f}s) " +
                   " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths),
                   flush=True)
+        if args.save_every and (step + 1) % args.save_every == 0:
+            ck = {i: R.detach().cpu() for i, R in enumerate(Rs)}
+            if args.tune_decay:
+                ck["decay"] = {"A_log": [m.A_log.detach().cpu() for m in mixers],
+                               "dt_bias": [m.dt_bias.detach().cpu() for m in mixers]}
+            torch.save(ck, args.save)                # overwrite = latest safe point
+            print(f"[{tag}] [ckpt] saved {args.save} @ step {step+1}", flush=True)
     print(f"[{tag}] FINAL " +
           " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths), flush=True)
     out = {i: R.detach().cpu() for i, R in enumerate(Rs)}
