@@ -1,0 +1,7 @@
+ERROR: Cannot install litellm, litellm[caching]==1.83.14, nemo-skills==0.7.0, nemo_run and nemo_skills because these package versions have conflicting dependencies.
+ERROR: ResolutionImpossible: for help visit https://pip.pypa.io/en/latest/topics/dependency-resolution/#dealing-with-dependency-conflicts
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+ModuleNotFoundError: No module named 'nemo_skills'
+bash: line 4: /home/omin/ns_env/bin/ns: No such file or directory
+NS2_DONE

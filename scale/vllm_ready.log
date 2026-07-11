@@ -1,0 +1,2 @@
+VLLM_READY
+{"id":"cmpl-85a70071653028ef","object":"text_completion","created":1783791228,"model":"nvidia/NVIDIA-Nemotron-Nano-9B-v2","choices":[{"index":0,"text":" Paris.\nprint(greeting(\"John","logprobs":null,"finish_reason":"length","stop_reason":null,"token_ids":null,"prompt_logprobs":null,"prompt_token_ids":null,"routed_experts":null}],"service_tier":null,"system_fingerprint":"vllm-0.24.0-3d914dd3","usa

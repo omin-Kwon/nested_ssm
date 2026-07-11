@@ -22,3 +22,10 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [nemo9b-rot] [ckpt] saved nemo9b_rot_longcot.pt @ step 200
 [nemo9b-rot] step 400 loss 2.369 orth 0.0000 (5106s) k16:8.76 k32:7.86 k64:7.58 k128:6.98
 [nemo9b-rot] [ckpt] saved nemo9b_rot_longcot.pt @ step 400
+[nemo9b-rot] step 600 loss 2.218 orth 0.0000 (7486s) k16:8.76 k32:7.71 k64:7.22 k128:6.97
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot.pt @ step 600
+[nemo9b-rot] step 800 loss 2.605 orth 0.0000 (10196s) k16:8.62 k32:7.71 k64:7.25 k128:6.98
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot.pt @ step 800
+[nemo9b-rot] FINAL k16:8.62 k32:7.71 k64:7.25 k128:6.98
+[nemo9b-rot] saved nemo9b_rot_longcot.pt
+RETRAIN LONGCOT DONE
