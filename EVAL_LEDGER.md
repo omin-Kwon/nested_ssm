@@ -3,7 +3,7 @@
 > **원칙 (유지 규칙):**
 > 1. 모든 정확도 비교는 **raw / fresh / v4** 3개를 항상 함께 기록. (raw=순정 9B, fresh=retrofit·tiering off, v4=retrofit·tiering on)
 > 2. **학습 방법론이 바뀔 때마다**(레시피/데이터/seqlen/c-menu 등) 여기에 새 체크포인트 섹션 추가 + TRAIN_REPRO.md 계보표 갱신.
-> 3. 원시 수치는 `scale/nemo9b_recall_*.json`·`nemo9b_lmeval_*.json` + 로그. 이 문서는 그 요약 진실.
+> 3. 원시 수치는 `scale/results/*.json` + `scale/logs/*.log` (2026-07-12 정리로 이동; 새 실행 산출물은 scale/ 루트에 생기니 주기적으로 쓸어담을 것). 이 문서는 그 요약 진실.
 > 4. c는 v4에만 있는 파라미터(tiering 갱신주기) → raw/fresh엔 c 없음. 짧은답=lossless는 c 무관, decode-heavy만 c 민감.
 
 ---

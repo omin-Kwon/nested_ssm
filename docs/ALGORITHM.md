@@ -1,6 +1,28 @@
-# Core Algorithm — Nested Block-Delta Memory (설계 v1)
+# ALGORITHM — 설계 역사 (v1~v4) + 현재 최종형
+
+## ★ 현재 알고리즘 (v4 최종형, 1페이지 — 2026-07-12 기준)
+
+이 문서의 본문은 **설계 역사**(v1 반증 → v3 placement-first → v4 도출)다. 바쁘면 이 1페이지만:
+
+**상태 분해**: recurrent state S∈R^{P×N}의 열(N축, d_state)을 중요도순 정렬(nested 학습이 만듦) 후 앞 pb열 = **hot**, 뒤 N−pb열 = **cold**.
+- **hot (fresh)**: 매 decode 토큰 정확 갱신+읽기 — recency의 담당자.
+- **cold (dense-but-stale)**: 쓰기는 **c토큰마다 chunk-batched exact replay**(버퍼된 k,v,decay를 matmul 한 방 — 근사 아님), 읽기는 **직전 snapshot + scalar decay 보정**(오차 = 최근 ≤c토큰의 cold 성분뿐, age-국소).
+- **prefill은 native chunked scan 그대로**(자연 fresh) → tiering은 decode에만. = warmup=프롬프트 의미론.
+
+**왜 빠른가** (memory-bound decode에서 바이트가 화폐): fresh 2.0S/token → tiering이 cold **write**를 ÷c, cold **read**는 bf16/fp8 스냅샷(chunk당 1회 라운딩이라 저정밀 면허 — per-token 경로는 fp8에 깨짐 +5.1%, cold는 0%). **B200 실측 2.42×** (c16+bf16cold), fp8-cold ~2.8× analytic.
+
+**왜 정확한가**: ① 쓰기는 항상 exact(E6 판정: 근사-쓰기는 붕괴, stale-읽기는 양성), ② 학습(retrofit 0.04%: 회전 R+QR로 full-width 보존 보장 + v4-aware 50% 스텝 + tune_decay + mixed 데이터)이 stale-읽기 비용을 0으로, ③ **c = 생성길이/recall-SLA 다이얼** — 짧은답 c16, 긴 CoT c4 (GSM8K 실증).
+
+**핵심 발견 요약**: delta의 full-width 결합이 곧 용량(블록 분해 금지, v1 반증) / staleness 금기는 correction이지 readout이 아님(E6) / nesting은 hot 티어를 자족 메모리로 만듦(hot-alone 0.46 vs dedic 0.00).
+
+구현: 학습 `scale/nemotron_retrofit.py`(chunked_mixer_forward), 배포형 decode `scale/v4_native_decode.py`, 수치 `KEY_RESULTS.md`.
+
+---
+
+# (이하 원문) Core Algorithm — Nested Block-Delta Memory (설계 v1)
 
 *Elastic Test-Time Memory의 core algorithm 설계. 담당: Fable 5 세션 (Opus 4.8 세션의 PoC/문헌 위에서).*
+*⚠ 역사 문서: v1(Nested Block-Delta)은 E1에서 반증되어 폐기됨. 최종형은 위 1페이지와 §9~13 참조.*
 *읽기 전제: `PROBLEM_SETTING.md` §1–3, §7.*
 
 ---
