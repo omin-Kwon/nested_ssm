@@ -22,11 +22,12 @@ ap.add_argument("--gen", type=int, default=128)
 args = ap.parse_args()
 
 from transformers.models.nemotron_h import modeling_nemotron_h as M
-assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
 
 tok = AutoTokenizer.from_pretrained(MID, cache_dir=SHARED)
 model = AutoModelForCausalLM.from_pretrained(MID, dtype=torch.bfloat16,
                                              cache_dir=SHARED).to("cuda")
+# fast-path resolution is LAZY (at mixer init) — assert only after model load
+assert M.is_fast_path_available, "fused kernels (causal_conv1d, mamba_ssm) missing!"
 model.config.use_cache = True
 model.eval()
 if ARMS[args.arm] is not None:

@@ -1,0 +1,29 @@
+Installing collected packages: causal-conv1d
+Successfully installed causal-conv1d-1.6.2.post1
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+causal_conv1d OK
+Requirement already satisfied: cuda-pathfinder~=1.1 in /home/omin/nemo_env/lib/python3.12/site-packages (from cuda-python>=12.8->nvidia-cutlass-dsl-libs-base==4.6.0->nvidia-cutlass-dsl==4.6.0->quack-kernels>=0.3.4->mamba-ssm) (1.5.6)
+Requirement already satisfied: mdurl~=0.1 in /usr/local/lib/python3.12/dist-packages (from markdown-it-py>=2.2.0->rich>=13.8.0->typer->transformers->mamba-ssm) (0.1.2)
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Traceback (most recent call last):
+  File "<string>", line 1, in <module>
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/mamba_ssm/__init__.py", line 3, in <module>
+    from mamba_ssm.ops.selective_scan_interface import selective_scan_fn, mamba_inner_fn
+  File "/home/omin/nemo_env/lib/python3.12/site-packages/mamba_ssm/ops/selective_scan_interface.py", line 20, in <module>
+    import selective_scan_cuda
+ImportError: /home/omin/nemo_env/lib/python3.12/site-packages/selective_scan_cuda.cpython-312-x86_64-linux-gnu.so: undefined symbol: _ZNK3c1010TensorImpl15incref_pyobjectEv
+KERNEL BUILD DONE
