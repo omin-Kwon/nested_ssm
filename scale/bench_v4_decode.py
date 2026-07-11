@@ -24,8 +24,38 @@ Run with SYSTEM python3 (needs fla), e.g.:
 """
 import argparse, json
 import torch
+import triton
+import triton.language as tl
 
 L, H, P, N = 27, 128, 80, 128     # Nemotron-9B mamba2 mixer dims
+
+
+@triton.jit
+def _fp8_matvec(Q, S8, SC, Y, Nc: tl.constexpr, Pd: tl.constexpr,
+                BLOCK_N: tl.constexpr, BLOCK_P: tl.constexpr):
+    """y[bh, p] = sum_n q[bh, n] * scale[bh, n] * fp8(S8[bh, n, p]).
+    Fused dequant-matvec: reads cold snapshot at 1 byte/elem — the kernel that
+    turns the analytic fp8-cold speedup into a measured one."""
+    pid = tl.program_id(0)                                # over B*H
+    offs_p = tl.arange(0, BLOCK_P)
+    acc = tl.zeros([BLOCK_P], dtype=tl.float32)
+    for n0 in range(0, Nc, BLOCK_N):
+        offs_n = n0 + tl.arange(0, BLOCK_N)
+        m_n = offs_n < Nc
+        qv = tl.load(Q + pid * Nc + offs_n, mask=m_n, other=0.).to(tl.float32)
+        sc = tl.load(SC + pid * Nc + offs_n, mask=m_n, other=0.).to(tl.float32)
+        s8 = tl.load(S8 + pid * Nc * Pd + offs_n[:, None] * Pd + offs_p[None, :],
+                     mask=m_n[:, None] & (offs_p[None, :] < Pd),
+                     other=0.).to(tl.float32)
+        acc += tl.sum((qv * sc)[:, None] * s8, 0)
+    tl.store(Y + pid * Pd + offs_p, acc, mask=offs_p < Pd)
+
+
+def fp8_cold_readout(qc, S8, scale, out):
+    BH = qc.shape[0]
+    _fp8_matvec[(BH,)](qc, S8, scale, out, Nc=S8.shape[1], Pd=S8.shape[2],
+                       BLOCK_N=32, BLOCK_P=128)
+    return out
 
 
 def timed(fn, iters, warmup, sync_buf=None):
@@ -91,7 +121,8 @@ def run_point(B, pb, c, device, iters=20, warmup=5):
                 Snap[l].mul_(0.98).add_(
                     torch.einsum('cbhn,cbhp->bhnp', bufK, bufV))
         step_idx[0] = t + 1
-    res["v4_ms"] = timed(v4, iters, warmup)
+    it_c = max(iters, 4 * c)                    # exact flush amortization
+    res["v4_ms"] = timed(v4, it_c, warmup)
     del Snap, bufK, bufV; torch.cuda.empty_cache()
 
     # ---- v4-async: flush hidden on side stream, snapshot lagged ONE chunk ----
@@ -127,7 +158,7 @@ def run_point(B, pb, c, device, iters=20, warmup=5):
                 flush_ev.record(side)
             st["cur"] = cur
         st["t"] = t + 1
-    res["v4async_ms"] = timed(v4async, iters, warmup)
+    res["v4async_ms"] = timed(v4async, it_c, warmup)
     torch.cuda.synchronize()
     del SnapP, bufKP, bufVP; torch.cuda.empty_cache()
 
@@ -154,8 +185,39 @@ def run_point(B, pb, c, device, iters=20, warmup=5):
                 SnapH[l].mul_(0.98).add_(
                     torch.einsum('cbhn,cbhp->bhnp', bufKh, bufVh))
         step_idx2[0] = t + 1
-    res["v4bf16_ms"] = timed(v4bf16, iters, warmup)
-    del Sh, SnapH, bufKh, bufVh; torch.cuda.empty_cache()
+    res["v4bf16_ms"] = timed(v4bf16, it_c, warmup)
+    del SnapH, bufKh, bufVh; torch.cuda.empty_cache()
+
+    # ---- v4 fp8-cold: scaled fp8 snapshot + Triton fused dequant-matvec readout
+    # (reads cold at 1 byte/elem; flush quantizes once per chunk — the asymmetric
+    # precision license, measured. Baseline CANNOT do per-token fp8: +5.1% ppl.)
+    f8 = torch.float8_e4m3fn
+    S8 = [torch.zeros(B * H, Nc, P, device=device, dtype=f8) for _ in range(L)]
+    SC8 = [torch.ones(B * H, Nc, device=device) for _ in range(L)]
+    qc2 = q[..., pb:].float().reshape(B * H, Nc).contiguous()
+    y8 = torch.empty(B * H, P, device=device)
+    bufK8 = torch.zeros(c, B, H, Nc, device=device, dtype=dt)
+    bufV8 = torch.zeros(c, B, H, P, device=device, dtype=dt)
+    acc_cold = torch.zeros(B, H, Nc, P, device=device)   # fp32 master (flush-side)
+    step_idx3 = [0]
+    def v4fp8():
+        t = step_idx3[0]
+        for l in range(L):
+            o, s2 = sgla(qh, kh, v, g=g, initial_state=Sh[l], output_final_state=True)
+            Sh[l].copy_(s2)
+            fp8_cold_readout(qc2, S8[l], SC8[l], y8)     # 1B/elem cold read
+        bufK8[t % c].copy_(kc_bf); bufV8[t % c].copy_(v_bf)
+        if (t + 1) % c == 0:                             # flush: fp32 accum -> fp8 store
+            for l in range(L):
+                acc_cold.mul_(0.98).add_(
+                    torch.einsum('cbhn,cbhp->bhnp', bufK8.float(), bufV8.float()))
+                sc = acc_cold.abs().amax(-1).clamp(min=1e-6).div(448.).reshape(B * H, Nc)
+                SC8[l].copy_(sc)
+                S8[l].copy_((acc_cold.reshape(B * H, Nc, P)
+                             / sc[..., None]).to(f8))
+        step_idx3[0] = t + 1
+    res["v4fp8_ms"] = timed(v4fp8, it_c, warmup)
+    del Sh, S8, SC8, bufK8, bufV8, acc_cold; torch.cuda.empty_cache()
 
     # ---- eager 3-pass fresh (unfused engine reference) ----
     S = [torch.zeros(B, H, N, P, device=device) for _ in range(L)]
@@ -179,6 +241,8 @@ def run_point(B, pb, c, device, iters=20, warmup=5):
                speedup_vs_fresh=res["fresh_ms"] / res["v4_ms"],
                speedup_async=res["fresh_ms"] / res["v4async_ms"],
                speedup_bf16=res["fresh_ms"] / res["v4bf16_ms"],
+               speedup_fp8=res["fresh_ms"] / res["v4fp8_ms"],
+               v4fp8_toks=B / res["v4fp8_ms"] * 1e3,
                speedup_vs_eager3=res["eager3_ms"] / res["v4_ms"],
                fresh_bw_tbs=2 * state_gb / res["fresh_ms"])   # fused ~2S traffic
     return res
@@ -211,7 +275,8 @@ def main():
                   f"v4-BF16COLD {r['v4bf16_ms']:7.2f}ms ({r['v4bf16_toks']:>9,.0f} tok/s) | "
                   f"hot-only {r['hotonly_ms']:6.2f}ms | eager3 {r['eager3_ms']:7.2f}ms | "
                   f"speedup: sync {r['speedup_vs_fresh']:.2f}x ASYNC {r['speedup_async']:.2f}x "
-                  f"BF16COLD {r['speedup_bf16']:.2f}x (vs fused-fresh)", flush=True)
+                  f"BF16COLD {r['speedup_bf16']:.2f}x FP8COLD {r['speedup_fp8']:.2f}x "
+                  f"(vs fused-fresh)", flush=True)
     json.dump(out, open("bench_v4_decode.json", "w"), indent=1)
     print("saved bench_v4_decode.json", flush=True)
 

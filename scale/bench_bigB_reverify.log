@@ -1,0 +1,19 @@
+GPU 3 for big-B bench reverify
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: flash_attn::_flash_attn_backward(Tensor dout, Tensor q, Tensor k, Tensor v, Tensor out, Tensor softmax_lse, Tensor(a6!)? dq, Tensor(a7!)? dk, Tensor(a8!)? dv, float dropout_p, float softmax_scale, bool causal, SymInt window_size_left, SymInt window_size_right, float softcap, Tensor? alibi_slopes, bool deterministic, Tensor? rng_state=None) -> Tensor
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+B=  256 pb=32 c=  4 | state   36.2GB | fresh   29.50ms (    8,678 tok/s, BW~2.46TB/s) | v4   22.77ms (   11,242 tok/s) | v4-ASYNC   22.65ms | v4-BF16COLD   15.56ms (   16,454 tok/s) | hot-only   8.39ms | eager3   65.86ms | speedup: sync 1.30x ASYNC 1.30x BF16COLD 1.90x (vs fused-fresh)
+B=  256 pb=32 c=  8 | state   36.2GB | fresh   29.45ms (    8,691 tok/s, BW~2.46TB/s) | v4   18.76ms (   13,649 tok/s) | v4-ASYNC   18.67ms | v4-BF16COLD   13.56ms (   18,875 tok/s) | hot-only   8.45ms | eager3   65.86ms | speedup: sync 1.57x ASYNC 1.58x BF16COLD 2.17x (vs fused-fresh)
+B=  256 pb=32 c= 16 | state   36.2GB | fresh   29.46ms (    8,689 tok/s, BW~2.46TB/s) | v4   16.95ms (   15,101 tok/s) | v4-ASYNC   16.91ms | v4-BF16COLD   12.66ms (   20,216 tok/s) | hot-only   8.45ms | eager3  124.25ms | speedup: sync 1.74x ASYNC 1.74x BF16COLD 2.33x (vs fused-fresh)
+B=  256 pb=32 c= 64 | state   36.2GB | fresh   39.27ms (    6,519 tok/s, BW~1.85TB/s) | v4   20.93ms (   12,231 tok/s) | v4-ASYNC   20.98ms | v4-BF16COLD   19.80ms (   12,932 tok/s) | hot-only  11.27ms | eager3   89.96ms | speedup: sync 1.88x ASYNC 1.87x BF16COLD 1.98x (vs fused-fresh)
+B=  448 pb=32 c=  4 | state   63.4GB | fresh   80.61ms (    5,558 tok/s, BW~1.57TB/s) | v4   68.94ms (    6,498 tok/s) | v4-ASYNC   70.60ms | v4-BF16COLD   42.32ms (   10,586 tok/s) | hot-only  25.27ms | eager3  155.64ms | speedup: sync 1.17x ASYNC 1.14x BF16COLD 1.90x (vs fused-fresh)
+B=  448 pb=32 c=  8 | state   63.4GB | fresh   69.36ms (    6,459 tok/s, BW~1.83TB/s) | v4   55.67ms (    8,047 tok/s) | v4-ASYNC   56.03ms | v4-BF16COLD   47.87ms (    9,359 tok/s) | hot-only  19.54ms | eager3  186.06ms | speedup: sync 1.25x ASYNC 1.24x BF16COLD 1.45x (vs fused-fresh)
+B=  448 pb=32 c= 16 | state   63.4GB | fresh   89.66ms (    4,997 tok/s, BW~1.41TB/s) | v4   52.79ms (    8,487 tok/s) | v4-ASYNC   38.95ms | v4-BF16COLD   36.25ms (   12,357 tok/s) | hot-only  25.29ms | eager3  213.16ms | speedup: sync 1.70x ASYNC 2.30x BF16COLD 2.47x (vs fused-fresh)
+B=  448 pb=32 c= 64 | state   63.4GB | fresh   68.82ms (    6,510 tok/s, BW~1.84TB/s) | v4   42.96ms (   10,428 tok/s) | v4-ASYNC   45.00ms | v4-BF16COLD   37.13ms (   12,067 tok/s) | hot-only  19.52ms | eager3  201.39ms | speedup: sync 1.60x ASYNC 1.53x BF16COLD 1.85x (vs fused-fresh)
+saved bench_v4_decode.json
+BIGB REVERIFY DONE
