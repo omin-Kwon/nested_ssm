@@ -232,6 +232,56 @@ def run_point(B, pb, c, device, iters=20, warmup=5):
     res["eager3_ms"] = timed(eager3, iters, warmup)
     del S; torch.cuda.empty_cache()
 
+
+    # ---- SSU re-anchor: official mamba selective_state_update as fresh baseline
+    # (e2e profiling showed SSU 0.67ms/layer beats fla simple_gla 1.09 — this is
+    # the kernel real deployments use), plus v4 built from the SAME components
+    # as the e2e v2 integration (hot SSU slice + bf16 snapshot bmm + lean flush).
+    try:
+        from mamba_ssm.ops.triton.selective_state_update import selective_state_update as ssu
+        G_ = 8; HG = H // G_
+        Bng = torch.randn(B, G_, N, device=device, dtype=dt)
+        Cng = torch.randn(B, G_, N, device=device, dtype=dt)
+        dth = torch.rand(B, H, P, device=device, dtype=dt)
+        dtb = torch.zeros(H, P, device=device, dtype=dt)
+        De = torch.ones(H, P, device=device, dtype=dt)
+        A_full = torch.full((H, P, N), -0.05, device=device)
+        Sf = [torch.zeros(B, H, P, N, device=device) for _ in range(L)]
+        def fresh_ssu():
+            for l in range(L):
+                ssu(Sf[l], v.squeeze(1).view(B, H, P), dth, A_full, Bng, Cng,
+                    De, z=None, dt_bias=dtb, dt_softplus=True)
+        res["fresh_ssu_ms"] = timed(fresh_ssu, iters, warmup)
+        del Sf; torch.cuda.empty_cache()
+        A_hot = torch.full((H, P, pb), -0.05, device=device)
+        Sh2 = [torch.zeros(B, H, P, pb, device=device) for _ in range(L)]
+        SnapM = [torch.zeros(B, H, Nc, P, device=device, dtype=dt) for _ in range(L)]
+        qch = torch.randn(B * H, 1, Nc, device=device, dtype=dt)
+        Bh_c = Bng[..., pb:].repeat_interleave(HG, dim=1)          # (B,H,Nc)
+        bufX2 = torch.zeros(c, B, H, P, device=device, dtype=dt)
+        bufB2 = torch.zeros(c, B, H, Nc, device=device, dtype=dt)
+        si = [0]
+        def v4_ssu():
+            t = si[0]
+            for l in range(L):
+                ssu(Sh2[l], v.squeeze(1).view(B, H, P), dth, A_hot,
+                    Bng[..., :pb].contiguous(), Cng[..., :pb].contiguous(),
+                    De, z=None, dt_bias=dtb, dt_softplus=True)
+                yc = torch.bmm(qch, SnapM[l].view(B * H, Nc, P))
+            bufX2[t % c].copy_(v.squeeze(1).view(B, H, P))
+            bufB2[t % c].copy_(Bh_c)
+            if (t + 1) % c == 0:
+                for l in range(L):
+                    SnapM[l].mul_(0.98).add_(
+                        torch.einsum('cbhp,cbhn->bhnp', bufX2, bufB2))
+            si[0] = t + 1
+        res["v4ssu_ms"] = timed(v4_ssu, it_c, warmup)
+        res["speedup_ssu"] = res["fresh_ssu_ms"] / res["v4ssu_ms"]
+        del Sh2, SnapM, bufX2, bufB2; torch.cuda.empty_cache()
+    except ImportError:
+        res["fresh_ssu_ms"] = res["v4ssu_ms"] = float("nan")
+        res["speedup_ssu"] = float("nan")
+
     state_gb = L * B * H * N * P * 4 / 1e9
     res.update(B=B, pb=pb, c=c, state_gb=state_gb,
                fresh_toks=B / res["fresh_ms"] * 1e3,
@@ -278,6 +328,7 @@ def main():
                   f"hot-only {r['hotonly_ms']:6.2f}ms | eager3 {r['eager3_ms']:7.2f}ms | "
                   f"speedup: sync {r['speedup_vs_fresh']:.2f}x ASYNC {r['speedup_async']:.2f}x "
                   f"BF16COLD {r['speedup_bf16']:.2f}x FP8COLD {r['speedup_fp8']:.2f}x "
+                  f"| SSU-anchored: fresh {r.get('fresh_ssu_ms', float('nan')):.2f}ms v4 {r.get('v4ssu_ms', float('nan')):.2f}ms = {r.get('speedup_ssu', float('nan')):.2f}x "
                   f"(vs fused-fresh)", flush=True)
     json.dump(out, open("bench_v4_decode.json", "w"), indent=1)
     print("saved bench_v4_decode.json", flush=True)

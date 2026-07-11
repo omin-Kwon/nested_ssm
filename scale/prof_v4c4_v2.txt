@@ -1,0 +1,36 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 18522.81it/s]
+===== v4c4 B=256 (32 decode steps) =====
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                                                   Name    Self CPU %      Self CPU   CPU total %     CPU total  CPU time avg     Self CUDA   Self CUDA %    CUDA total  CUDA time avg    # of Calls  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+                          _selective_scan_update_kernel         0.00%       0.000us         0.00%       0.000us       0.000us     157.505ms        16.13%     157.505ms     188.179us           837  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us     125.309ms        12.83%     125.309ms      43.555us          2877  
+               nvjet_sm100_tst_128x8_64x12_1x1_v_bz_NNT         0.00%       0.000us         0.00%       0.000us       0.000us      93.433ms         9.57%      93.433ms     111.628us           837  
+         nvjet_sm100_tst_64x128_64x13_2x1_2cta_v_bz_TNT         0.00%       0.000us         0.00%       0.000us       0.000us      53.600ms         5.49%      53.600ms      29.911us          1792  
+void at::native::vectorized_elementwise_kernel<8, at...         0.00%       0.000us         0.00%       0.000us       0.000us      46.495ms         4.76%      46.495ms      23.470us          1981  
+void at::native::unrolled_elementwise_kernel<at::nat...         0.00%       0.000us         0.00%       0.000us       0.000us      43.566ms         4.46%      43.566ms       7.085us          6149  
+          nvjet_sm100_tst_64x96_64x13_2x1_2cta_v_bz_NTT         0.00%       0.000us         0.00%       0.000us       0.000us      42.969ms         4.40%      42.969ms     227.348us           189  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      38.176ms         3.91%      38.176ms      14.883us          2565  
+         nvjet_sm100_tst_176x128_64x8_2x2_2cta_h_bz_TNN         0.00%       0.000us         0.00%       0.000us       0.000us      35.686ms         3.65%      35.686ms      41.303us           864  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      33.729ms         3.45%      33.729ms     138.803us           243  
+void at::native::reduce_kernel<512, 1, at::native::R...         0.00%       0.000us         0.00%       0.000us       0.000us      29.059ms         2.98%      29.059ms      10.810us          2688  
+         nvjet_sm100_tst_256x128_64x5_2x2_2cta_h_bz_TNT         0.00%       0.000us         0.00%       0.000us       0.000us      26.745ms         2.74%      26.745ms      33.432us           800  
+void at::native::vectorized_elementwise_kernel<8, at...         0.00%       0.000us         0.00%       0.000us       0.000us      26.621ms         2.73%      26.621ms       6.421us          4146  
+                                 _chunk_scan_fwd_kernel         0.00%       0.000us         0.00%       0.000us       0.000us      26.040ms         2.67%      26.040ms     964.451us            27  
+void causal_conv1d_update_kernel<Causal_conv1d_updat...         0.00%       0.000us         0.00%       0.000us       0.000us      23.980ms         2.46%      23.980ms      28.650us           837  
+void at::native::elementwise_kernel<128, 4, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      23.389ms         2.40%      23.389ms       6.768us          3456  
+void at::native::elementwise_kernel<128, 2, at::nati...         0.00%       0.000us         0.00%       0.000us       0.000us      22.380ms         2.29%      22.380ms       6.026us          3714  
+                              _state_passing_fwd_kernel         0.00%       0.000us         0.00%       0.000us       0.000us      14.021ms         1.44%      14.021ms     519.305us            27  
+-------------------------------------------------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  ------------  
+Self CPU time total: 520.889ms
+Self CUDA time total: 976.498ms
+
