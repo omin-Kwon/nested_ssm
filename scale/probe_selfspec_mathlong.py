@@ -89,14 +89,10 @@ def clone_cache(cache):
     return new
 
 PROMPTS = [
-    "Explain why the sky is blue in three sentences.",
-    "A train travels 60 km/h for 2.5 hours, then 80 km/h for 1.5 hours. Total distance? Show your work.",
-    "Write a short Python function that reverses a linked list.",
-    "Summarize the causes of World War I in one paragraph.",
-    "If x^2 - 5x + 6 = 0, find both roots and verify them.",
-    "Describe how a refrigerator works thermodynamically.",
-    "Translate to French: 'The weather is beautiful today, let us walk along the river.'",
-    "What is the time complexity of quicksort in the worst case and why?",
+    "Natalia sold clips to 48 of her friends in April, and then she sold half as many clips in May. How many clips did Natalia sell altogether in April and May? Think step by step.",
+    "A robe takes 2 bolts of blue fiber and half that much white fiber. How many bolts in total does it take? Think step by step.",
+    "Josh decides to try flipping a house. He buys a house for $80,000 and then puts in $50,000 in repairs. This increased the value of the house by 150%. How much profit did he make? Think step by step.",
+    "Every day, Wendi feeds each of her chickens three cups of mixed chicken feed. She gives the chickens their feed in three separate meals. In the morning, she gives her flock of chickens 15 cups of feed. In the afternoon, she gives her chickens another 25 cups of feed. How many cups of feed does she need to give her chickens in the final meal of the day if the size of Wendi's flock is 20 chickens? Think step by step.",
 ]
 
 records = []
@@ -151,7 +147,7 @@ with torch.no_grad():
               f"alpha={sum(r_['hit'] for r_ in records if r_['prompt']==pi)/max(1,len([r_ for r_ in records if r_['prompt']==pi])):.3f}",
               flush=True)
 
-json.dump(records, open("results/selfspec_policy_records.json", "w"))
+json.dump(records, open("results/selfspec_policy_mathlong.json", "w"))
 # ---- offline analysis ----
 import statistics
 hits = [r["hit"] for r in records]
@@ -178,4 +174,4 @@ for sig in ("margin", "stamp"):
     else:
         auc = sum(a > b for a, b in pairs) / len(pairs)
     print(f"signal {sig}: mean(hit)={mh:.3f} mean(miss)={mm:.3f} AUC={auc:.3f}")
-print("RECORDS SAVED -> results/selfspec_policy_records.json")
+print("RECORDS SAVED -> results/selfspec_policy_mathlong.json")
