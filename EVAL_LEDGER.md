@@ -89,6 +89,19 @@
 
 ---
 
+## 신 스택 = NeMo-Skills + vLLM (2026-07-12 전면 교체 — 이후 acc의 공식 소스)
+공식 논문과 동일한 측정 방식. 이전 lm-eval 수치는 내부 기록으로 강등(3-arm 델타는 여전히 유효).
+- 서빙: `vllm serve nvidia/NVIDIA-Nemotron-Nano-9B-v2 --mamba_ssm_cache_dtype float32` (raw-bf16 arm은 `bfloat16`)
+- 평가: `ns eval --server_type vllm --server_address http://localhost:8010/v1 ...` — **함정 3종: ① server_address는 스킴+`/v1` 포함 전체 URL 필수(스킴 없으면 litellm 연결 실패), ② `export PATH=~/ns_env/bin:$PATH` 없으면 하위 스폰이 /usr/bin/python 사용, ③ prepare는 `~/ns_env/bin/python3 -m nemo_skills.dataset.prepare <bench>` 직접 실행**
+- 측정 configs(유저 확정 6종): raw / raw-bf16 / fresh / v4-c4-{fp32,bf16,fp8} (fresh·v4는 vLLM 포팅 후)
+
+### raw (스택 검증 — 전수, pass@1, reasoning on)
+| bench | 공식 | 신 스택 raw | 구 lm-eval raw | 판정 |
+|---|---|---|---|---|
+| GSM8K (1319) | 91.4 | **95.0** (avg 1601 tok) | 76.7 | ✅ 스택 검증 통과 — 구 갭은 harness 차이였음 |
+| MATH-500 | 97.8(공식 MATH) | 측정 중 | 32(minerva) | — |
+json: `scale/ns_results/raw/eval-results/*/metrics.json`
+
 ## 절대값 신뢰성 판정 (raw sanity, 2026-07-12)
 공식 -Base 수치 대비 우리 raw(aligned) 갭의 원인 분해 — **-Base probe 실측**:
 | task | 공식 -Base | -Base@우리harness | aligned@우리harness | 원인 |
