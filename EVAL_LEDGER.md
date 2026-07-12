@@ -117,12 +117,14 @@
 - 평가: `ns eval --server_type vllm --server_address http://localhost:8010/v1 ...` — **함정 3종: ① server_address는 스킴+`/v1` 포함 전체 URL 필수(스킴 없으면 litellm 연결 실패), ② `export PATH=~/ns_env/bin:$PATH` 없으면 하위 스폰이 /usr/bin/python 사용, ③ prepare는 `~/ns_env/bin/python3 -m nemo_skills.dataset.prepare <bench>` 직접 실행**
 - 측정 configs(유저 확정 6종): raw / raw-bf16 / fresh / v4-c4-{fp32,bf16,fp8} (fresh·v4는 vLLM 포팅 후)
 
-### raw / raw-bf16 (스택 검증 — 전수, pass@1, reasoning on)
-| bench | 공식 | raw(fp32 cache) | raw-bf16 cache | 구 lm-eval raw | 판정 |
-|---|---|---|---|---|---|
-| GSM8K (1319) | 91.4 | **95.0** (avg 1601 tok) | **95.0** | 76.7 | ✅ 스택 검증 통과 + bf16 cache 무손실 |
-| MATH-500 (500) | 97.8(공식 MATH) | **97.6** (avg 5273 tok) | **97.6** | 32(minerva) | ✅ 공식 일치 + bf16 cache 무손실 |
-json: `scale/ns_results/{raw,raw-bf16}/eval-results/*/metrics.json`
+### 6-config 매트릭스 (전수, pass@1, reasoning on; fresh/v4 = longcot ckpt, vLLM 포팅 서빙)
+| bench | 공식 | raw | raw-bf16 | fresh | v4-c4-fp32 | v4-c4-bf16 | v4-c4-fp8 |
+|---|---|---|---|---|---|---|---|
+| GSM8K (1319) | 91.4 | **95.0** | **95.0** | **95.0** (정답수까지 동일 1253) | — | 측정 중 | — |
+| MATH-500 (500) | 97.8(공식 MATH) | **97.6** | **97.6** | **98.2** (+0.6 noise) | — | 측정 중 | — |
+
+판정 누적: ① 스택 검증 통과(공식 수치 재현, 구 lm-eval 76.7 갭은 harness 차이), ② **bf16 state cache 무손실**, ③ **fresh 완전 무손실 = retrofit(0.04%)은 기반 모델을 훼손하지 않음** (직교 R의 full-width 불변성 실증). 구 lm-eval 수치는 내부 역사 기록으로만.
+json: `scale/ns_results/{raw,raw-bf16,fresh,v4-*}/eval-results/*/metrics.json` · 서빙: `NESTED_SSM_CKPT/MODE/PB/C/COLD` env (scale/install_vllm_v4.sh)
 
 ## 절대값 신뢰성 판정 (raw sanity, 2026-07-12)
 공식 -Base 수치 대비 우리 raw(aligned) 갭의 원인 분해 — **-Base probe 실측**:
