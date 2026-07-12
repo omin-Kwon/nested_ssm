@@ -38,6 +38,15 @@ tok = AutoTokenizer.from_pretrained(MID, cache_dir=SHARED_HUB)
 model = AutoModelForCausalLM.from_pretrained(
     MID, dtype=torch.bfloat16, cache_dir=SHARED_HUB).to("cuda")
 model.config.use_cache = True
+if mode != "raw":
+    # fresh/v4 must route through the patched torch_forward: once fused kernels
+    # are importable (post source-build), is_fast_path_available flips True and
+    # cuda_kernels_forward silently bypasses both R and the v4 dispatcher
+    # (symptom: fresh == v4 to the last decimal). Prefill inside the dispatcher
+    # uses _lean_prefill (bit-exact vs the cuda path, memory-lean Triton scan);
+    # HF's naive torch_forward prefill is NOT numerically equivalent to the
+    # production kernels (top-1 agree 0.78 on stock weights) — do not use it.
+    V.M.is_fast_path_available = False
 tag = args.tag or f"nat_{mode}"
 if mode == "raw":
     # stock public 9B: no ActRotMask, no ckpt, pure native forward

@@ -96,12 +96,65 @@ def _v4_decode(self, input_states, cache_params, attention_mask):
     return self.out_proj(scan_output.to(dtype))
 
 
+def _lean_prefill(self, input_states, cache_params, attention_mask):
+    """Prefill via fused causal_conv1d + Triton chunk scan, R applied manually.
+
+    HF torch_forward materializes O(T*H*P*N) broadcast intermediates (7.5GB+ on
+    a 2k-token minerva prompt) — unusable on a GPU shared with another tenant.
+    The Triton scan is memory-lean and exact; ActRotMask cannot fire on this
+    path (silu is fused into the conv kernel), so B/C rotation is applied here
+    with the same rotmask the wrapper uses."""
+    from causal_conv1d import causal_conv1d_fn
+    from mamba_ssm.ops.triton.ssd_combined import mamba_chunk_scan_combined
+    batch_size, seq_len, _ = input_states.shape
+    if attention_mask is not None and not torch.all(attention_mask == 1):
+        input_states = (input_states * attention_mask[:, :, None]).to(input_states.dtype)
+    projected_states = self.in_proj(input_states)
+    d_mlp = (projected_states.shape[-1] - 2 * self.intermediate_size
+             - 2 * self.n_groups * self.ssm_state_size - self.num_heads) // 2
+    _, _, gate, hidden_states_B_C, time_step = projected_states.split(
+        [d_mlp, d_mlp, self.intermediate_size, self.conv_dim, self.num_heads], dim=-1)
+    hidden_states_B_C = hidden_states_B_C.transpose(1, 2)
+    if cache_params is not None:
+        new_conv_state = F.pad(
+            hidden_states_B_C, (self.conv_kernel_size - hidden_states_B_C.shape[-1], 0))
+        cache_params.update_conv_state(new_conv_state, self.layer_idx)
+    hidden_states_B_C = causal_conv1d_fn(
+        x=hidden_states_B_C, weight=self.conv1d.weight.squeeze(1),
+        bias=self.conv1d.bias, activation=self.activation).transpose(1, 2)
+    gn = self.n_groups * self.ssm_state_size
+    hidden_states, B, C = torch.split(
+        hidden_states_B_C, [self.intermediate_size, gn, gn], dim=-1)
+    if hasattr(self.act, "R"):                       # rotated ckpt
+        B, C = self.act.rotmask(B), self.act.rotmask(C)
+    A = -torch.exp(self.A_log.float())
+    dt_limit_kwargs = ({} if getattr(self, "time_step_limit", None) is None
+                       else {"dt_limit": self.time_step_limit})
+    scan_output, ssm_state = mamba_chunk_scan_combined(
+        hidden_states.view(batch_size, seq_len, -1, self.head_dim),
+        time_step, A,
+        B.view(batch_size, seq_len, self.n_groups, -1),
+        C.view(batch_size, seq_len, self.n_groups, -1),
+        chunk_size=self.chunk_size, D=self.D, z=None, seq_idx=None,
+        return_final_states=True, dt_bias=self.dt_bias, dt_softplus=True,
+        initial_states=None, **dt_limit_kwargs)
+    if ssm_state is not None and cache_params is not None:
+        cache_params.update_recurrent_state(ssm_state, self.layer_idx)
+    scan_output = self.norm(scan_output.view(batch_size, seq_len, -1), gate)
+    return self.out_proj(scan_output.to(self.out_proj.weight.dtype))
+
+
 def _dispatch(self, input_states, cache_params=None, attention_mask=None):
     seq_len = input_states.shape[1]
     if (cache_params is not None and cache_params.has_previous_state(self.layer_idx)
             and seq_len == 1 and self._v4state is not None):
         return _v4_decode(self, input_states, cache_params, attention_mask)
-    out = _orig_forward(self, input_states, cache_params, attention_mask)
+    if (seq_len > 1 and cache_params is not None
+            and not cache_params.has_previous_state(self.layer_idx)
+            and self.v4cfg.get("lean_prefill", 1)):
+        out = _lean_prefill(self, input_states, cache_params, attention_mask)
+    else:
+        out = _orig_forward(self, input_states, cache_params, attention_mask)
     if cache_params is not None:                             # end of prefill:
         ssm = cache_params.layers[self.layer_idx].recurrent_states.to(torch.float32)
         pb = self.v4cfg["pb"]
