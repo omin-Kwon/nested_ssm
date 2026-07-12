@@ -139,8 +139,11 @@ if BF16:
     bb = sorted(BF16)
     ax.plot(bb, [BF16[B]["tok_per_s"] for B in bb], "s", ms=8, color="#17becf",
             label="raw bf16-state (measured)")
-for cut, lab, c in [(2.14, "v4-c16-bf16 (SSU/2.14x, projected)", "#d62728"),
-                    (1.62, "v4-c4-bf16 (SSU/1.62x, projected)", "#ff9896")]:
+# fp8-cold projection (deployment target): analytic byte ratio, fp32-hot
+# normalized units where raw state R+W = 2.0 —
+#   hot R+W 0.5 + cold fp8 read 0.1875 + flush (bf16 shadow R+W + fp8 snap)/c
+for cut, lab, c in [(2.68, "v4-c16-fp8cold (SSU/2.68x, analytic proj.)", "#d62728"),
+                    (2.17, "v4-c4-fp8cold (SSU/2.17x, analytic proj.)", "#ff9896")]:
     tp2 = []
     for B in BS:
         ssu = R[B]["buckets_ms"].get("state-op (SSU)", 0) / R[B]["gen"]
