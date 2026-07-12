@@ -9,7 +9,7 @@ Nemotron-9B decode.
 
 Run: ~/nemo_env/bin/python3 plot_roofline_sweep.py   (from scale/)
 """
-import json, os
+import json, os, sys
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -18,7 +18,11 @@ import numpy as np
 R = {int(k): v for k, v in
      json.load(open("results/vllm_sweep_breakdown.json")).items()}
 BS = sorted(B for B in R if R[B].get("state_dtype", "float32") == "float32")
-BF16 = {B: v for B, v in R.items() if v.get("state_dtype") == "bfloat16"}
+# bf16-state points (B=2048/2304) verified the ceiling story but batch cannot
+# grow further there either — excluded from the main figures by default;
+# pass --with-bf16 to re-include.
+BF16 = ({B: v for B, v in R.items() if v.get("state_dtype") == "bfloat16"}
+        if "--with-bf16" in sys.argv else {})
 
 # ---------------- B200 machine model + component models ----------------
 BW = 8.0e12                    # HBM3e peak bytes/s
