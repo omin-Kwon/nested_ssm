@@ -106,6 +106,8 @@ def prefill_snapshot(mixer, ssm_state, slots):
     """After prefill wrote fresh states: cold snapshot @ t=0 (warmup=prefill)."""
     if mixer.v4cfg is None:
         return
+    if slots.dim() > 1:
+        slots = slots.reshape(-1)
     buf = _bufs(mixer, ssm_state)
     pb = mixer.v4cfg["pb"]
     s = ssm_state[slots].float()
@@ -125,6 +127,8 @@ def decode_readout(mixer, ssm_state, out, x_head, dt_raw, C_d, slots):
     """
     if mixer.v4cfg is None:
         return
+    if slots.dim() > 1:        # non-cache-all decode passes (b, q_len=1) 2D indices
+        slots = slots[:, -1]
     cfg = mixer.v4cfg
     pb, c = cfg["pb"], cfg["c"]
     buf = _bufs(mixer, ssm_state)
