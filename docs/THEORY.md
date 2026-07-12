@@ -15,6 +15,30 @@
 
 **[관찰]** ① recall(k)의 단조 곡선(0.87→1.00), ② hot-단독 품질: nested **0.98** vs 비-nested 우연 0.13~0.48, ③ 회전-retrofit 성공.
 
+### 명제 1의 상세 유도 — 회전 불변성, 단계별 (2026-07-12 문답에서 정리)
+
+mamba2 표기로 쓴다 (head 하나, $S \in \mathbb{R}^{P\times N}$, $B_t, C_t \in \mathbb{R}^N$, decay $a_t$는 head당 **스칼라**):
+
+$$S_t = a_t\,S_{t-1} + (\Delta x_t)\otimes B_t, \qquad y_t = S_t\,C_t$$
+
+회전 모델은 $B'_t = R B_t,\ C'_t = R C_t$ ($R^\top R = I$)로 정의하고, 그 상태를 $S'_t$라 하자.
+
+**(0) 바깥곱 항등식.** $(\Delta x)\otimes(RB)$의 $(p,n)$ 성분은 $\Delta x_p \sum_m R_{nm}B_m$이고, $[(\Delta x)\otimes B]\,R^\top$의 $(p,n)$ 성분도 $\sum_m (\Delta x_p B_m)(R^\top)_{mn} = \Delta x_p \sum_m B_m R_{nm}$. 따라서
+$$(\Delta x)\otimes(RB) = \big[(\Delta x)\otimes B\big]\,R^\top$$
+
+**(1) 귀납.** $t=0$: $S'_0 = 0 = S_0 R^\top$. 가정: $S'_{t-1} = S_{t-1}R^\top$. 전개:
+$$S'_t = a_t\,\underbrace{S'_{t-1}}_{=\,S_{t-1}R^\top\ (\text{귀납 가정})} + \underbrace{(\Delta x_t)\otimes(RB_t)}_{=\,[(\Delta x_t)\otimes B_t]R^\top\ (\text{항등식 (0)})}$$
+
+**⚠ 흔한 혼동 지점**: $R$은 새 write 항($B$)에만 곱해지는데 왜 상태 전체가 회전되는가? — 첫째 항의 $R^\top$은 곱해서 생긴 것이 아니라 **귀납 가정에서 온다** (어제까지의 상태가 이미 회전돼 저장되어 있음). 둘째 항의 $R^\top$은 $B$의 회전에서 온다. **출처는 다르지만 둘 다 오른쪽 인자 $R^\top$로 같으므로** 묶인다:
+$$S'_t = \big[a_t S_{t-1} + (\Delta x_t)\otimes B_t\big]R^\top = S_t R^\top\ \checkmark$$
+이 묶어내기의 유일한 요건: $a_t$가 스칼라라서 $R^\top$와 교환한다는 것.
+
+**(2) readout 상쇄.** $y'_t = S'_t C'_t = S_t R^\top R\, C_t = S_t C_t = y_t$. 즉 **어떤 직교 $R$이든 모델의 입출력 함수는 불변**이고, 변하는 것은 상태 $S$의 N축 좌표 배치("어느 서랍에 꽂히나")뿐.
+
+**(3) tiering과의 결합.** 함수는 $R$-불변이지만 tiering(앞 $p_b$개 좌표만 fresh)의 피해는 $R$-의존적이다. 따라서 $R$은 "모델을 바꾸지 않으면서(무손실 보장; fresh=raw 실증 — vLLM 공식 스택 GSM8K 1319문항 정답 수 동일 1253) tiering 피해만 줄이는" 자유 변수이고, retrofit 학습의 목적함수는 순수하게 "tiering-on 손실 최소화"가 된다.
+
+**(4) 조건의 필요성 (반례).** decay가 N축(key 채널) 대각행렬 $D$로 작용한다면($S_{t-1}D$ 꼴) $S_{t-1}R^\top D \ne S_{t-1} D R^\top$라 (1)의 묶어내기가 깨진다 — 회전 불변 아님. **mamba2/GDN(head당 스칼라)은 성립, GLA/KDA(N축 대각 게이트)는 깨짐** → 후자는 경량 해동 FT 필요(위 [보조 증거]의 실측 90% 수준과 일치).
+
 ---
 
 ## 명제 2 — Cold 갱신의 "늦지만 정확함(lazy-but-exact)"은 recurrence의 결정론적 fold 구조와 affine 합성에서 나온다
