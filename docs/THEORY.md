@@ -69,6 +69,17 @@ $$y^{fresh}_t - y^{stale}_t \;=\; \sum_{\tau = b+1}^{t} \Big(\prod_{s>\tau}\alph
 
 ---
 
+### 명제 3의 따름정리 (2026-07-13 발견·실증) — additive 가족의 rank-c 정확 보정
+
+명제 3(iii)의 "correction 금기"는 **delta 가족**(갱신항 $w_t$가 state를 읽음)에 대한 것이다. **additive 가족(mamba2 = Nemotron)은 갱신항 $(\Delta x_t)\otimes B_t$가 state와 무관**하므로, flush 사이에 빠진 write들은 버퍼에 있는 작은 벡터들로 **완전 정확하게** 복원된다:
+
+$$y^{cold}_t = e^{G_t}\,(C_t\cdot \text{snap}) + \sum_{j\,\text{since flush}} e^{G_t-G_j}\,(C^{cold}_t\!\cdot B_j)\;\Delta x_j,\qquad G_t=\textstyle\sum_{i\leq t} dt_i A$$
+
+- **구현 함정 2개(실증에서 발견)**: ① $G$는 현재 토큰 **포함**(inclusive)으로 앵커링 — stale 경로는 1토큰 지연 의미론(학습이 그 의미론을 봄)이라 통일하면 안 됨; ② $j=t$ 항(가중치 $e^0$) 필수 — $y_t$는 이번 토큰 write를 포함한 $S_t$를 읽는 것이므로.
+- **게이트 실증**: fp32-cold에서 v4-c32-pb32+corr가 fresh와 greedy 200토큰 **완전 동일** (stale은 토큰 7에서 발산). `scale/probe_corr_exact.py`.
+- **비용**: 버퍼(토큰당 $\Delta x$ 8K원소 + $B^{cold}$)의 R/W ≈ cold-read의 ~20% @c32 — 트래픽 이득의 본체(write 연기 + cold read 저정밀)는 유지.
+- **의미 — 이중 면허 구조**: staleness를 (a) **학습으로 견디거나**(v4-aware: 소~중 c, 버퍼 0), (b) **수학으로 소거하거나**(corr: 임의 c에서 무손실 보장, delta 가족 제외). (b)는 재학습 없이 c를 크게 여는 면허. 구현: `v4_native_decode.py` corr=1.
+
 ## 명제 1′ — 가족 불변성: hot/cold 절단이 4가족(GDN/GLA/KDA/M2) 전부에서 성립하는 이유 (T8 검증)
 
 네 가족의 recurrence는 전부 다음 **공통 골격**의 인스턴스다:

@@ -27,6 +27,8 @@ ap.add_argument("--maxlen", type=int, default=0,
                 help="RULER max_seq_lengths metadata (0 = not a RULER run)")
 ap.add_argument("--pb", type=int, default=32)
 ap.add_argument("--c", type=int, default=16)
+ap.add_argument("--corr", type=int, default=0,
+                help="rank-c exact readout correction (additive families only)")
 ap.add_argument("--model", default=MID,
                 help="e.g. nvidia/NVIDIA-Nemotron-Nano-9B-v2-Base (official base "
                      "numbers are for -Base; aligned ckpt underperforms base harness)")
@@ -66,9 +68,9 @@ else:
             m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to("cuda"))
     model.eval()
 if mode == "v4":
-    n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1)
-    print(f"[{tag}] v4 installed on {n} mixers (pb={args.pb} c={args.c} bf16cold)",
-          flush=True)
+    n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1, corr=args.corr)
+    print(f"[{tag}] v4 installed on {n} mixers (pb={args.pb} c={args.c} bf16cold"
+          f"{' +corr' if args.corr else ''})", flush=True)
 elif mode == "fresh":
     # rotation caveat: native decode branch calls act on 2D -> ActRotMask would
     # skip R. Route ALL mixers through the v4 dispatcher with pb=128 (all-hot),

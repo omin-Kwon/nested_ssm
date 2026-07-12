@@ -78,6 +78,43 @@ def _v4_decode(self, input_states, cache_params, attention_mask):
         y = torch.einsum('bhpn,bhn->bhp', Sf, Cf)
     else:
         st = self._v4state
+        if cfg.get("corr"):
+            # rank-c EXACT correction (additive/mamba2 only — the update term
+            # is state-independent, so the writes missed since flush are
+            # exactly the buffered rank-1 terms):
+            #   y_cold = e^{G_t}(C·snap) + Σ_j e^{G_t-G_j}(C_cold·B_j)·Δx_j
+            # with G inclusive of the current token (exact decay anchoring —
+            # note the stale path below keeps its trained one-token-lag
+            # semantics; do not unify).  Buffers are ~KB vs GB of state.
+            st["glog"] = st["glog"] + dt * A[None, :, None]   # G_t inclusive
+            g1 = st["glog"][:, :, 0]                          # [b,H] (const over P)
+            # buffer THIS token's write BEFORE readout: y_t reads S_t which
+            # already contains dBx_t — the j=t term (weight e^0) must be in
+            # the correction sum or every token misses one rank-1 write.
+            st["bufB"].append(B[..., pb:].float().clone())            # [b,H,Nc]
+            st["bufX"].append((dt * hidden_states).float().clone())   # [b,H,P]
+            st["bufG"].append(g1.clone())                             # [b,H]
+            y_cold = torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
+                * torch.exp(st["glog"])
+            Bs = torch.stack(st["bufB"])                      # [j,b,H,Nc]
+            Xs = torch.stack(st["bufX"])                      # [j,b,H,P]
+            Gs = torch.stack(st["bufG"])                      # [j,b,H]
+            s = torch.einsum('jbhn,bhn->jbh', Bs, Cf[..., pb:])
+            w = torch.exp(g1[None] - Gs) * s                  # [j,b,H]
+            y_cold = y_cold + torch.einsum('jbh,jbhp->bhp', w, Xs)
+            y = torch.einsum('bhpn,bhn->bhp', Sf[..., :pb], Cf[..., :pb]) + y_cold
+            st["t"] += 1
+            if st["t"] % c == 0:                              # snapshot refresh
+                snap = Sf[..., pb:]
+                st["snap"] = (snap.to(torch.bfloat16).float()
+                              if cfg.get("cold_bf16") else snap.clone())
+                st["glog"] = torch.zeros_like(st["glog"])
+                st["bufB"], st["bufX"], st["bufG"] = [], [], []
+            D = self.D[..., None].expand(self.D.shape[0], self.head_dim)
+            y = (y + hidden_states * D).to(dtype)
+            y = y.reshape(batch_size, -1)[:, None, ...]
+            scan_output = self.norm(y, gate)
+            return self.out_proj(scan_output.to(dtype))
         y = torch.einsum('bhpn,bhn->bhp', Sf[..., :pb], Cf[..., :pb]) \
             + torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
             * torch.exp(st["glog"])          # glog is per (b,H,P) here — no new axis
@@ -164,15 +201,15 @@ def _dispatch(self, input_states, cache_params=None, attention_mask=None):
                      if self.v4cfg.get("cold_bf16") else snap.clone()),
             "glog": torch.zeros(ssm.shape[0], ssm.shape[1], ssm.shape[2],
                                 device=ssm.device),
-            "t": 0}
+            "t": 0, "bufB": [], "bufX": [], "bufG": []}
     return out
 
 
-def install(model, pb=32, c=16, cold_bf16=1):
+def install(model, pb=32, c=16, cold_bf16=1, corr=0):
     n = 0
     for m in model.modules():
         if type(m).__name__ == "NemotronHMamba2Mixer":
-            m.v4cfg = dict(pb=pb, c=c, cold_bf16=cold_bf16)
+            m.v4cfg = dict(pb=pb, c=c, cold_bf16=cold_bf16, corr=corr)
             m._v4state = None
             m.torch_forward = _dispatch.__get__(m)
             n += 1
