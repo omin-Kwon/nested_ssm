@@ -77,6 +77,7 @@ $$y^{cold}_t = e^{G_t}\,(C_t\cdot \text{snap}) + \sum_{j\,\text{since flush}} e^
 
 - **구현 함정 2개(실증에서 발견)**: ① $G$는 현재 토큰 **포함**(inclusive)으로 앵커링 — stale 경로는 1토큰 지연 의미론(학습이 그 의미론을 봄)이라 통일하면 안 됨; ② $j=t$ 항(가중치 $e^0$) 필수 — $y_t$는 이번 토큰 write를 포함한 $S_t$를 읽는 것이므로.
 - **게이트 실증**: fp32-cold에서 v4-c32-pb32+corr가 fresh와 greedy 200토큰 **완전 동일** (stale은 토큰 7에서 발산). `scale/probe_corr_exact.py`.
+- **acc 실증 (GSM8K n=200, bf16-cold)**: fresh 85.0 / c32-stale **74.5 (−10.5)** / c32+corr **84.5 (−0.5 노이즈)** — 보정이 c32 붕괴를 완전 회복. json `scale/nemo9b_recall_corr_*.json`.
 - **비용**: 버퍼(토큰당 $\Delta x$ 8K원소 + $B^{cold}$)의 R/W ≈ cold-read의 ~20% @c32 — 트래픽 이득의 본체(write 연기 + cold read 저정밀)는 유지.
 - **의미 — 이중 면허 구조**: staleness를 (a) **학습으로 견디거나**(v4-aware: 소~중 c, 버퍼 0), (b) **수학으로 소거하거나**(corr: 임의 c에서 무손실 보장, delta 가족 제외). (b)는 재학습 없이 c를 크게 여는 면허. 구현: `v4_native_decode.py` corr=1.
 
