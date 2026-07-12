@@ -94,8 +94,20 @@
 - *c2<c4 역전은 노이즈 소견(방향상 c2가 더 fresh에 가까워야 함).
 - GSM8K n=500 결판: **fresh 83.2 / v4-c4 79.8 (−3.4) / v4-c2 80.8 (−2.4)** — c 단조 회복 확인 → 노이즈 아닌 **c-다이얼로 조절되는 staleness 비용 ~2-3pp** (n=100의 −8은 소표본 과장). minerva가 회복된 반면 GSM8K에 소갭 잔존 — 공식 스택(vLLM) v4 측정이 최종 수치.
 - 주의: 이 표는 lean-prefill(=cuda 등가) 경로라 p4long 절대값(HF naive torch 경로, top-1 0.78 불일치 실증)과 직접 비교 불가. 같은 표 안의 3-arm 델타만 유효.
-- [ ] GSM8K n=500 3-config 결판
-- [ ] 짧은답 스위트(RULER/commonsense/recall) 회귀 체크
+- [x] GSM8K n=500 3-config 결판 (위)
+- [x] recall 6종 회귀 체크 (limit 300, lean 경로) — **합격, v4-c4 lossless**:
+
+| task | fresh | v4-c4 | Δ |
+|---|---|---|---|
+| fda (contains) | 0.827 | 0.827 | 0 |
+| swde (contains) | 0.903 | 0.900 | −.003 |
+| squad_completion | 0.797 | 0.777 | −.020 |
+| triviaqa (EM) | 0.313 | 0.330 | +.017 |
+| nq_open (EM) | 0.093 | 0.083 | −.010 |
+| drop (f1) | 0.039 | 0.059 | +.020 |
+
+  절대값이 p4long 표(fda 0.31, swde 0.66, squad 0.70)보다 크게 높음 — **lean-prefill(=production 커널 등가) 경로 효과**로 판단(구 torch 경로가 절대값을 눌러왔음; RULER 0.79 미스터리의 유력 원인). 구 경로 절대값은 이후 인용 금지, 델타만 역사적 참고.
+- [ ] RULER/commonsense 회귀는 공식 스택(vLLM) 이관 후 측정
 
 ---
 
