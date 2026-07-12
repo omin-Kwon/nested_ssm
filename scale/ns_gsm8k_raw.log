@@ -1,0 +1,20 @@
+    raise ValueError(
+ValueError: Please use 'cluster' parameter when specifying data_dir. You can set it to 'local' if preparing data locally assuming you have a corresponding 'local.yaml' cluster config.
+[92m08:47:44 - LiteLLM:DEBUG[0m: logging_worker.py:452 - [LoggingWorker] atexit: No queue initialized
+PREP_DONE
+    return callback(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/typer/main.py", line 1515, in wrapper
+    return callback(**use_params)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/app.py", line 51, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/eval.py", line 437, in eval
+    cluster_config = pipeline_utils.get_cluster_config(cluster, config_dir)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/utils/cluster.py", line 350, in get_cluster_config
+    raise ValueError(f"Cluster config {cluster} not found in any of the supported folders.")
+ValueError: Cluster config none not found in any of the supported folders.
+[92m08:47:53 - LiteLLM:DEBUG[0m: logging_worker.py:452 - [LoggingWorker] atexit: No queue initialized
+NS_EVAL_DONE

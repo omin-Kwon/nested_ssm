@@ -1,0 +1,24 @@
+                    20 --retries 3                                              
+nemo-run/0 /usr/bin/python: Error while finding module specification for 'nemo_skills.dataset.prepare' (ModuleNotFoundError: No module named 'nemo_skills')
+PREP_DONE
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/typer/main.py", line 1515, in wrapper
+    return callback(**use_params)
+           ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/app.py", line 51, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/eval.py", line 460, in eval
+    benchmarks_dict, job_batches_units = prepare_eval_commands(
+                                         ^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/utils/eval.py", line 348, in prepare_eval_commands
+    cur_benchmarks = add_default_args(
+                     ^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/utils/eval.py", line 279, in add_default_args
+    benchmark_args = get_benchmark_args_from_module(
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/pipeline/utils/eval.py", line 142, in get_benchmark_args_from_module
+    raise ValueError(
+ValueError: Data file /home/omin/ns_env/lib/python3.12/site-packages/nemo_skills/dataset/gsm8k/test.jsonl does not exist locally. Please check the benchmark and split parameters. Did you forget to run prepare data commands or add data_dir argument?
+[92m08:49:30 - LiteLLM:DEBUG[0m: logging_worker.py:452 - [LoggingWorker] atexit: No queue initialized
+NS_EVAL_DONE
