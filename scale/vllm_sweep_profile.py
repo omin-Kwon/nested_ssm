@@ -8,15 +8,25 @@ Output: scale/results/vllm_sweep_breakdown.json  (plots: plot_roofline_sweep.py)
 Usage: CUDA_VISIBLE_DEVICES=2 VLLM_ENABLE_V1_MULTIPROCESSING=0 \
        ~/vllm_env/bin/python3 vllm_sweep_profile.py
 """
-import json, os, time, torch
+import argparse, json, os, time, torch
+
+ap = argparse.ArgumentParser()
+ap.add_argument("--batches", type=int, nargs="+", default=[1, 16, 32, 64, 128, 256])
+ap.add_argument("--state_dtype", default="float32",
+                help="fp32 state caps at B~1180 on 178GB (2048x113MB=232GB "
+                     "does NOT fit -> bf16 for B=2048; capacity wall = PNM motivation)")
+ap.add_argument("--util", type=float, default=0.85)
+ap.add_argument("--out", default="results/vllm_sweep_breakdown.json")
+args = ap.parse_args()
 
 GEN = 64
-BATCHES = [1, 16, 32, 64, 128, 256]
+BATCHES = args.batches
 
 from vllm import LLM, SamplingParams
 llm = LLM(model="nvidia/NVIDIA-Nemotron-Nano-9B-v2",
-          mamba_ssm_cache_dtype="float32",
-          gpu_memory_utilization=0.85, max_num_seqs=256, max_model_len=2048,
+          mamba_ssm_cache_dtype=args.state_dtype,
+          gpu_memory_utilization=args.util, max_num_seqs=max(BATCHES),
+          max_model_len=2048,
           enforce_eager=True, download_dir="/NHNHOME/ARC/arclab/shared/hub")
 sp = SamplingParams(temperature=0, max_tokens=GEN, ignore_eos=True)
 
@@ -62,10 +72,14 @@ for B in BATCHES:
         buckets_ms=agg, busy_ms=busy, wall_ms=wall * 1e3,
         wall_unprofiled_ms=wall_unprof * 1e3, gen=GEN,
         ms_per_step_busy=busy / GEN, ms_per_step_wall=wall_unprof * 1e3 / GEN,
-        tok_per_s=B * GEN / wall_unprof)
+        tok_per_s=B * GEN / wall_unprof, state_dtype=args.state_dtype)
     print(f"B={B:4d}: wall {wall_unprof*1e3/GEN:7.2f} ms/step  "
           f"busy {busy/GEN:7.2f}  {B*GEN/wall_unprof:9.0f} tok/s", flush=True)
 
 os.makedirs("results", exist_ok=True)
-json.dump(results, open("results/vllm_sweep_breakdown.json", "w"), indent=1)
-print("SWEEP DONE -> results/vllm_sweep_breakdown.json")
+if os.path.exists(args.out):                       # merge into existing sweep
+    old = json.load(open(args.out))
+    old.update({str(k): v for k, v in results.items()})
+    results = old
+json.dump(results, open(args.out, "w"), indent=1)
+print(f"SWEEP DONE -> {args.out}")

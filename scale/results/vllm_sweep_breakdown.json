@@ -106,5 +106,100 @@
   "ms_per_step_busy": 21.94317053125,
   "ms_per_step_wall": 23.19035325490404,
   "tok_per_s": 11039.072893202434
+ },
+ "512": {
+  "buckets_ms": {
+   "other": 6.108613000000906,
+   "norm/elementwise": 368.6819199999975,
+   "GEMM (proj/MLP/lm_head)": 462.93314700000326,
+   "prefill scan/conv": 116.46151799999973,
+   "attention": 17.172136999998415,
+   "conv update": 48.4866430000008,
+   "state-op (SSU)": 1634.766541999991
+  },
+  "busy_ms": 2654.6105199999915,
+  "wall_ms": 2789.444759488106,
+  "wall_unprofiled_ms": 2756.928998976946,
+  "gen": 64,
+  "ms_per_step_busy": 41.47828937499987,
+  "ms_per_step_wall": 43.07701560901478,
+  "tok_per_s": 11885.688754465458,
+  "state_dtype": "float32"
+ },
+ "1024": {
+  "buckets_ms": {
+   "other": 11.632052000000257,
+   "norm/elementwise": 749.897769000056,
+   "GEMM (proj/MLP/lm_head)": 990.3947069999755,
+   "prefill scan/conv": 230.22766799999366,
+   "attention": 35.047268000003996,
+   "conv update": 99.5339000000204,
+   "state-op (SSU)": 3303.1802559999787
+  },
+  "busy_ms": 5419.9136200000285,
+  "wall_ms": 5981.848403811455,
+  "wall_unprofiled_ms": 5633.2995584234595,
+  "gen": 64,
+  "ms_per_step_busy": 84.68615031250044,
+  "ms_per_step_wall": 88.02030560036656,
+  "tok_per_s": 11633.67921771605,
+  "state_dtype": "float32"
+ },
+ "1152": {
+  "buckets_ms": {
+   "other": 12.981670999996814,
+   "norm/elementwise": 820.5568560000183,
+   "GEMM (proj/MLP/lm_head)": 1018.7725160000667,
+   "prefill scan/conv": 258.89578900000515,
+   "attention": 38.76232899998769,
+   "conv update": 110.6915030000161,
+   "state-op (SSU)": 3717.078639000012
+  },
+  "busy_ms": 5977.739303000103,
+  "wall_ms": 6270.852267742157,
+  "wall_unprofiled_ms": 6192.057596519589,
+  "gen": 64,
+  "ms_per_step_busy": 93.40217660937661,
+  "ms_per_step_wall": 96.75089994561858,
+  "tok_per_s": 11906.865989334592,
+  "state_dtype": "float32"
+ },
+ "2048": {
+  "buckets_ms": {
+   "other": 14.214415000027657,
+   "norm/elementwise": 1406.1852070000793,
+   "GEMM (proj/MLP/lm_head)": 1620.4459369999888,
+   "prefill scan/conv": 460.6359809999983,
+   "attention": 64.35396499998413,
+   "conv update": 189.93994499998516,
+   "state-op (SSU)": 4348.928762999975
+  },
+  "busy_ms": 8104.704213000039,
+  "wall_ms": 8476.3237927109,
+  "wall_unprofiled_ms": 8250.871234573424,
+  "gen": 64,
+  "ms_per_step_busy": 126.63600332812561,
+  "ms_per_step_wall": 128.91986304020975,
+  "tok_per_s": 15885.837540497809,
+  "state_dtype": "bfloat16"
+ },
+ "2304": {
+  "buckets_ms": {
+   "other": 14.709150000011258,
+   "norm/elementwise": 1550.4894160000763,
+   "GEMM (proj/MLP/lm_head)": 1791.2137549999554,
+   "prefill scan/conv": 516.3201840000027,
+   "attention": 72.08860299999407,
+   "conv update": 212.24012700000847,
+   "state-op (SSU)": 4904.099602000024
+  },
+  "busy_ms": 9061.160837000072,
+  "wall_ms": 9465.667521581054,
+  "wall_unprofiled_ms": 9585.191970691085,
+  "gen": 64,
+  "ms_per_step_busy": 141.58063807812613,
+  "ms_per_step_wall": 149.7686245420482,
+  "tok_per_s": 15383.729449642784,
+  "state_dtype": "bfloat16"
  }
 }
