@@ -120,8 +120,10 @@
 ### 6-config 매트릭스 (전수, pass@1, reasoning on; fresh/v4 = longcot ckpt, vLLM 포팅 서빙)
 | bench | 공식 | raw | raw-bf16 | fresh | v4-c4-fp32 | v4-c4-bf16 | v4-c4-fp8 |
 |---|---|---|---|---|---|---|---|
-| GSM8K (1319) | 91.4 | **95.0** | **95.0** | **95.0** (정답수까지 동일 1253) | — | 측정 중 | — |
-| MATH-500 (500) | 97.8(공식 MATH) | **97.6** | **97.6** | **98.2** (+0.6 noise) | — | 측정 중 | — |
+| GSM8K (1319) | 91.4 | **95.0** | **95.0** | **95.0** (정답수까지 동일 1253) | 측정 중 | **94.47 (−0.5 ≈ lossless)** | — |
+| MATH-500 (500) | 97.8(공식 MATH) | **97.6** | **97.6** | **98.2** (+0.6 noise) | 측정 중 | **95.20 (−2.4·no_ans 2.6%)** | — |
+
+v4-c4-bf16 판정: 짧은~중간 CoT(GSM8K) lossless, 최장 CoT(MATH-500 avg 6k tok)에만 잔여 staleness — **rank-c 정확 보정(THEORY 명제 3 따름정리, GSM8K에서 c32 −10.5 → −0.5 실증)이 이 잔여 갭의 해독제 후보** → v4-c4+corr 공식 스택 측정 예정.
 
 판정 누적: ① 스택 검증 통과(공식 수치 재현, 구 lm-eval 76.7 갭은 harness 차이), ② **bf16 state cache 무손실**, ③ **fresh 완전 무손실 = retrofit(0.04%)은 기반 모델을 훼손하지 않음** (직교 R의 full-width 불변성 실증). 구 lm-eval 수치는 내부 역사 기록으로만.
 json: `scale/ns_results/{raw,raw-bf16,fresh,v4-*}/eval-results/*/metrics.json` · 서빙: `NESTED_SSM_CKPT/MODE/PB/C/COLD` env (scale/install_vllm_v4.sh)
