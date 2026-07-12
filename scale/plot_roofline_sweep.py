@@ -142,7 +142,9 @@ if BF16:
 # fp8-cold projection (deployment target): analytic byte ratio, fp32-hot
 # normalized units where raw state R+W = 2.0 —
 #   hot R+W 0.5 + cold fp8 read 0.1875 + flush (bf16 shadow R+W + fp8 snap)/c
-for cut, lab, c in [(2.68, "v4-c16-fp8cold (SSU/2.68x, analytic proj.)", "#d62728"),
+#   c4 0.922 -> 2.17x | c16 0.746 -> 2.68x | c32 0.717 -> 2.79x (asymptote 2.91x)
+for cut, lab, c in [(2.79, "v4-c32-fp8cold (SSU/2.79x, analytic proj.)", "#8b0000"),
+                    (2.68, "v4-c16-fp8cold (SSU/2.68x, analytic proj.)", "#d62728"),
                     (2.17, "v4-c4-fp8cold (SSU/2.17x, analytic proj.)", "#ff9896")]:
     tp2 = []
     for B in BS:
