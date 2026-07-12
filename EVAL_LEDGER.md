@@ -92,7 +92,7 @@
 
 - **판정축 달성: minerva v4-c4 갭 −2.9(p4long) → −0.86 (n=700 노이즈 ±1.7pp 이내) — long-CoT 재학습 유효.**
 - *c2<c4 역전은 노이즈 소견(방향상 c2가 더 fresh에 가까워야 함).
-- GSM8K −8/−5는 n=100 소표본(±5pp) — n=500 확장 측정으로 결판 [진행].
+- GSM8K n=500 결판: **fresh 83.2 / v4-c4 79.8 (−3.4) / v4-c2 80.8 (−2.4)** — c 단조 회복 확인 → 노이즈 아닌 **c-다이얼로 조절되는 staleness 비용 ~2-3pp** (n=100의 −8은 소표본 과장). minerva가 회복된 반면 GSM8K에 소갭 잔존 — 공식 스택(vLLM) v4 측정이 최종 수치.
 - 주의: 이 표는 lean-prefill(=cuda 등가) 경로라 p4long 절대값(HF naive torch 경로, top-1 0.78 불일치 실증)과 직접 비교 불가. 같은 표 안의 3-arm 델타만 유효.
 - [ ] GSM8K n=500 3-config 결판
 - [ ] 짧은답 스위트(RULER/commonsense/recall) 회귀 체크
