@@ -82,9 +82,19 @@
 ---
 
 ## CKPT: `nemo9b_rot_longcot.pt` (진행 중, 2026-07-12) — [예약]
-레시피 변경: **seqlen 1024→4096 + cs_menu {2..32} + tune_decay + mixed** (긴 CoT staleness in-distribution화). resume p4long, 800스텝. 완료 시 아래 3-arm 재측정 → minerva 회복 확인:
-- [ ] minerva_math raw/fresh/v4-c4/c2 (목표: v4 ≈ fresh)
-- [ ] GSM8K·HumanEval 회귀 체크 (안 떨어졌나)
+레시피 변경: **seqlen 1024→4096 + cs_menu {2..32} + tune_decay + mixed** (긴 CoT staleness in-distribution화). resume p4long, 800스텝(계획 1500 중 GPU 회수 전 저장분).
+
+### 판정 (2026-07-12, lean-prefill 경로 = production 커널 등가; limit 100/task)
+| | fresh | v4-c4 | v4-c2 |
+|---|---|---|---|
+| minerva_math (700샘플, math_verify) | 30.0 | **29.14 (−0.86)** | 27.86 (−2.1)* |
+| GSM8K (100) | 89.0 | 81.0 (−8) | 84.0 (−5) |
+
+- **판정축 달성: minerva v4-c4 갭 −2.9(p4long) → −0.86 (n=700 노이즈 ±1.7pp 이내) — long-CoT 재학습 유효.**
+- *c2<c4 역전은 노이즈 소견(방향상 c2가 더 fresh에 가까워야 함).
+- GSM8K −8/−5는 n=100 소표본(±5pp) — n=500 확장 측정으로 결판 [진행].
+- 주의: 이 표는 lean-prefill(=cuda 등가) 경로라 p4long 절대값(HF naive torch 경로, top-1 0.78 불일치 실증)과 직접 비교 불가. 같은 표 안의 3-arm 델타만 유효.
+- [ ] GSM8K n=500 3-config 결판
 - [ ] 짧은답 스위트(RULER/commonsense/recall) 회귀 체크
 
 ---
