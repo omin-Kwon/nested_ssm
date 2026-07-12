@@ -115,6 +115,16 @@ def _v4_decode(self, input_states, cache_params, attention_mask):
             y = y.reshape(batch_size, -1)[:, None, ...]
             scan_output = self.norm(y, gate)
             return self.out_proj(scan_output.to(dtype))
+        if cfg.get("coldoff"):
+            # hot-only readout (state update stays FULL width): the draft-model
+            # semantics for self-speculative decoding — probe_selfspec_alpha.py
+            y = torch.einsum('bhpn,bhn->bhp', Sf[..., :pb], Cf[..., :pb])
+            st["t"] += 1
+            D = self.D[..., None].expand(self.D.shape[0], self.head_dim)
+            y = (y + hidden_states * D).to(dtype)
+            y = y.reshape(batch_size, -1)[:, None, ...]
+            scan_output = self.norm(y, gate)
+            return self.out_proj(scan_output.to(dtype))
         y = torch.einsum('bhpn,bhn->bhp', Sf[..., :pb], Cf[..., :pb]) \
             + torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
             * torch.exp(st["glog"])          # glog is per (b,H,P) here — no new axis
@@ -205,11 +215,12 @@ def _dispatch(self, input_states, cache_params=None, attention_mask=None):
     return out
 
 
-def install(model, pb=32, c=16, cold_bf16=1, corr=0):
+def install(model, pb=32, c=16, cold_bf16=1, corr=0, coldoff=0):
     n = 0
     for m in model.modules():
         if type(m).__name__ == "NemotronHMamba2Mixer":
-            m.v4cfg = dict(pb=pb, c=c, cold_bf16=cold_bf16, corr=corr)
+            m.v4cfg = dict(pb=pb, c=c, cold_bf16=cold_bf16, corr=corr,
+                           coldoff=coldoff)
             m._v4state = None
             m.torch_forward = _dispatch.__get__(m)
             n += 1
