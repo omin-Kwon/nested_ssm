@@ -45,8 +45,26 @@ def rot_flat(x, R):
     return torch.einsum("tgn,gmn->tgm", x.view(T, G, N), R.to(x.dtype)).reshape(T, G * N)
 
 
+def fp8_roundtrip_(state, slots):
+    """Falsification arm (NESTED_SSM_FP8_RT=1): round the FULL state through
+    scaled e4m3 after every decode step, simulating fp8 state storage exactly
+    (accuracy-wise). Expectation: per-token rounding injection compounds
+    through the recurrence and breaks — the contrast with lossless
+    v4-cold-fp8 (rounded T/c times) is the asymmetric-precision license."""
+    s = state[slots].float()
+    sc = s.abs().amax(dim=-1, keepdim=True) / 448.0 + 1e-12
+    state[slots] = ((s / sc).to(torch.float8_e4m3fn).float() * sc).to(state.dtype)
+
+
 def apply_ckpt(model):
     """Called at the end of NemotronHForCausalLM.load_weights."""
+    if os.environ.get("NESTED_SSM_FP8_RT"):
+        from vllm.model_executor.layers.mamba.mamba_mixer2 import MambaMixer2
+        for m in model.modules():
+            if isinstance(m, MambaMixer2):
+                m.v4cfg = dict(fp8_rt=True)
+        print("[nested_ssm] raw-fp8 round-trip mode on all mixers", flush=True)
+        return
     cfg = _cfg_from_env()
     if cfg is None:
         return
@@ -108,6 +126,9 @@ def prefill_snapshot(mixer, ssm_state, slots):
         return
     if slots.dim() > 1:
         slots = slots.reshape(-1)
+    if mixer.v4cfg.get("fp8_rt"):
+        fp8_roundtrip_(ssm_state, slots)
+        return
     buf = _bufs(mixer, ssm_state)
     pb = mixer.v4cfg["pb"]
     s = ssm_state[slots].float()
@@ -130,6 +151,9 @@ def decode_readout(mixer, ssm_state, out, x_head, dt_raw, C_d, slots):
     if slots.dim() > 1:        # non-cache-all decode passes (b, q_len=1) 2D indices
         slots = slots[:, -1]
     cfg = mixer.v4cfg
+    if cfg.get("fp8_rt"):      # falsification arm: fresh readout, fp8-rounded carry
+        fp8_roundtrip_(ssm_state, slots)
+        return
     pb, c = cfg["pb"], cfg["c"]
     buf = _bufs(mixer, ssm_state)
     H = mixer.num_heads
