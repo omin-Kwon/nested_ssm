@@ -103,17 +103,29 @@ ax.grid(alpha=.25, which="both")
 fig.tight_layout(); fig.savefig("results/plots/roofline.pdf")
 
 # ------------------------- 2. latency breakdown -------------------------
+# SSU is one fused kernel; the profiler cannot split it. But it is measured
+# bandwidth-saturated (4.6 TB/s), so time ∝ bytes, and its bytes are exactly
+# half state READ (readout rides the loaded tile for free) and half state
+# WRITE — an analytic 50/50 split of the measured kernel time.
 ALL = BS + sorted(BF16)
-order = ["state-op (SSU)", "GEMM (proj/MLP/lm_head)", "norm/elementwise",
+order = ["GEMM (proj/MLP/lm_head)", "norm/elementwise",
          "conv update", "attention", "sampler/logits", "prefill scan/conv",
          "other"]
 fig, ax = plt.subplots(figsize=(8.5, 5.2))
 x = np.arange(len(ALL))
 bot = np.zeros(len(ALL))
+ssu = np.array([R[B]["buckets_ms"].get("state-op (SSU)", 0) / R[B]["gen"]
+                for B in ALL])
+ax.bar(x, ssu / 2, .62, bottom=bot, color="#d62728",
+       label="state READ + readout (SSU/2, bandwidth model)")
+bot += ssu / 2
+ax.bar(x, ssu / 2, .62, bottom=bot, color="#d62728", hatch="\\\\",
+       edgecolor="white", lw=.3,
+       label="state WRITE (SSU/2 — the half v4 defers on cold)")
+bot += ssu / 2
 for comp in order:
     v = np.array([R[B]["buckets_ms"].get(comp, 0) / R[B]["gen"] for B in ALL])
-    ax.bar(x, v, .62, bottom=bot, color=COLORS[comp], label=comp,
-           hatch=["" if B not in BF16 else "//" for B in ALL][0])
+    ax.bar(x, v, .62, bottom=bot, color=COLORS[comp], label=comp)
     bot += v
 for i, B in enumerate(ALL):                      # hatch bf16 bars post-hoc
     if B in BF16:
