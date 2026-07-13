@@ -1,0 +1,32 @@
+{
+ "mode": "fresh",
+ "ckpt": "nemo9b_rot_longcot.pt",
+ "limit": 300,
+ "results": {
+  "fda": {
+   "sample_len": 300,
+   "contains": 0.8266666666666667
+  },
+  "swde": {
+   "sample_len": 300,
+   "contains": 0.9033333333333333
+  },
+  "squad_completion": {
+   "sample_len": 300,
+   "contains": 0.7966666666666666
+  },
+  "triviaqa": {
+   "sample_len": 300,
+   "exact_match": 0.31333333333333335
+  },
+  "nq_open": {
+   "sample_len": 300,
+   "exact_match": 0.09333333333333334
+  },
+  "drop": {
+   "sample_len": 300,
+   "em": 0.0,
+   "f1": 0.03933333333333332
+  }
+ }
+}

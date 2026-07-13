@@ -1,0 +1,19 @@
+{
+ "mode": "v4",
+ "ckpt": "nemo9b_ghost_perm.pt",
+ "limit": 200,
+ "results": {
+  "gsm8k": {
+   "sample_len": 200,
+   "exact_match": 0.585
+  },
+  "fda": {
+   "sample_len": 200,
+   "contains": 0.81
+  },
+  "swde": {
+   "sample_len": 200,
+   "contains": 0.92
+  }
+ }
+}

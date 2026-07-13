@@ -1,0 +1,12 @@
+{
+ "mode": "v4",
+ "ckpt": "nemo9b_rot_qreg2.pt",
+ "limit": 100,
+ "results": {
+  "gsm8k": {
+   "sample_len": 100,
+   "exact_match": 0.74
+  },
+  "_qgate_skip_frac": 0.6570310147545919
+ }
+}

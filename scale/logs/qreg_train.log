@@ -1,0 +1,24 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 18568.26it/s]
+[nemo9b-rot] wrapped 27 mamba2 mixers
+[nemo9b-rot] VALIDATION original=10.08 patched-full=9.35
+[nemo9b-rot] PRE-FT ppl vs width: k16:300.74 k32:201.94 k64:2148.76 k128:9.35
+[nemo9b-rot] resumed R from nemo9b_rot_longcot.pt: k16:12.17 k32:11.25 k64:10.25 k128:9.35
+[nemo9b-rot] step 50 loss 3.375 orth 0.0000 qrho 0.670 (56s) k16:12.12 k32:11.01 k64:10.28 k128:9.35
+[nemo9b-rot] step 100 loss 2.799 orth 0.0000 qrho 0.626 (121s) k16:12.19 k32:11.10 k64:10.16 k128:9.36
+[nemo9b-rot] step 150 loss 2.892 orth 0.0000 qrho 0.593 (192s) k16:11.93 k32:10.50 k64:9.89 k128:9.35
+[nemo9b-rot] step 200 loss 2.270 orth 0.0000 qrho 0.560 (256s) k16:11.66 k32:10.81 k64:10.14 k128:9.35
+[nemo9b-rot] step 250 loss 3.699 orth 0.0000 qrho 0.526 (321s) k16:11.51 k32:10.85 k64:10.08 k128:9.36
+[nemo9b-rot] step 300 loss 3.184 orth 0.0000 qrho 0.507 (386s) k16:11.70 k32:10.98 k64:10.29 k128:9.35
+[nemo9b-rot] step 350 loss 2.838 orth 0.0000 qrho 0.501 (451s) k16:12.03 k32:11.32 k64:10.69 k128:9.34
+[nemo9b-rot] step 400 loss 3.102 orth 0.0000 qrho 0.492 (515s) k16:12.33 k32:11.49 k64:10.58 k128:9.35
+[nemo9b-rot] FINAL k16:12.33 k32:11.49 k64:10.58 k128:9.35
+[nemo9b-rot] saved nemo9b_rot_qreg2.pt

@@ -1,0 +1,19 @@
+{
+ "mode": "v4",
+ "ckpt": "nemo9b_rot_longcot.pt",
+ "limit": 200,
+ "results": {
+  "gsm8k": {
+   "sample_len": 200,
+   "exact_match": 0.595
+  },
+  "fda": {
+   "sample_len": 200,
+   "contains": 0.815
+  },
+  "swde": {
+   "sample_len": 200,
+   "contains": 0.92
+  }
+ }
+}

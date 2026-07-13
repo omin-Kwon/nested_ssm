@@ -1,0 +1,11 @@
+{
+  "math-500": {
+    "pass@1": {
+      "num_entries": 500,
+      "avg_tokens": 11613,
+      "gen_seconds": 8732,
+      "symbolic_correct": 93.2,
+      "no_answer": 3.2
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "ruler.nemotron9b_4k.niah_single_2": {
+    "pass@1": {
+      "num_entries": 100,
+      "avg_tokens": 64,
+      "gen_seconds": 63,
+      "accuracy": 100.0
+    }
+  }
+}

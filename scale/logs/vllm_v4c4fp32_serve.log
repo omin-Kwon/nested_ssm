@@ -1,0 +1,269 @@
+(APIServer pid=4058429) INFO 07-13 03:08:13 [api_utils.py:339] 
+(APIServer pid=4058429) INFO 07-13 03:08:13 [api_utils.py:339]        █     █     █▄   ▄█
+(APIServer pid=4058429) INFO 07-13 03:08:13 [api_utils.py:339]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.24.0
+(APIServer pid=4058429) INFO 07-13 03:08:13 [api_utils.py:339]   █▄█▀ █     █     █     █  model   nvidia/NVIDIA-Nemotron-Nano-9B-v2
+(APIServer pid=4058429) INFO 07-13 03:08:13 [api_utils.py:339]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=4058429) INFO 07-13 03:08:13 [api_utils.py:339] 
+(APIServer pid=4058429) INFO 07-13 03:08:13 [api_utils.py:273] non-default args: {'model_tag': 'nvidia/NVIDIA-Nemotron-Nano-9B-v2', 'port': 8011, 'model': 'nvidia/NVIDIA-Nemotron-Nano-9B-v2', 'enforce_eager': True, 'gpu_memory_utilization': 0.3, 'mamba_ssm_cache_dtype': 'float32', 'max_num_seqs': 64}
+(APIServer pid=4058429) Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+(APIServer pid=4058429) INFO 07-13 03:08:14 [model.py:598] Resolved architecture: NemotronHForCausalLM
+(APIServer pid=4058429) INFO 07-13 03:08:14 [model.py:1725] Using max model len 131072
+(APIServer pid=4058429) INFO 07-13 03:08:14 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=8192.
+(APIServer pid=4058429) INFO 07-13 03:08:14 [vllm.py:1006] Asynchronous scheduling is enabled.
+(APIServer pid=4058429) WARNING 07-13 03:08:14 [vllm.py:1062] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(APIServer pid=4058429) WARNING 07-13 03:08:14 [vllm.py:1110] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(APIServer pid=4058429) INFO 07-13 03:08:14 [kernel.py:276] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(APIServer pid=4058429) INFO 07-13 03:08:15 [vllm.py:1288] Cudagraph is disabled under eager mode
+(APIServer pid=4058429) INFO 07-13 03:08:15 [compilation.py:310] Enabled custom fusions: norm_quant, act_quant
+(EngineCore pid=4058916) INFO 07-13 03:08:22 [core.py:114] Initializing a V1 LLM engine (v0.24.0) with config: model='nvidia/NVIDIA-Nemotron-Nano-9B-v2', speculative_config=None, tokenizer='nvidia/NVIDIA-Nemotron-Nano-9B-v2', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=131072, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_verbose=False), seed=0, served_model_name=nvidia/NVIDIA-Nemotron-Nano-9B-v2, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native']), enable_flashinfer_autotune=True, moe_backend='auto', linear_backend='auto')
+(EngineCore pid=4058916) INFO 07-13 03:08:23 [parallel_state.py:1588] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://172.18.0.4:36631 backend=nccl
+(EngineCore pid=4058916) INFO 07-13 03:08:23 [parallel_state.py:1923] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0, EPLB rank N/A
+(EngineCore pid=4058916) INFO 07-13 03:08:24 [topk_topp_sampler.py:55] Using FlashInfer for top-p & top-k sampling.
+(EngineCore pid=4058916) INFO 07-13 03:08:24 [gpu_model_runner.py:5160] Starting to load model nvidia/NVIDIA-Nemotron-Nano-9B-v2...
+(EngineCore pid=4058916) INFO 07-13 03:08:24 [cuda.py:480] Using FLASHINFER attention backend out of potential backends: ['FLASHINFER', 'FLASH_ATTN', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=4058916) INFO 07-13 03:08:24 [selector.py:138] Using HND KV cache layout for FLASHINFER backend.
+(EngineCore pid=4058916) Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+(EngineCore pid=4058916) INFO 07-13 03:08:25 [weight_utils.py:849] Filesystem type for checkpoints: LUSTRE. Checkpoint size: 16.56 GiB. Available RAM: 2133.35 GiB.
+(EngineCore pid=4058916) INFO 07-13 03:08:25 [weight_utils.py:811] Prefetching checkpoint files into page cache started (in background, num_threads=8, block_size=16777216 bytes)
+(EngineCore pid=4058916) Loading safetensors checkpoint shards:   0% Completed | 0/4 [00:00<?, ?it/s]
+(EngineCore pid=4058916) INFO 07-13 03:08:26 [weight_utils.py:783] Prefetching checkpoint files: 10% (1/4)
+(EngineCore pid=4058916) INFO 07-13 03:08:26 [weight_utils.py:783] Prefetching checkpoint files: 20% (2/4)
+(EngineCore pid=4058916) INFO 07-13 03:08:26 [weight_utils.py:783] Prefetching checkpoint files: 30% (3/4)
+(EngineCore pid=4058916) INFO 07-13 03:08:26 [weight_utils.py:783] Prefetching checkpoint files: 40% (4/4)
+(EngineCore pid=4058916) INFO 07-13 03:08:26 [weight_utils.py:806] Prefetching checkpoint files into page cache finished in 0.31s
+(EngineCore pid=4058916) Loading safetensors checkpoint shards:  25% Completed | 1/4 [00:01<00:04,  1.45s/it]
+(EngineCore pid=4058916) Loading safetensors checkpoint shards:  50% Completed | 2/4 [00:02<00:02,  1.43s/it]
+(EngineCore pid=4058916) Loading safetensors checkpoint shards:  75% Completed | 3/4 [00:04<00:01,  1.36s/it]
+(EngineCore pid=4058916) Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:05<00:00,  1.19s/it]
+(EngineCore pid=4058916) Loading safetensors checkpoint shards: 100% Completed | 4/4 [00:05<00:00,  1.27s/it]
+(EngineCore pid=4058916) 
+(EngineCore pid=4058916) [nested_ssm] ckpt /home/omin/nested_ssm/scale/nemo9b_rot_longcot.pt applied to 27 mixers (mode=v4 pb=32 c=4 cold=fp32)
+(EngineCore pid=4058916) INFO 07-13 03:08:31 [default_loader.py:430] Loading weights took 5.22 seconds
+(EngineCore pid=4058916) INFO 07-13 03:08:31 [gpu_model_runner.py:5255] Model loading took 16.6 GiB memory and 6.530902 seconds
+(EngineCore pid=4058916) INFO 07-13 03:08:31 [interface.py:773] Setting attention block size to 1312 tokens to ensure that attention page size is >= mamba page size.
+(EngineCore pid=4058916) INFO 07-13 03:08:31 [interface.py:797] Padding mamba page size by 1.08% to ensure that mamba page size and attention page size are exactly equal.
+(EngineCore pid=4058916) INFO 07-13 03:08:31 [utils.py:90] `_KV_CACHE_LAYOUT_OVERRIDE` variable detected. Setting KV cache layout to HND.
+(EngineCore pid=4058916) INFO 07-13 03:08:32 [mamba_mixer2.py:583] Warming up Mamba2 SSD Triton kernels...
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [gpu_worker.py:508] Available KV cache memory: 35.41 GiB
+(EngineCore pid=4058916) WARNING 07-13 03:08:33 [kv_cache_utils.py:1208] Add 1 padding layers, may waste at most 3.70% KV cache memory
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [kv_cache_utils.py:2146] GPU KV cache size: 2,165,750 tokens
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [kv_cache_utils.py:2147] Maximum concurrency for 131,072 tokens per request: 16.52x
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [ssu_dispatch.py:224] Using triton Mamba SSU backend.
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [deep_gemm.py:175] deep_gemm not found in site-packages, trying vendored vllm.third_party.deep_gemm
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [deep_gemm.py:202] DeepGEMM PDL enabled on vllm.third_party.deep_gemm.
+(EngineCore pid=4058916) 2026-07-13 03:08:33,451 - INFO - autotuner.py:622 - flashinfer.jit: [Autotuner]: Autotuning process starts ...
+(EngineCore pid=4058916) 2026-07-13 03:08:33,487 - INFO - autotuner.py:641 - flashinfer.jit: [Autotuner]: Autotuning process ends
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [jit_monitor.py:60] Kernel JIT monitor activated — Triton JIT compilations during inference will be logged as warnings.
+(EngineCore pid=4058916) INFO 07-13 03:08:33 [core.py:344] init engine (profile, create kv cache, warmup model) took 2.12 s
+(EngineCore pid=4058916) INFO 07-13 03:08:36 [vllm.py:1006] Asynchronous scheduling is enabled.
+(EngineCore pid=4058916) WARNING 07-13 03:08:36 [vllm.py:1062] Enforce eager set, disabling torch.compile and CUDAGraphs. This is equivalent to setting -cc.mode=none -cc.cudagraph_mode=none
+(EngineCore pid=4058916) WARNING 07-13 03:08:36 [vllm.py:1110] Inductor compilation was disabled by user settings, optimizations settings that are only active during inductor compilation will be ignored.
+(EngineCore pid=4058916) INFO 07-13 03:08:36 [kernel.py:276] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native'])
+(EngineCore pid=4058916) INFO 07-13 03:08:36 [vllm.py:1288] Cudagraph is disabled under eager mode
+(EngineCore pid=4058916) INFO 07-13 03:08:36 [compilation.py:310] Enabled custom fusions: norm_quant, act_quant
+(APIServer pid=4058429) INFO 07-13 03:08:36 [api_server.py:577] Supported tasks: ['generate']
+(APIServer pid=4058429) INFO 07-13 03:08:40 [hf.py:548] Detected the chat template content format to be 'string'. You can set `--chat-template-content-format` to override this.
+(APIServer pid=4058429) INFO 07-13 03:08:41 [api_server.py:581] Starting vLLM server on http://0.0.0.0:8011
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:37] Available routes are:
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /openapi.json, Methods: GET, HEAD
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /docs, Methods: GET, HEAD
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /docs/oauth2-redirect, Methods: GET, HEAD
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /redoc, Methods: GET, HEAD
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /load, Methods: GET
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /version, Methods: GET
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /health, Methods: GET
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /metrics, Methods: GET
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /tokenize, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /detokenize, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/models, Methods: GET
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /ping, Methods: GET
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /ping, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /invocations, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/chat/completions, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/chat/completions/batch, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/responses, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/responses/{response_id}, Methods: GET
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/responses/{response_id}/cancel, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/completions, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/messages, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/messages/count_tokens, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /generative_scoring, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /inference/v1/generate, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /scale_elastic_ep, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /is_scaling_elastic_ep, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/chat/completions/render, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/completions/render, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/chat/completions/derender, Methods: POST
+(APIServer pid=4058429) INFO 07-13 03:08:41 [launcher.py:46] Route: /v1/completions/derender, Methods: POST
+(APIServer pid=4058429) INFO:     Started server process [4058429]
+(APIServer pid=4058429) INFO:     Waiting for application startup.
+(APIServer pid=4058429) INFO:     Application startup complete.
+(APIServer pid=4058429) INFO:     127.0.0.1:60852 - "PUT /v1 HTTP/1.1" 404 Not Found
+(APIServer pid=4058429) INFO:     127.0.0.1:60866 - "PUT /v1 HTTP/1.1" 404 Not Found
+(EngineCore pid=4058916) WARNING 07-13 03:08:59 [jit_monitor.py:106] Triton kernel JIT compilation during inference: _zero_kv_blocks_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(EngineCore pid=4058916) WARNING 07-13 03:08:59 [jit_monitor.py:106] Triton kernel JIT compilation during inference: _compute_slot_mapping_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(EngineCore pid=4058916) WARNING 07-13 03:08:59 [flashinfer.py:480] Using TRTLLM prefill attention (auto-detected).
+(EngineCore pid=4058916) WARNING 07-13 03:08:59 [jit_monitor.py:106] Triton kernel JIT compilation during inference: _causal_conv1d_fwd_kernel. This causes a latency spike; consider extending warmup to cover this shape/config.
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [dump_input.py:72] Dumping input data for V1 LLM engine (v0.24.0) with config: model='nvidia/NVIDIA-Nemotron-Nano-9B-v2', speculative_config=None, tokenizer='nvidia/NVIDIA-Nemotron-Nano-9B-v2', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.bfloat16, max_seq_len=131072, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=True, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_verbose=False), seed=0, served_model_name=nvidia/NVIDIA-Nemotron-Nano-9B-v2, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.NONE: 0>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['all'], 'ir_enable_torch_wrap': False, 'splitting_ops': [], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.NONE: 0>, 'cudagraph_num_of_warmups': 0, 'cudagraph_capture_sizes': [], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': True, 'fuse_act_quant': True, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False}, 'max_cudagraph_capture_size': 0, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['vllm_c', 'native'], fused_add_rms_norm=['vllm_c', 'native']), enable_flashinfer_autotune=True, moe_backend='auto', linear_backend='auto'), 
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [dump_input.py:79] Dumping scheduler output for model execution: SchedulerOutput(scheduled_new_reqs=[NewRequestData(req_id=chatcmpl-b98f090b34beae7c-856d9fe6,prompt_token_ids_len=66,prefill_token_ids_len=None,mm_features=[],sampling_params=SamplingParams(n=1, presence_penalty=0.0, frequency_penalty=0.0, repetition_penalty=1.0, temperature=0.0, top_p=1.0, top_k=0, min_p=0.0, seed=0, stop=[], stop_token_ids=[2, 11], bad_words=[], thinking_token_budget=None, include_stop_str_in_output=False, ignore_eos=False, max_tokens=131006, min_tokens=0, logprobs=None, prompt_logprobs=None, skip_special_tokens=True, spaces_between_special_tokens=False, structured_outputs=None, extra_args=None),block_ids=([1], [2], [3], [4], [5], [6], [7], [8]),num_computed_tokens=0,lora_request=None,prompt_embeds_shape=None)], scheduled_cached_reqs=CachedRequestData(req_ids=[],resumed_req_ids=set(),new_token_ids_lens=[],all_token_ids_lens={},new_block_ids=[],num_computed_tokens=[],num_output_tokens=[]), num_scheduled_tokens={chatcmpl-b98f090b34beae7c-856d9fe6: 66}, total_num_scheduled_tokens=66, scheduled_spec_decode_tokens={}, scheduled_encoder_inputs={}, num_common_prefix_blocks=[0, 0, 0, 0, 0, 0, 0, 0], finished_req_ids=[], free_encoder_mm_hashes=[], preempted_req_ids=[], has_structured_output_requests=false, pending_structured_output_tokens=false, num_invalid_spec_tokens=null, kv_connector_metadata=null, ec_connector_metadata=null, new_block_ids_to_zero=[8], num_spec_tokens_to_schedule=0)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [dump_input.py:81] Dumping scheduler stats: SchedulerStats(num_running_reqs=1, num_waiting_reqs=0, num_skipped_waiting_reqs=0, step_counter=0, current_wave=0, kv_cache_usage=0.004527447651386574, prefix_cache_stats=PrefixCacheStats(reset=False, requests=0, queries=0, hits=0, preempted_requests=0, preempted_queries=0, preempted_hits=0), connector_prefix_cache_stats=None, kv_cache_eviction_events=[], spec_decoding_stats=None, kv_connector_stats=None, waiting_lora_adapters={}, running_lora_adapters={}, cudagraph_stats=None, perf_stats=None)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233] EngineCore encountered a fatal error.
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233] Traceback (most recent call last):
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 1224, in run_engine_core
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     engine_core.run_busy_loop()
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 1265, in run_busy_loop
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     self._process_engine_step()
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 1304, in _process_engine_step
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     outputs, model_executed = self.step_fn()
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]                               ^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/engine/core.py", line 549, in step_with_batch_queue
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     exec_future = self.model_executor.execute_model(
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/executor/uniproc_executor.py", line 120, in execute_model
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     output.result()
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self.__get_result()
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     raise self._exception
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/executor/uniproc_executor.py", line 98, in collective_rpc
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     result = run_method(self.driver_worker, method, args, kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/serial_utils.py", line 510, in run_method
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return func(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/worker/worker_base.py", line 351, in execute_model
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self.worker.execute_model(scheduler_output)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return func(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/worker/gpu_worker.py", line 896, in execute_model
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     output = self.model_runner.execute_model(
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/utils/_contextlib.py", line 124, in decorate_context
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return func(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/worker/gpu_model_runner.py", line 4332, in execute_model
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     model_output = self._model_forward(
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]                    ^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/worker/gpu_model_runner.py", line 3793, in _model_forward
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self.model(
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self._call_impl(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return forward_call(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/models/nemotron_h.py", line 937, in forward
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     hidden_states = self.model(
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]                     ^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/compilation/decorators.py", line 507, in __call__
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self.forward(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/models/nemotron_h.py", line 614, in forward
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     hidden_states, residual = layer(
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]                               ^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self._call_impl(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return forward_call(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/models/nemotron_h.py", line 409, in forward
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     output = self.mixer(hidden_states)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]              ^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1779, in _wrapped_call_impl
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self._call_impl(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/nn/modules/module.py", line 1790, in _call_impl
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return forward_call(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/mamba_mixer2.py", line 558, in forward
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     torch.ops.vllm.mamba_mixer2(
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/torch/_ops.py", line 1269, in __call__
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     return self._op(*args, **kwargs)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]            ^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/mamba_mixer2.py", line 1108, in mamba_mixer2
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     self.conv_ssm_forward(projected_states=projected_states, output=output)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/mamba_mixer2.py", line 968, in conv_ssm_forward
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     _v4n.prefill_snapshot(self, ssm_state, state_indices_tensor_p)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/v4_nested.py", line 132, in prefill_snapshot
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     buf = _bufs(mixer, ssm_state)
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]           ^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/model_executor/layers/mamba/v4_nested.py", line 97, in _bufs
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]     snap=torch.zeros(slots, H, P, N - pb, dtype=_COLD_DT[cold], device=dev),
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233]          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=4058916) ERROR 07-13 03:08:59 [core.py:1233] torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 6.47 GiB. GPU 0 has a total capacity of 178.35 GiB of which 1.93 GiB is free. Including non-PyTorch memory, this process has 176.41 GiB memory in use. Of the allocated memory 175.57 GiB is allocated by PyTorch, and 8.39 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704] AsyncLLM output_handler failed.
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704] Traceback (most recent call last):
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/engine/async_llm.py", line 660, in output_handler
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704]     outputs = await engine_core.get_output_async()
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704]               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704]   File "/home/omin/vllm_env/lib/python3.12/site-packages/vllm/v1/engine/core_client.py", line 1061, in get_output_async
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704]     raise self._format_exception(outputs) from None
+(APIServer pid=4058429) ERROR 07-13 03:08:59 [async_llm.py:704] vllm.v1.engine.exceptions.EngineDeadError: EngineCore encountered an issue. See stack trace (above) for the root cause.
+(APIServer pid=4058429) INFO:     127.0.0.1:36854 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36868 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36880 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36882 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36884 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36896 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36912 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36918 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36922 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36928 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36936 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36940 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36954 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36966 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36972 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36988 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:36998 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37006 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37012 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37022 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37032 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37048 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37056 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37060 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37066 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37074 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37088 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37090 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37092 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37104 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37116 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37130 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     Shutting down
+(APIServer pid=4058429) INFO:     Waiting for connections to close. (CTRL+C to force quit)
+(APIServer pid=4058429) INFO:     127.0.0.1:37140 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37154 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37166 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37172 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37184 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37192 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37198 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37200 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37216 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37222 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37236 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37248 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37256 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37268 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37276 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37280 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37296 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     127.0.0.1:37312 - "POST /v1/chat/completions HTTP/1.1" 500 Internal Server Error
+(APIServer pid=4058429) INFO:     Waiting for application shutdown.
+(APIServer pid=4058429) INFO:     Application shutdown complete.
+(APIServer pid=4058429) INFO:     Finished server process [4058429]
+(APIServer pid=4058429) INFO 07-13 03:08:59 [core_client.py:655] [shutdown] MPClient: start timeout=0s
+(APIServer pid=4058429) INFO 07-13 03:08:59 [core_client.py:657] [shutdown] MPClient: stopping engine manager
+(APIServer pid=4058429) WARNING 07-13 03:08:59 [utils.py:620] [shutdown] Process manager: force killing remaining processes count=1
+(APIServer pid=4058429) INFO 07-13 03:08:59 [core_client.py:659] [shutdown] MPClient: engine manager stopped
+(APIServer pid=4058429) INFO 07-13 03:08:59 [core_client.py:660] [shutdown] MPClient: cleaning up background resources
+(APIServer pid=4058429) INFO 07-13 03:08:59 [core_client.py:662] [shutdown] MPClient: complete
+/usr/lib/python3.12/multiprocessing/resource_tracker.py:254: UserWarning: resource_tracker: There appear to be 1 leaked semaphore objects to clean up at shutdown
+  warnings.warn('resource_tracker: There appear to be %d '
