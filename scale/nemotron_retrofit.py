@@ -215,6 +215,12 @@ def main():
     tag = "nemo9b-rot" if not args.fixed_only else f"nemo9b-fixed{args.fixed_only}"
     model = AutoModelForCausalLM.from_pretrained(
         "nvidia/NVIDIA-Nemotron-Nano-9B-v2", dtype=torch.bfloat16).to(device)
+    # training MUST run the torch path: R lives in self.act, and once fused
+    # kernels are pip-importable, is_fast_path_available flips True and
+    # cuda_kernels_forward silently bypasses ActRotMask (symptom: orth==0,
+    # k-width ppls identical, R gets no gradient — hit 2026-07-13).
+    from transformers.models.nemotron_h import modeling_nemotron_h as _M
+    _M.is_fast_path_available = False
     for q in model.parameters():
         q.requires_grad_(False)
     model.config.use_cache = False
