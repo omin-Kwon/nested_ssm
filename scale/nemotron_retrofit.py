@@ -122,7 +122,10 @@ def batches(train, bsz, seqlen, gen, device):
     return x.to(device), y.to(device)
 
 @torch.no_grad()
-def vppl(model, val, w, seqlen=1024, n=6, device="cuda"):
+def vppl(model, val, w, seqlen=512, n=6, device="cuda"):
+    # NOTE 07-13: default 1024->512 to fit shared-GPU leftovers (torch-path
+    # Y_diag is O(T*chunk*H*P)); absolute ppl not comparable to older logs,
+    # k-width comparisons remain internally consistent.
     model.eval(); set_width(model, w); tot = 0.0
     for m in model.modules():
         if hasattr(m, "scan_cfg"):
