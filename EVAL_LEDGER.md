@@ -118,12 +118,16 @@
 - 측정 configs(유저 확정 6종): raw / raw-bf16 / fresh / v4-c4-{fp32,bf16,fp8} (fresh·v4는 vLLM 포팅 후)
 
 ### 6-config 매트릭스 (전수, pass@1, reasoning on; fresh/v4 = longcot ckpt, vLLM 포팅 서빙)
-| bench | 공식 | raw | raw-bf16 | fresh | v4-c4-fp32 | v4-c4-bf16 | v4-c4-fp8 |
-|---|---|---|---|---|---|---|---|
-| GSM8K (1319) | 91.4 | **95.0** | **95.0** | **95.0** (정답수까지 동일 1253) | 측정 중 | **94.47 (−0.5 ≈ lossless)** | — |
-| MATH-500 (500) | 97.8(공식 MATH) | **97.6** | **97.6** | **98.2** (+0.6 noise) | 측정 중 | **95.20 (−2.4·no_ans 2.6%)** | — |
+| bench | 공식 | raw | raw-bf16 | **raw-fp8** | fresh | v4-c4-fp32 | v4-c4-bf16 | **v4-c4-fp8** |
+|---|---|---|---|---|---|---|---|---|
+| GSM8K (1319) | 91.4 | **95.0** | **95.0** | 95.15 | **95.0** (정답수 동일) | 94.47 | 94.47 | **94.62** |
+| MATH-500 (500) | 97.8(공식 MATH) | **97.6** | **97.6** | **93.2 ⚠** | **98.2** | 95.2 | 95.2 | **95.2** |
 
-v4-c4-bf16 판정: 짧은~중간 CoT(GSM8K) lossless, 최장 CoT(MATH-500 avg 6k tok)에만 잔여 staleness — **rank-c 정확 보정(THEORY 명제 3 따름정리, GSM8K에서 c32 −10.5 → −0.5 실증)이 이 잔여 갭의 해독제 후보** → v4-c4+corr 공식 스택 측정 예정.
+**매트릭스 완성 판정 (2026-07-13):**
+1. **비대칭 정밀도 면허 실증** — raw-fp8은 장문 CoT에서 붕괴: MATH −4.4, avg 11,613토큰(raw의 2.2× — 방황·장황 = 폐루프 상태오염 증상), no-answer 3.2%. **v4-cold-fp8은 완전 생존(95.2 = bf16 = fp32, 정상 6.4k토큰)**. 손상 축 = 수천 토큰 자기생성 (GSM8K ~1.8k은 양쪽 다 무사, RULER@4k도 raw-fp8 98-100 — 짧은 지평에선 안 드러남). ⚠ 매트릭스 설계 교훈: 반증 arm은 예상 손상 축의 벤치를 처음부터 포함할 것.
+2. **v4 잔여 갭(MATH −2.4)은 정밀도 무관** (fp32=bf16=fp8 동일 95.2) → 순수 staleness → 처방 = long-CoT 학습 연장(800→1500 잔여) 또는 c2. cold 정밀도는 fp8까지 공짜.
+3. GSM8K는 전 config lossless (v4-fp8 −0.4 이내).
+4. RULER@4k(niah 5종): raw-fp8 98~100 — 참고: `ns_results/raw-fp8/eval-results/ruler.nemotron9b_4k/`.
 
 판정 누적: ① 스택 검증 통과(공식 수치 재현, 구 lm-eval 76.7 갭은 harness 차이), ② **bf16 state cache 무손실**, ③ **fresh 완전 무손실 = retrofit(0.04%)은 기반 모델을 훼손하지 않음** (직교 R의 full-width 불변성 실증). 구 lm-eval 수치는 내부 역사 기록으로만.
 json: `scale/ns_results/{raw,raw-bf16,fresh,v4-*}/eval-results/*/metrics.json` · 서빙: `NESTED_SSM_CKPT/MODE/PB/C/COLD` env (scale/install_vllm_v4.sh)
