@@ -54,7 +54,7 @@ def _v4_fused_decode(self, hidden_states, cache_params, attention_mask):
             Bg[..., :pb].contiguous(), Cg[..., :pb].contiguous(),
             st["D_e"], z=None, dt_bias=st["dtb_e"], dt_softplus=True)
     y = y.view(B_, H, P).float()
-    if pb < N:
+    if pb < N and cfg["cold"] != "off":
         HG = H // G
         # ---- cold readout: per-head bmm on the SNAPSHOT-RESIDENT master ----
         qc = Cg[..., pb:].repeat_interleave(HG, dim=1)               # (B,H,Nc)
@@ -134,13 +134,16 @@ def _dispatch(self, hidden_states, cache_params=None, attention_mask=None, **kw)
                                   if rec.dtype != torch.float32 else torch.bfloat16),
               "A_hot": A[:, None, None].expand(H, P, pb).contiguous(),
               "dtb_e": self.dt_bias[:, None].expand(H, P).contiguous(),
-              "D_e": self.D[:, None].expand(H, P).contiguous(),
-              # flush buffers: B at GROUP level (16x smaller), X per head
-              "bufB": torch.zeros(c, B_, G, Nc, device=dev),
-              "bufX": torch.zeros(c, B_, H, P, device=dev),
-              "bufA": torch.zeros(c, B_, H, device=dev)}
+              "D_e": self.D[:, None].expand(H, P).contiguous()}
         st["dt_e"] = torch.empty(B_, H, P, device=dev,
                                  dtype=st["dtb_e"].dtype)
+        if cfg["cold"] == "off":                 # hot-only draft: no cold at all
+            self._v4state = st
+            return out
+        # flush buffers: B at GROUP level (16x smaller), X per head
+        st["bufB"] = torch.zeros(c, B_, G, Nc, device=dev)
+        st["bufX"] = torch.zeros(c, B_, H, P, device=dev)
+        st["bufA"] = torch.zeros(c, B_, H, device=dev)
         cold = rec[..., pb:].float().permute(0, 1, 3, 2).contiguous()  # (B,H,Nc,P)
         if cfg["cold"] == "fp8":
             st["shadow"] = cold.to(torch.bfloat16)                   # bf16 master
