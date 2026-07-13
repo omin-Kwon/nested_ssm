@@ -42,6 +42,7 @@
 - `HF_DATASETS_CACHE`/`HF_HUB_CACHE`는 쓰기가능 로컬로(공유캐시 lock PermissionError); 모델은 cache_dir=공유hub로 로드.
 - nohup은 `bash -c "cd <절대경로> && ..."` + 로그 절대경로. pkill 자기-매치 주의. 발사 전 `nvidia-smi`(타 유저 GPU 이동/OOM).
 - 평가: 생성형은 `run_recall_native.py`(naive 엔진은 생성 degenerate); **정확도 비교는 항상 raw/fresh/v4 3-arm**; 후보 비교 limit≥1000.
+- **⚠ fused-커널 빌드 후 함정(07-12 eval, 07-13 학습에서도 실증)**: nemo_env에 커널이 import되면 `is_fast_path_available=True`가 되어 mixer.forward가 `cuda_kernels_forward`를 탐 → torch_forward를 패치하는 v4/fresh 설치와 ActRotMask(R)가 **침묵 무효화**. 증상: (eval) fresh==v4 소수점까지 동일 / (학습) orth=0.0000·k폭 ppl 전부 동일·R 무그래디언트. run_recall_native와 **nemotron_retrofit(학습)** 둘 다 모델 로드 후 `is_fast_path_available=False` 강제로 봉합됨. torch 경로 prefill은 chunked-SSD 중간텐서가 T×chunk_size 비례 — 공유 GPU 자투리에선 `m.chunk_size=64` 축소(exact라 수치 불변).
 
 ## 파일 지도
 | 위치 | 내용 |

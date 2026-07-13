@@ -183,6 +183,8 @@ def main():
                         "rho=|C_cold|^2/|C|^2 of the rotated query")
     p.add_argument("--qpb", type=int, default=32,
                    help="hot prefix used by --qreg")
+    p.add_argument("--chunk", type=int, default=0,
+                   help="override mixer chunk_size (shrinks torch-path memory; exact)")
     p.add_argument("--widths", type=int, nargs="+", default=[16, 32, 64, 128])
     p.add_argument("--fixed_only", type=int, default=0)
     p.add_argument("--save", default="nemo9b_rot.pt")
@@ -221,6 +223,10 @@ def main():
     # k-width ppls identical, R gets no gradient — hit 2026-07-13).
     from transformers.models.nemotron_h import modeling_nemotron_h as _M
     _M.is_fast_path_available = False
+    if args.chunk:      # shrink torch-path chunked-SSD intermediates (exact)
+        for _m in model.modules():
+            if type(_m).__name__ == "NemotronHMamba2Mixer":
+                _m.chunk_size = args.chunk
     for q in model.parameters():
         q.requires_grad_(False)
     model.config.use_cache = False
