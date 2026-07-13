@@ -167,3 +167,12 @@ longcot +400스텝(seqlen256, λ=2.0): qrho 0.690→0.492, 폭 ppl 무손상(k12
 | trained R + 삭제 (hot-32만) | **59.5** | 81.5 | 92.0 |
 | trained R + **lazy** (v4-c4) | **80.0** | 81.5 | 92.0 |
 판정: ① 정적 절단은 추론에서 파국(−26.5; GHOST의 wikitext +1ppl 뒤에 숨는 축), ② 회전만으론 삭제 못 구함(−25.5) — 회전=분할 효율화지 삭제 면허가 아님, ③ **같은 hot 예산에서 lazy 보존만이 회복**(−5 @n=200; 공식 스택 n=1319에선 −0.5). ④ 삭제 민감축 = 얕은 recall이 아니라 다단계 추론. 재현: `queue_deletion_ladder.sh` + `make_ghost_perm.py`, json `nemo9b_recall_del_*.json`.
+
+## CKPT: `nemo9b_rot_longcot2.pt` (2026-07-14) — GSM8K lossless 달성
+레시피: longcot 이어 +1200스텝, seqlen 4096, v4aware, **cs_menu c4·c8 가중(2 4 4 8 8 16 32)**, tune_decay, mixed. FINAL(vppl512) k16 9.20/k32 8.43/k64 8.06/k128 7.45.
+### GSM8K n=500 판정 (native lean 경로)
+| ckpt | fresh | v4-c4 | 갭 |
+|---|---|---|---|
+| longcot | 83.2 | 79.8 | −3.4 |
+| **longcot2** | 81.2 | **81.6** | **+0.4 (lossless)** |
+판정: c4-가중 장문 학습으로 v4 arm +1.8 (fresh는 −2 드리프트 — 갭 소멸의 주인은 v4 상승). 다음: 공식 스택(vLLM) GSM8K/MATH-500 재측정으로 배포 승격 판정. json `nemo9b_recall_lc2_*.json`.
