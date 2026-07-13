@@ -158,3 +158,12 @@ longcot +400스텝(seqlen256, λ=2.0): qrho 0.690→0.492, 폭 ppl 무손상(k12
 | τ=0.45 | 24.7 | 79.0 |
 | τ=0.6 | 65.7 | 74.0 |
 판정: 게이트 작동하나 미학습 상태론 skip1%당 −0.2pp — **write-staleness의 dedicated-v4 붕괴→v4aware 회복 서사와 평행** → 처방 = gate-aware 학습(+qreg 본학습 seqlen1024/1500스텝). json `scale/nemo9b_recall_qg_*.json`.
+
+## 삭제-vs-Lazy 사다리 (2026-07-13, motivation 실험; n=200, native lean 경로)
+| arm | GSM8K | fda | swde |
+|---|---|---|---|
+| fresh | 85.0 | 81.0 | 92.5 |
+| GHOST-lite (calibration 순열 top-32 잔존, 삭제) | **58.5** | 81.0 | 92.0 |
+| trained R + 삭제 (hot-32만) | **59.5** | 81.5 | 92.0 |
+| trained R + **lazy** (v4-c4) | **80.0** | 81.5 | 92.0 |
+판정: ① 정적 절단은 추론에서 파국(−26.5; GHOST의 wikitext +1ppl 뒤에 숨는 축), ② 회전만으론 삭제 못 구함(−25.5) — 회전=분할 효율화지 삭제 면허가 아님, ③ **같은 hot 예산에서 lazy 보존만이 회복**(−5 @n=200; 공식 스택 n=1319에선 −0.5). ④ 삭제 민감축 = 얕은 recall이 아니라 다단계 추론. 재현: `queue_deletion_ladder.sh` + `make_ghost_perm.py`, json `nemo9b_recall_del_*.json`.
