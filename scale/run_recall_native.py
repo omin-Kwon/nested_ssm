@@ -31,6 +31,10 @@ ap.add_argument("--corr", type=int, default=0,
                 help="rank-c exact readout correction (additive families only)")
 ap.add_argument("--qgate", type=float, default=0.0,
                 help="skip cold readout for heads with query cold-energy < tau")
+ap.add_argument("--coldoff", type=int, default=0,
+                help="DELETE the cold tier (hot-only readout) — the "
+                     "truncation-baseline semantics (GHOST-style if ckpt is a "
+                     "calibration permutation)")
 ap.add_argument("--model", default=MID,
                 help="e.g. nvidia/NVIDIA-Nemotron-Nano-9B-v2-Base (official base "
                      "numbers are for -Base; aligned ckpt underperforms base harness)")
@@ -70,7 +74,8 @@ else:
             m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to("cuda"))
     model.eval()
 if mode == "v4":
-    n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1, corr=args.corr)
+    n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1, corr=args.corr,
+                  coldoff=args.coldoff)
     if args.qgate:
         for _m in model.modules():
             if type(_m).__name__ == "NemotronHMamba2Mixer":
