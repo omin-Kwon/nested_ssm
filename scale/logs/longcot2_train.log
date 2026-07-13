@@ -1,0 +1,34 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 20645.19it/s]
+[nemo9b-rot] wrapped 27 mamba2 mixers
+[nemo9b-rot] VALIDATION original=10.64 patched-full=7.45 (patched = OUR chunked scan engine)
+[nemo9b-rot] PRE-FT ppl vs width: k16:303.13 k32:317.35 k64:1048.63 k128:7.45
+[nemo9b-rot] resumed R from nemo9b_rot_longcot.pt: k16:9.88 k32:8.56 k64:7.99 k128:7.45
+[nemo9b-rot] step 100 loss 2.238 orth 0.0000 (1491s) k16:9.97 k32:8.76 k64:8.06 k128:7.45
+[nemo9b-rot] step 200 loss 2.552 orth 0.0000 (3786s) k16:9.47 k32:8.49 k64:7.93 k128:7.44
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot2.pt @ step 200
+[nemo9b-rot] step 300 loss 1.915 orth 0.0000 (5687s) k16:9.68 k32:8.57 k64:7.92 k128:7.45
+[nemo9b-rot] step 400 loss 2.318 orth 0.0000 (7432s) k16:9.38 k32:8.38 k64:8.04 k128:7.45
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot2.pt @ step 400
+[nemo9b-rot] step 500 loss 2.529 orth 0.0000 (8974s) k16:9.45 k32:8.45 k64:7.99 k128:7.44
+[nemo9b-rot] step 600 loss 2.218 orth 0.0000 (10101s) k16:9.02 k32:8.30 k64:7.93 k128:7.45
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot2.pt @ step 600
+[nemo9b-rot] step 700 loss 2.405 orth 0.0000 (12237s) k16:8.99 k32:8.38 k64:8.00 k128:7.45
+[nemo9b-rot] step 800 loss 2.567 orth 0.0000 (14120s) k16:8.97 k32:8.35 k64:8.00 k128:7.45
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot2.pt @ step 800
+[nemo9b-rot] step 900 loss 2.824 orth 0.0000 (15841s) k16:9.13 k32:8.35 k64:8.02 k128:7.45
+[nemo9b-rot] step 1000 loss 2.145 orth 0.0000 (17876s) k16:9.18 k32:8.45 k64:8.07 k128:7.45
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot2.pt @ step 1000
+[nemo9b-rot] step 1100 loss 2.604 orth 0.0000 (19914s) k16:9.19 k32:8.43 k64:8.06 k128:7.45
+[nemo9b-rot] step 1200 loss 1.907 orth 0.0000 (21601s) k16:9.20 k32:8.43 k64:8.06 k128:7.45
+[nemo9b-rot] [ckpt] saved nemo9b_rot_longcot2.pt @ step 1200
+[nemo9b-rot] FINAL k16:9.20 k32:8.43 k64:8.06 k128:7.45
+[nemo9b-rot] saved nemo9b_rot_longcot2.pt

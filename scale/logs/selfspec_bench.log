@@ -97,3 +97,30 @@ Traceback (most recent call last):
     final_states = torch.empty((batch, nheads, dim), device=states.device, dtype=torch.float32)
                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 1.25 GiB. GPU 0 has a total capacity of 178.35 GiB of which 1001.81 MiB is free. Process 1028572 has 154.00 GiB memory in use. Including non-PyTorch memory, this process has 23.35 GiB memory in use. Of the allocated memory 21.81 GiB is allocated by PyTorch, and 794.26 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+GPU 2 stable window (used=67881MiB) — bench then training
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 4898.31it/s]
+[raw] 43.86 ms/step
+[verify c=4] 170.99 ms/chunk
+[verify c=6] 225.09 ms/chunk
+[verify c=8] 237.70 ms/chunk
+[verify c=16] 282.88 ms/chunk
+[draft] hot-only installed on 27 mixers
+[draft(hot-only)] 20.45 ms/step
+
+B=256  t_raw=43.86  t_draft=20.45 ms/step
+c= 4: cycle  252.80 ms vs raw  175.45 -> mech 0.69x  eff~0.65x
+c= 6: cycle  347.79 ms vs raw  263.17 -> mech 0.76x  eff~0.70x
+c= 8: cycle  401.31 ms vs raw  350.90 -> mech 0.87x  eff~0.81x
+c=16: cycle  610.10 ms vs raw  701.80 -> mech 1.15x  eff~1.07x
+SELFSPEC BENCH DONE
+bench exit=0 — launching longcot2 training on GPU 2
+training exit=0
