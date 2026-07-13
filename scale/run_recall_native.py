@@ -29,6 +29,8 @@ ap.add_argument("--pb", type=int, default=32)
 ap.add_argument("--c", type=int, default=16)
 ap.add_argument("--corr", type=int, default=0,
                 help="rank-c exact readout correction (additive families only)")
+ap.add_argument("--qgate", type=float, default=0.0,
+                help="skip cold readout for heads with query cold-energy < tau")
 ap.add_argument("--model", default=MID,
                 help="e.g. nvidia/NVIDIA-Nemotron-Nano-9B-v2-Base (official base "
                      "numbers are for -Base; aligned ckpt underperforms base harness)")
@@ -69,8 +71,13 @@ else:
     model.eval()
 if mode == "v4":
     n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1, corr=args.corr)
+    if args.qgate:
+        for _m in model.modules():
+            if type(_m).__name__ == "NemotronHMamba2Mixer":
+                _m.v4cfg["qgate"] = args.qgate
     print(f"[{tag}] v4 installed on {n} mixers (pb={args.pb} c={args.c} bf16cold"
-          f"{' +corr' if args.corr else ''})", flush=True)
+          f"{' +corr' if args.corr else ''}"
+          f"{f' +qgate{args.qgate}' if args.qgate else ''})", flush=True)
 elif mode == "fresh":
     # rotation caveat: native decode branch calls act on 2D -> ActRotMask would
     # skip R. Route ALL mixers through the v4 dispatcher with pb=128 (all-hot),
@@ -92,6 +99,15 @@ for t, m in res["results"].items():
               if isinstance(v, (int, float)) and "stderr" not in k}
     print(f"[{tag}] {t}: " + " ".join(f"{k}={round(v,4)}" for k, v in out[t].items()),
           flush=True)
+if args.qgate:
+    kept = tot = 0
+    for m in mixers:
+        s = getattr(m, "_v4state", None) or {}
+        kept += s.get("qgate_kept", 0); tot += s.get("qgate_n", 0)
+    if tot:
+        out["_qgate_skip_frac"] = 1 - kept / tot
+        print(f"[{tag}] qgate tau={args.qgate}: cold reads SKIPPED "
+              f"{100*(1-kept/tot):.1f}%", flush=True)
 json.dump({"mode": mode, "ckpt": ckpt, "limit": limit, "results": out},
           open(f"nemo9b_recall_{tag}.json", "w"), indent=1)
 print(f"[{tag}] DONE", flush=True)

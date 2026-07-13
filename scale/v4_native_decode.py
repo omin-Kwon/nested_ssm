@@ -125,9 +125,20 @@ def _v4_decode(self, input_states, cache_params, attention_mask):
             y = y.reshape(batch_size, -1)[:, None, ...]
             scan_output = self.norm(y, gate)
             return self.out_proj(scan_output.to(dtype))
-        y = torch.einsum('bhpn,bhn->bhp', Sf[..., :pb], Cf[..., :pb]) \
-            + torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
+        y_cold = torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
             * torch.exp(st["glog"])          # glog is per (b,H,P) here — no new axis
+        tau = cfg.get("qgate", 0.0)
+        if tau > 0:
+            # query-gated cold skip (qreg-trained ckpts): if the query's cold
+            # energy fraction is below tau for this head, drop its cold readout
+            # entirely — the skip fraction IS the cold-read traffic saving.
+            e = Cf.pow(2)
+            rho = e[..., pb:].sum(-1) / e.sum(-1).clamp(min=1e-9)   # (b,H)
+            keep = (rho >= tau)
+            st["qgate_n"] = st.get("qgate_n", 0) + keep.numel()
+            st["qgate_kept"] = st.get("qgate_kept", 0) + int(keep.sum())
+            y_cold = y_cold * keep[..., None]
+        y = torch.einsum('bhpn,bhn->bhp', Sf[..., :pb], Cf[..., :pb]) + y_cold
         st["t"] += 1
         if st["t"] % c == 0:                                 # snapshot refresh
             snap = Sf[..., pb:]
