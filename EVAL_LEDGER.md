@@ -127,7 +127,7 @@
 1. **비대칭 정밀도 면허 실증** — raw-fp8은 장문 CoT에서 붕괴: MATH −4.4, avg 11,613토큰(raw의 2.2× — 방황·장황 = 폐루프 상태오염 증상), no-answer 3.2%. **v4-cold-fp8은 완전 생존(95.2 = bf16 = fp32, 정상 6.4k토큰)**. 손상 축 = 수천 토큰 자기생성 (GSM8K ~1.8k은 양쪽 다 무사, RULER@4k도 raw-fp8 98-100 — 짧은 지평에선 안 드러남). ⚠ 매트릭스 설계 교훈: 반증 arm은 예상 손상 축의 벤치를 처음부터 포함할 것.
 2. **v4 잔여 갭(MATH −2.4)은 정밀도 무관** (fp32=bf16=fp8 동일 95.2) → 순수 staleness → 처방 = long-CoT 학습 연장(800→1500 잔여) 또는 c2. cold 정밀도는 fp8까지 공짜.
 3. GSM8K는 전 config lossless (v4-fp8 −0.4 이내).
-4. RULER@4k(niah 5종): raw-fp8 98~100 — 참고: `ns_results/raw-fp8/eval-results/ruler.nemotron9b_4k/`.
+4. RULER@4k(niah 5종): raw-fp8 98~100, **v4-c4-fp8도 98~100 (만점대)** — 배포점의 recall 축 무손상. 구 torch-경로 RULER(0.77대)는 경로 아티팩트였음 재확인. json `ns_results/{raw-fp8,v4-c4-fp8}/eval-results/ruler.nemotron9b_4k/`.
 
 판정 누적: ① 스택 검증 통과(공식 수치 재현, 구 lm-eval 76.7 갭은 harness 차이), ② **bf16 state cache 무손실**, ③ **fresh 완전 무손실 = retrofit(0.04%)은 기반 모델을 훼손하지 않음** (직교 R의 full-width 불변성 실증). 구 lm-eval 수치는 내부 역사 기록으로만.
 json: `scale/ns_results/{raw,raw-bf16,fresh,v4-*}/eval-results/*/metrics.json` · 서빙: `NESTED_SSM_CKPT/MODE/PB/C/COLD` env (scale/install_vllm_v4.sh)
