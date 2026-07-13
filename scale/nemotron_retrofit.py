@@ -21,10 +21,13 @@ class ActRotMask(nn.Module):
         self.R = nn.Parameter(torch.eye(dstate).repeat(ngroups, 1, 1))  # (G,N,N)
         self.width = dstate
 
-    def rotmask(self, x):                                  # x: (B,T,G*N)
+    def _rot(self, x):                                     # x: (B,T,G*N) -> rotated
         b, t, _ = x.shape
         x = x.view(b, t, self.ng, self.ds)
-        x = torch.einsum('btgn,gmn->btgm', x, self.R.to(x.dtype))
+        return torch.einsum('btgn,gmn->btgm', x, self.R.to(x.dtype))
+
+    def _mask(self, x):                                    # x: (B,T,G,N) -> masked flat
+        b, t = x.shape[:2]
         w = self.width
         if torch.is_tensor(w):
             idx = torch.arange(self.ds, device=x.device)
@@ -33,12 +36,23 @@ class ActRotMask(nn.Module):
             x = torch.cat([x[..., :w], torch.zeros_like(x[..., w:])], -1)
         return x.reshape(b, t, self.ng * self.ds)
 
+    def rotmask(self, x):                                  # x: (B,T,G*N)
+        return self._mask(self._rot(x))
+
     def forward(self, x):
         x = self.act(x)
         if x.dim() == 3 and x.shape[-1] == self.conv_dim:
             h, B, C = torch.split(
                 x, [self.inter, self.ng * self.ds, self.ng * self.ds], dim=-1)
-            x = torch.cat([h, self.rotmask(B), self.rotmask(C)], dim=-1)
+            Cr = self._rot(C)
+            if self.training and getattr(self, "qpb", 0):
+                # query-concentration regularizer: fraction of the (unmasked)
+                # rotated query's energy pointing at cold coordinates — trained
+                # DOWN so cold reads become skippable/gatherable at inference
+                e = Cr.float().pow(2)
+                self._q_rho = e[..., self.qpb:].sum((-1, -2)).div(
+                    e.sum((-1, -2)).clamp(min=1e-9)).mean()
+            x = torch.cat([h, self._mask(self._rot(B)), self._mask(Cr)], dim=-1)
         return x
 
 def chunked_mixer_forward(self, input_states, **kw):
@@ -164,6 +178,11 @@ def main():
     p.add_argument("--lr", type=float, default=3e-3)
     p.add_argument("--warmup", type=int, default=50)
     p.add_argument("--orth", type=float, default=1e-2)
+    p.add_argument("--qreg", type=float, default=0.0,
+                   help="query-concentration weight: penalize E[rho], "
+                        "rho=|C_cold|^2/|C|^2 of the rotated query")
+    p.add_argument("--qpb", type=int, default=32,
+                   help="hot prefix used by --qreg")
     p.add_argument("--widths", type=int, nargs="+", default=[16, 32, 64, 128])
     p.add_argument("--fixed_only", type=int, default=0)
     p.add_argument("--save", default="nemo9b_rot.pt")
@@ -233,6 +252,8 @@ def main():
           flush=True)
     Rs = [m.R for m in get_wrappers(model)]
     mixers = [m for m in model.modules() if type(m).__name__ == "NemotronHMamba2Mixer"]
+    for m in mixers:
+        m.act.qpb = args.qpb if args.qreg else 0
     if args.resume:
         saved = torch.load(args.resume)
         for i, R in enumerate(Rs):
@@ -311,7 +332,13 @@ def main():
             logits = model(x).logits
             loss = F.cross_entropy(logits.float().view(-1, logits.shape[-1]), y.reshape(-1))
         orth = sum(((R.transpose(-1, -2) @ R) - eye).pow(2).mean() for R in Rs) / len(Rs)
-        (loss + args.orth * orth).backward()
+        qrho = torch.zeros((), device=device)
+        if args.qreg:
+            terms = [m.act._q_rho for m in mixers
+                     if getattr(m.act, "_q_rho", None) is not None]
+            if terms:
+                qrho = torch.stack(terms).mean()
+        (loss + args.orth * orth + args.qreg * qrho).backward()
         torch.nn.utils.clip_grad_norm_(Rs, 1.0)
         opt.step(); opt.zero_grad()
         with torch.no_grad():                        # QR retraction: R stays exactly
@@ -321,7 +348,8 @@ def main():
                 R.data = Q * sgn[..., None, :]
         if (step + 1) % args.log_every == 0:
             print(f"[{tag}] step {step+1} loss {loss.item():.3f} orth {orth.item():.4f} "
-                  f"({time.time()-t0:.0f}s) " +
+                  + (f"qrho {qrho.item():.3f} " if args.qreg else "")
+                  + f"({time.time()-t0:.0f}s) " +
                   " ".join(f"k{w}:{vppl(model, val, w, device=device):.2f}" for w in args.widths),
                   flush=True)
         if args.save_every and (step + 1) % args.save_every == 0:
