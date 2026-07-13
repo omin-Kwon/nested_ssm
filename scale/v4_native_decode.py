@@ -125,8 +125,25 @@ def _v4_decode(self, input_states, cache_params, attention_mask):
             y = y.reshape(batch_size, -1)[:, None, ...]
             scan_output = self.norm(y, gate)
             return self.out_proj(scan_output.to(dtype))
-        y_cold = torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
-            * torch.exp(st["glog"])          # glog is per (b,H,P) here — no new axis
+        ktop = cfg.get("ktop", 0)
+        P = st["snap"].shape[-2]
+        if ktop and ktop < N - pb:
+            # norm-augmented top-k COLUMN gather (cold precision untouched):
+            # score_n = |C_n| * ||S[:,n]|| bounds column n's contribution
+            # (Cauchy-Schwarz); read only the top-k columns per (b, head).
+            # column norms are computed at flush (amortized metadata, 96/head).
+            if "cnorm" not in st:
+                st["cnorm"] = st["snap"].norm(dim=-2)              # (b,H,Nc)
+            sc = Cf[..., pb:].abs() * st["cnorm"]                  # (b,H,Nc)
+            idx = sc.topk(ktop, dim=-1).indices                    # (b,H,k)
+            snap_k = torch.gather(
+                st["snap"], -1, idx[:, :, None, :].expand(-1, -1, P, -1))
+            C_k = torch.gather(Cf[..., pb:], -1, idx)
+            y_cold = torch.einsum('bhpk,bhk->bhp', snap_k, C_k) \
+                * torch.exp(st["glog"])
+        else:
+            y_cold = torch.einsum('bhpn,bhn->bhp', st["snap"], Cf[..., pb:]) \
+                * torch.exp(st["glog"])      # glog is per (b,H,P) here — no new axis
         tau = cfg.get("qgate", 0.0)
         if tau > 0:
             # query-gated cold skip (qreg-trained ckpts): if the query's cold
@@ -145,6 +162,7 @@ def _v4_decode(self, input_states, cache_params, attention_mask):
             st["snap"] = (snap.to(torch.bfloat16).float()
                           if cfg.get("cold_bf16") else snap.clone())
             st["glog"] = torch.zeros_like(st["glog"])
+            st.pop("cnorm", None)            # column-norm metadata refreshes @flush
         else:                                                # decay since snapshot
             st["glog"] = st["glog"] + dt * A[None, :, None]  # [b,H,P]
     D = self.D[..., None].expand(self.D.shape[0], self.head_dim)

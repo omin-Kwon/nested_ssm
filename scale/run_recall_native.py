@@ -31,6 +31,11 @@ ap.add_argument("--corr", type=int, default=0,
                 help="rank-c exact readout correction (additive families only)")
 ap.add_argument("--qgate", type=float, default=0.0,
                 help="skip cold readout for heads with query cold-energy < tau")
+ap.add_argument("--ktop", type=int, default=0,
+                help="read only top-k cold columns per head (norm-augmented "
+                     "gather; cold precision untouched)")
+ap.add_argument("--coldfp32", type=int, default=0,
+                help="keep the cold snapshot in fp32 (no precision trick)")
 ap.add_argument("--coldoff", type=int, default=0,
                 help="DELETE the cold tier (hot-only readout) — the "
                      "truncation-baseline semantics (GHOST-style if ckpt is a "
@@ -74,12 +79,14 @@ else:
             m.dt_bias.data.copy_(saved["decay"]["dt_bias"][i].to("cuda"))
     model.eval()
 if mode == "v4":
-    n = V.install(model, pb=args.pb, c=args.c, cold_bf16=1, corr=args.corr,
+    n = V.install(model, pb=args.pb, c=args.c,
+                  cold_bf16=0 if args.coldfp32 else 1, corr=args.corr,
                   coldoff=args.coldoff)
-    if args.qgate:
+    if args.qgate or args.ktop:
         for _m in model.modules():
             if type(_m).__name__ == "NemotronHMamba2Mixer":
                 _m.v4cfg["qgate"] = args.qgate
+                _m.v4cfg["ktop"] = args.ktop
     print(f"[{tag}] v4 installed on {n} mixers (pb={args.pb} c={args.c} bf16cold"
           f"{' +corr' if args.corr else ''}"
           f"{f' +qgate{args.qgate}' if args.qgate else ''})", flush=True)
