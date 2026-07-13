@@ -1,6 +1,15 @@
 # HANDOFF — 새 세션 이어받기 (현재 상태만; 역사는 docs/HISTORY.md)
 
-## ★★ RESUME (2026-07-12, compact 직전 고정) — 이 순서로 즉시 재개
+## ★★★ 현황 (2026-07-14 아침, 밤샘 세션 종료 시점)
+- **최신 ckpt = `nemo9b_rot_longcot2.pt`** (+1200스텝 seqlen4096, cs_menu c4·c8 가중): **GSM8K n=500 v4-c4 = fresh (+0.4) — lossless 달성**. 전 학습 ckpt git 백업됨.
+- **공식 스택 7-config 매트릭스 완결** (EVAL_LEDGER): fresh 무손실(95.0/98.2), **fp8 비대칭 면허 실증**(raw-fp8 MATH 붕괴·방황 vs v4-fp8 95.2 생존), 배포점 v4-c4-fp8 = 94.6/95.2/RULER 98-100.
+- **삭제-vs-lazy 사다리** (motivation 실측): 삭제 −26.5 (GHOST식·trained-R 공히) vs lazy −5 — "버리지 말고 미뤄라" + 삭제 희생축은 wikitext가 못 보는 다단계 추론.
+- **self-spec** (신규 축): hot-only draft α=0.91~0.92 (nesting 인과 2.7×), B=256 실측 draft 20.5ms(2.14×↓), naive verify 190ms 고정비 → eff c16 1.07× — **varlen verify 커널이 완성 조건** (투영 1.6~1.8×).
+- **qreg/qgate** (read 축): 질의-집중 학습 가능(qrho 0.69→0.49, 무손상), τ-게이트는 미학습 시 유료(25%skip/−5) → gate-aware 학습이 다음 처방.
+- **정리된 함정**: is_fast_path 침묵 우회(eval+학습 양쪽), ns URL/PATH, vppl seqlen, 슬롯-비례 스냅샷 버퍼 OOM(LRU 매핑이 근본 해법).
+- **다음 우선순위**: ① longcot2 공식 스택 재측정(GSM8K/MATH) → 배포 승격, ② PAPER_OUTLINE 재작성(사다리·매트릭스·roofline 그림 배선), ③ gate-aware 학습, ④ vLLM varlen verify 커널(self-spec), ⑤ B=256 speed 재확정(longcot2).
+
+## ★★ RESUME (2026-07-12, compact 직전 고정 — 역사 참고용)
 **대전제(유저 확정)**: ① acc는 **NeMo-Skills+vLLM 공식 스택으로 전면 교체**(lm-eval 수치는 내부 기록으로 강등), 측정 configs = raw / raw-bf16 / fresh / v4-c4-{fp32,bf16,fp8}. ② speed는 **state-op/e2e 병기, B=256 표준**, eager 금지(fused만). ③ 모든 acc 비교는 3-arm(raw/fresh/v4) 필수.
 
 **재개 액션 (우선순위):**
