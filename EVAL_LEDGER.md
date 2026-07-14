@@ -209,3 +209,20 @@ longcot +400스텝(seqlen256, λ=2.0): qrho 0.690→0.492, 폭 ppl 무손상(k12
 
 ## E-T1b: lagged M도 동일 (2026-07-14) — 결론 확정
 M(ā)=Σā^τ E[C_t B_{t−τ}ᵀ], ā∈{0.9, 0.99}: cos 0.438/0.437 — lag-0과 동일 무상관. **4중 수렴**(크기M·시차M·열노름·질의에너지 전부 무신호/붕괴) → 명제 승격: "**측정 가능한 training-free 통계는 학습된 중요도 기저를 예측 못 한다 — 중요도는 loss가 정의; end-to-end 학습은 생략 불가능**." THEORY '해석' 절의 M-고유기저 서사는 w(민감도)가 지배 인자로 정밀화 필요. json results/M_lagged.json.
+
+## E-T2: 도메인별 탄력성 곡선 — 이식성의 직접 실측 (2026-07-14, probe_domain_elasticity.py)
+학습 R(longcot2) 고정, vppl(seqlen512×6) 절단세 tax = ppl(k)/ppl(128); 도메인 = wiki(wt103) / math(GSM8K 텍스트 200k tok) / code(HumanEval 32k tok); 대조 = identity·ghost_perm(calibration 순열).
+
+| config | 폭 | wiki | math | code | 판정 |
+|---|---|---|---|---|---|
+| **trained** | k16 | **1.26×** | **1.31×** | **1.27×** | 메뉴 지점: 3도메인 겹침(산포 ≤0.06) |
+| trained | k32 | 1.15× | 1.21× | 1.18× | 〃 |
+| trained | k64 | 1.12× | 1.11× | 1.07× | 〃 |
+| trained | k8 (off-menu) | 2.91× | 3.08× | 3.04× | off-menu도 도메인 균일 유료 |
+| trained | k96 (off-menu) | 1.38× | 1.28× | 1.21× | **k96 > k64 비단조** — 격자 증거 |
+| ghost | k32 | 1.61× | 1.35× | 1.27× | ppl론 생존 — 그러나 GSM8K 58.5(−26.5) = ppl-acc 괴리 함정 |
+| ghost | k16 | 24.4× | 16.6× | 36.2× | **절벽 — 탄력성 없음**(단일 절단점만) |
+| ghost | k8 | 413× | 231× | 337× | 〃 |
+| identity | k16~k96 | 12~230× | 〃 | 〃 | 파국 + k64>k32 역전 등 요동 |
+
+**판정 3건**: ① **이식성 실측 승격** — 한 R의 tax 곡선이 wiki/수학/코드에서 사실상 일치(D-K 갭 논증 없이 일반화를 직접 측정으로 대체; theory_deck 슬라이드5 재배선 완료). ② **메뉴 격자(flag) 관측** — off-menu 폭(8, 96)은 3도메인 공통 유료, k96>k64 비단조 → 학습물은 '전순서'가 아니라 학습 메뉴 {16,32,64,128} 지점의 부분공간 사슬. E-T1(cos≈무작위)과 정합: R은 어떤 M의 고유기저도 아니고 메뉴 경계 제약만 만족하면 됨. ③ **calibration 기저의 이중 실패** — ghost는 자기 폭(32) ppl만 그럭저럭이고 다른 폭은 절벽(nested 탄력성은 학습 산물), 그리고 그 k32 ppl 생존조차 acc로는 붕괴(58.5) = eval-design 교훈 재확인. json results/domain_elasticity.json.

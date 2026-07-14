@@ -99,27 +99,44 @@ ax.set_title("SGD never forms M — it tallies votes and converges to M's eigenb
 ax.legend(fontsize=8); ax.grid(alpha=.3)
 save(fig, "F4_voting")
 
-# ---- F5: generalization — Davis-Kahan picture ----
-fig, axes = plt.subplots(1, 2, figsize=(9.4, 3.6))
-lam = np.array([.30, .22, .14, .09, .06, .045, .035, .028, .022, .018,
-                .014, .011, .009, .007, .006])
-x = np.arange(1, 16)
-for ax, gapat, ttl in [(axes[0], 5, "LARGE eigengap at the hot boundary\n"
-                        "-> hot subspace ROBUST to distribution shift (Davis-Kahan)"),
-                       (axes[1], None, "task shift = perturbing M\n"
-                        "top subspace moves ~ ||perturbation|| / gap")]:
-    ax.bar(x, lam, color=["#d62728"] * 5 + ["#1f77b4"] * 10)
-    ax.set_xlabel("eigen-index n"); ax.set_ylabel("eigenvalue of M")
-    ax.set_title(ttl, fontsize=9)
-    if gapat:
-        ax.annotate("", xy=(5.5, lam[4]), xytext=(5.5, lam[5]),
-                    arrowprops=dict(arrowstyle="<->", color="k", lw=1.5))
-        ax.annotate("gap", xy=(5.7, (lam[4] + lam[5]) / 2), fontsize=10)
-lam2 = lam + np.array([.02, -.015, .01, -.01, .008, .01, -.005, .006, -.004,
-                       .005, -.003, .003, -.002, .002, -.001])
-axes[1].plot(x, lam2, "k^", ms=5, label="M under task shift")
-axes[1].legend(fontsize=8)
-save(fig, "F5_dk")
+# ---- F5: generalization — MEASURED (E-T1 refutation + E-T2 transfer) ----
+import json as _json
+_et1 = _json.load(open("results/M_spectrum.json"))["mean"]
+_et1b = _json.load(open("results/M_lagged.json"))
+_et2 = _json.load(open("results/domain_elasticity.json"))
+fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.7))
+# (a) E-T1/E-T1b: trained R vs explicit-statistic eigenbases — 4-way convergence
+names = ["explicit M\n(lag-0)", "lagged M\n(a=0.9)", "lagged M\n(a=0.99)"]
+cosv = [_et1["subspace_cos"], _et1b["0.9"]["cos"], _et1b["0.99"]["cos"]]
+axes[0].bar(names, cosv, color="#1f77b4", width=.55)
+axes[0].axhline(0.5, color="#d62728", ls="--", lw=1.5)
+axes[0].annotate("random 32-dim subspace (~0.5)", xy=(0.02, 0.51),
+                 color="#d62728", fontsize=8)
+axes[0].axhline(1.0, color="#047857", ls=":", lw=1.2)
+axes[0].annotate("perfect match (1.0)", xy=(1.6, 0.93), color="#047857", fontsize=8)
+axes[0].set_ylim(0, 1.05); axes[0].set_ylabel("principal-angle cos (trained R vs eigenbasis)")
+axes[0].set_title("MEASURED: trained hot subspace is UNCORRELATED with any\n"
+                  f"training-free statistic's eigenbasis (gap@32 = {_et1['gap_at_32']:.4f} too)",
+                  fontsize=9)
+# (b) E-T2: truncation-tax curves per domain × config — only trained R transfers
+ws = [8, 16, 32, 64, 96, 128]
+dcol = {"wiki": "#1d4ed8", "math": "#c2410c", "code": "#047857"}
+styles = {"trained": ("o-", 2.2), "ghost": ("s--", 1.2), "identity": ("^:", 1.0)}
+for cfg, (st, lw) in styles.items():
+    for dom, c in dcol.items():
+        tax = [_et2[cfg][dom]["tax"][str(k)] for k in ws]
+        lab = f"{cfg} R" if dom == "wiki" else None
+        axes[1].plot(ws, tax, st, color=c, lw=lw, ms=4, alpha=1 if cfg == "trained" else .6,
+                     label=lab)
+axes[1].axhline(1.0, color="#999", lw=.8)
+axes[1].set_xscale("log", base=2); axes[1].set_yscale("log")
+axes[1].set_xticks(ws); axes[1].set_xticklabels(ws)
+axes[1].set_xlabel("hot width k"); axes[1].set_ylabel("ppl tax  ppl(k)/ppl(128)  [log]")
+axes[1].set_title("MEASURED: ONE trained R -> near-1.0 tax on wiki/math/code alike;\n"
+                  "identity & calibration(GHOST) bases pay 1.6-400x, domain-erratic",
+                  fontsize=9)
+axes[1].legend(fontsize=8); axes[1].grid(alpha=.3, which="both")
+save(fig, "F5_measured")
 
 # ---- F6: union-subspace condition ----
 fig, ax = plt.subplots(figsize=(7.4, 3.8)); ax.axis("off")
@@ -175,7 +192,7 @@ tf = tb.text_frame
 tf.paragraphs[0].text = "왜 '하나의 직교 회전'이 기억을 정렬하고, 왜 일반화되는가"
 tf.paragraphs[0].font.size = Pt(34); tf.paragraphs[0].font.bold = True
 p = tf.add_paragraph(); p.text = ("N차원 key 공간의 기저 재선택으로서의 R — 통신 통계, "
-                                  "암묵적 고유분해, Davis-Kahan 일반화 논증")
+                                  "loss-정의 중요도(E-T1), 도메인 이식 실측(E-T2)")
 p.font.size = Pt(17)
 p = tf.add_paragraph(); p.text = "Elastic Test-Time Memory · Theory Deck (2026-07-14)"
 p.font.size = Pt(13); p.font.color.rgb = RGBColor(0x66, 0x66, 0x66)
@@ -200,18 +217,22 @@ slide("4. 학습 = M을 만들지 않는 고유분해",
       ["M은 (동결 가중치 × 데이터 분포)가 정하는 수학적 사실 — 아무도 계산하지 않음",
        "prefix-loss SGD: 표본마다 자기 방향에 loss-가중 '한 표' → 개표 결과가 고유값 순 (nested dropout=PCA 정리; Oja/streaming-PCA 계보)"],
       "F4_voting")
-# 6 generalization core
-slide("5. 왜 과적합되지 않는가 (1) — 배우는 것이 '부분공간'이라서",
+# 6 generalization core — REWIRED after E-T1/E-T2 measurements (07-14)
+slide("5. 왜 과적합되지 않는가 (1) — 갭 논증이 아니라 '작은 가설류 + 이식 실측'",
       ["R의 가설 공간 = 직교군 (3.5M, 백본의 0.04%) — 특징을 새로 배우지 않고 기존 통계의 좌표만 고름",
-       "고유공간 추정은 표본 집중(행렬 농도부등식)으로 수렴하고, Davis-Kahan sin-θ 정리: 고유값 갭이 크면 분포 섭동에도 부분공간이 안정",
-       "예측(검증 가능): 추정된 M의 스펙트럼에서 n=32 경계의 갭 측정 → 갭 큼 = 이식성 보장"],
-      "F5_dk")
+       "이상화(Davis-Kahan): 갭 크면 부분공간 안정 — 실측이 기각: 명시 M은 gap@32≈0, 학습 R과 주각 cos 0.44≈무작위"
+       " (lag-0·시차·열노름·질의에너지 4중 수렴) → 중요도는 loss가 정의, training-free 통계로 대체 불가",
+       "일반화의 실제 근거 = ① 가설류 작음 ② 이식의 직접 실측(E-T2): 한 R의 절단세 곡선이 wiki/수학/코드에서 겹침"
+       " (k16: 1.26/1.31/1.27×) vs calibration 기저는 k16에서 17-36× 절벽"],
+      "F5_measured", tfs=13)
 # 7 union
 slide("6. 왜 과적합되지 않는가 (2) — 요구 조건이 '순서'가 아니라 '합집합'이라서",
       ["hot은 방향 1개가 아닌 그룹당 32차원 부분공간 — hot 내부 순서는 무의미, 경계만 유효",
        "태스크들이 서로 다른 순서로 밀어도 상위 방향 합집합이 32차원에 들어오면 무충돌 + 27층×8그룹이 다양성 분산 흡수",
-       "실증: 일반 LM loss로만 학습한 R이 GSM8K/RULER/recall/HumanEval 전반 lossless — 상위 스펙트럼 = 태스크 공유 인프라"],
-      "F6_union")
+       "실증: 일반 LM loss로만 학습한 R이 GSM8K/RULER/recall/HumanEval 전반 lossless — 상위 스펙트럼 = 태스크 공유 인프라",
+       "정밀화(E-T2): 배우는 것은 전순서도 아닌 '메뉴 격자의 부분공간 사슬(flag)' — 메뉴 밖 폭(k=8, 96)은 3도메인"
+       " 공통으로 유료(k96 1.2-1.4× > k64) → 학습이 굽는 건 메뉴 지점의 경계들뿐"],
+      "F6_union", tfs=13)
 # 8 boundary
 slide("7. 경계 부근만 혼합에 민감 — 레시피의 통역",
       ["상위부(범용 채널)는 태스크 불변, hot/cold 경계 부근은 혼합 가중에 민감",
@@ -228,9 +249,11 @@ rows = [
  ("회전 불변성 (fresh=raw)", "정확한 정리 + 9B 실증 (정답 수 동일)", "확정"),
  ("prefix-loss → 고유기저 정렬", "선형 정리(Rippel'14) + 비선형은 실측 (탄력성 단조curves)", "강함"),
  ("스펙트럼 집중의 존재", "표현 비등방성의 상속(문헌) + GHOST phantom(외부) + 우리 33→81", "강함"),
- ("일반화 (혼합→다운스트림)", "부분공간 가설류(작음) + Davis-Kahan 안정성 + LM-only R의 이식 실측", "논증+실측"),
+ ("중요도 = loss-정의 (E-T1)", "명시 M(lag-0·시차)·열노름·질의에너지 전부 학습 R과 무상관(cos 0.44) — calibration류 실패의 뿌리", "확정(실측)"),
+ ("일반화 (혼합→다운스트림)", "부분공간 가설류(작음) + E-T2 이식 실측(3도메인 tax 곡선 일치) + LM-only R 전이; D-K 갭 논증은 기각(gap@32≈0)", "확정(실측)"),
+ ("메뉴 격자 (E-T2)", "off-menu 폭(8, 96)은 3도메인 공통 유료 — 학습물 = 전순서가 아닌 메뉴 지점의 flag", "관측"),
  ("경계 민감성", "wikitext 실패 / longcot 회복 — 재현 가능한 레시피 실측", "확정"),
- ("남은 이론 실험", "① M 명시 추정→n=32 갭 측정 ② spectral warm-start ③ M_task 정렬도(부분공간 각도) 측정", "TODO"),
+ ("남은 이론 실험", "① ppl-acc 괴리 정량화(ghost k32: ppl 1.3×인데 GSM8K −26.5) ② M_task 정렬도(부분공간 각도) ③ 경계갭 없는 안정성의 대안 정리(flag 최적성)", "TODO"),
 ]
 for i, (k, v, st) in enumerate(rows):
     p = tf.paragraphs[0] if i == 0 else tf.add_paragraph()

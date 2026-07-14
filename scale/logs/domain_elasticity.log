@@ -1,0 +1,22 @@
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[prep] math_val_nemo.npy: 248,550 tokens
+[prep] code_val_nemo.npy: 31,842 tokens
+/usr/local/lib/python3.12/dist-packages/torch/library.py:356: UserWarning: Warning only once for all operators,  other operators may also be overridden.
+  Overriding a previously registered kernel for the same operator and the same dispatch key
+  operator: DaoAILab::_causal_conv1d_fwd_cpp(Tensor x, Tensor weight, Tensor? bias, Tensor? seq_idx, Tensor? initial_states, Tensor(a5!) out, Tensor(a6!)? final_states_out, bool silu_activation) -> ()
+    registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922
+  dispatch key: ADInplaceOrView
+  previous kernel: no debug info
+       new kernel: registered at /usr/local/lib/python3.12/dist-packages/torch/_library/custom_ops.py:922 (Triggered internally at /opt/pytorch/pytorch/aten/src/ATen/core/dispatch/OperatorEntry.cpp:208.)
+  self.m.impl(
+Loading weights:   0%|          | 0/341 [00:00<?, ?it/s]Loading weights: 100%|██████████| 341/341 [00:00<00:00, 9743.56it/s]
+[trained/wiki] k8:27.26(2.91x)  k16:11.83(1.26x)  k32:10.73(1.15x)  k64:10.48(1.12x)  k96:12.96(1.38x)  k128:9.36(1.00x)
+[trained/math] k8:10.37(3.08x)  k16:4.40(1.31x)  k32:4.08(1.21x)  k64:3.73(1.11x)  k96:4.29(1.28x)  k128:3.37(1.00x)
+[trained/code] k8:8.39(3.04x)  k16:3.51(1.27x)  k32:3.27(1.18x)  k64:2.96(1.07x)  k96:3.35(1.21x)  k128:2.76(1.00x)
+[identity/wiki] k8:376.14(40.24x)  k16:300.74(32.18x)  k32:201.94(21.61x)  k64:2148.76(229.90x)  k96:258.40(27.65x)  k128:9.35(1.00x)
+[identity/math] k8:66.63(19.80x)  k16:57.07(16.96x)  k32:42.36(12.59x)  k64:308.97(91.79x)  k96:35.77(10.63x)  k128:3.37(1.00x)
+[identity/code] k8:76.04(27.51x)  k16:50.67(18.33x)  k32:43.43(15.71x)  k64:179.33(64.87x)  k96:20.80(7.53x)  k128:2.76(1.00x)
+[ghost/wiki] k8:3859.72(412.78x)  k16:228.12(24.40x)  k32:15.01(1.61x)  k64:9.84(1.05x)  k96:9.39(1.00x)  k128:9.35(1.00x)
+[ghost/math] k8:776.54(230.61x)  k16:55.77(16.56x)  k32:4.54(1.35x)  k64:3.58(1.06x)  k96:3.42(1.02x)  k128:3.37(1.00x)
+[ghost/code] k8:930.97(336.83x)  k16:99.93(36.15x)  k32:3.51(1.27x)  k64:2.79(1.01x)  k96:2.74(0.99x)  k128:2.76(1.00x)
+DOMAIN ELASTICITY DONE
