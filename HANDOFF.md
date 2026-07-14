@@ -1,5 +1,11 @@
 # HANDOFF — 새 세션 이어받기 (현재 상태만; 역사는 docs/HISTORY.md)
 
+## ★★★★ 현재 트랙 (2026-07-14, compact 직전): THEORY 강화 실험
+이론 서사(THEORY.md "해석" 절 + BACKGROUND.md 부록 + docs/theory_deck.pptx)가 완성됨: 정렬 대상 = M=E[CBᵀ·w]의 고유기저(트래픽 순), 성립 3힘(표현 비등방성 상속·사전학습 압력·동결 생성기+정상성), 일반화 = 부분공간 가설류(작음)+Davis-Kahan(경계 갭)+합집합 조건(hot=32차원 부분공간, 순서 무관). **진행 중 실험:**
+- **E-T1 (실행 중, `probe_M_spectrum.py` → results/M_spectrum.json)**: M 명시 추정(wt103 24×512tok) → ① 원기저 고유값 감쇠+top32 질량, ② **n=32 경계 갭**(D-K 일반화 논증의 측정), ③ **학습 R 상위32행 vs M 고유상위32공간의 주각 cos**("SGD=암묵적 고유분해" 직접 검증), ④ 학습기저 트래픽 정렬도.
+- E-T2 (다음): 도메인별 M_task(wikitext vs 수학 텍스트) top-32 부분공간 주각 → 태스크 공유/합집합 주장 검증. E-T3: spectral warm-start ablation (M 고유분해를 R 초기값으로).
+- 판정 기대: top32 질량 큼 + 주각 cos 높음 + 갭>0 → 이론 3주장 실측 승격. cos 낮으면 "실효 M(민감도 가중) ≠ 명시 M(크기)" 해석 — 그 자체로 GHOST류 명시-통계 접근과의 차별화 데이터.
+
 ## ★★★ 현황 (2026-07-14 아침, 밤샘 세션 종료 시점)
 - **최신 ckpt = `nemo9b_rot_longcot2.pt`** (+1200스텝 seqlen4096, cs_menu c4·c8 가중): **GSM8K n=500 v4-c4 = fresh (+0.4) — lossless 달성**. 전 학습 ckpt git 백업됨.
 - **공식 스택 7-config 매트릭스 완결** (EVAL_LEDGER): fresh 무손실(95.0/98.2), **fp8 비대칭 면허 실증**(raw-fp8 MATH 붕괴·방황 vs v4-fp8 95.2 생존), 배포점 v4-c4-fp8 = 94.6/95.2/RULER 98-100.
