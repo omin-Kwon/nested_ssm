@@ -1,0 +1,11 @@
+{
+ "mode": "v4",
+ "ckpt": "nemo9b_rot_longcot2.pt",
+ "limit": 200,
+ "results": {
+  "gsm8k": {
+   "sample_len": 200,
+   "exact_match": 0.81
+  }
+ }
+}
