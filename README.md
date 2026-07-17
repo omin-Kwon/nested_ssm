@@ -1,8 +1,8 @@
 # nested_ssm — Elastic Test-Time Memory (tiered recurrent state)
 
-**한 문단**: Linear-attention/SSM의 recall 용량은 recurrent state 크기가 결정하는데, decode에서 그 state를 매 토큰 통째로 read+write하는 것이 memory-bound 병목이다(OI≈1, 9B에서 시퀀스당 141.6MB). 우리는 state 차원을 중요도순으로 정렬(nested)한 뒤 **앞쪽 hot 차원은 매 토큰 fresh, 뒤쪽 cold 차원은 c토큰마다 몰아서 갱신(읽기는 stale+decay 보정)** 하는 *dense-but-stale* 티어링을 제안한다. 공개 **Nemotron-Nano-9B-v2의 0.04% 파라미터**(회전 R 3.5M + decay ~7k)만 몇 시간 재학습하면:
+**한 문단**: Linear-attention/SSM의 recall 용량은 recurrent state 크기가 결정하는데, decode에서 그 state를 매 토큰 통째로 read+write하는 것이 memory-bound 병목이다(OI≈1, 9B에서 시퀀스당 141.6MB; B200 실측 state-op 점유 57.6% @B=256). 우리는 state 차원을 중요도순으로 정렬(nested)한 뒤 **앞쪽 hot 차원은 매 토큰 fresh, 뒤쪽 cold 차원은 c토큰마다 몰아서 갱신(읽기는 stale+decay 보정)** 하는 *dense-but-stale* 티어링을 제안한다. 공개 **Nemotron-Nano-9B-v2의 0.04% 파라미터**(회전 R 3.5M)만 몇 시간 재학습하면:
 
-> **B200 실측 decode 2.42×** (v4-c16+bf16cold+warmup), **모든 표준 벤치에서 fresh와 동률** (commonsense 8 · recall 6 · RULER 11 · GSM8K · HumanEval; minerva_math만 −2.9 → long-CoT 재학습 진행 중). 장기 확장: cold를 CXL-PNM에 상주(+3.8×, state capacity 8×).
+> **B200 실측 decode 1.92×(c4)~2.42×(c16)**, **공식 평가 스택(NeMo-Skills+vLLM) 3-arm 전 벤치 lossless** — 배포점 v4-c4-fp8: GSM8K 94.6 / MATH-500 95.2 / RULER@4k 98–100 (raw-fp8은 장문 CoT에서 붕괴 = 비대칭 정밀도 면허 실측). GSM8K는 longcot2 ckpt로 v4-c4 = fresh 달성(공식 재측정 대기). 이론 실측: 중요도는 loss가 정의(E-T1 4중 수렴) + 학습 기저의 도메인 이식성(E-T2). 장기 확장: cold를 CXL-PNM에 상주(+3.8×, state capacity 8×).
 
 ## 처음 읽는 순서
 1. **`KEY_RESULTS.md`** — 논문 논리 흐름 그대로의 결과 정리 (문제→방법→속도→정확도→한정)

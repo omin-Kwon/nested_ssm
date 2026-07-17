@@ -8,7 +8,8 @@
 - **E-T1b 판정 완료**: lagged M(ā=0.9/0.99)도 cos 0.437-0.438 — **4중 수렴 확정** (크기M·시차M·열노름·질의에너지 전부 무신호): "training-free 통계는 학습 기저를 예측 못 함; 중요도는 loss가 정의" — THEORY '해석' 절에 정밀화 반영됨.
 - **E-T2 판정 완료 (07-14, probe_domain_elasticity.py)**: 학습 R 하나의 절단세 곡선이 wiki/math/code에서 일치(k16 1.26/1.31/1.27×, k32 1.15/1.21/1.18×) = **이식성 직접 실측 승격**; ghost(calibration 순열)는 k32 ppl만 생존(acc론 −26.5)·k16 이하 절벽(17~36×) = nested 탄력성은 학습 산물; **메뉴 격자 관측** — off-menu 폭(8,96) 3도메인 공통 유료(k96>k64 비단조) → 학습물 = 전순서 아닌 메뉴 지점 flag(E-T1과 정합). 원장 E-T2 절 + THEORY 재배선 박스 + theory_deck 슬라이드5 실측판(F5_measured) 반영 완료.
 - **theory_deck 슬라이드5 수정 완료**: D-K 갭 논증 → "가설류 작음 + 이식 실측" 재배선, F5 = E-T1 cos 바 + E-T2 tax 곡선(실데이터 로드), 주장 사다리에 E-T1/E-T2 확정행 추가.
-- **compact 후 이어갈 것**: ① 남은 본선: longcot2 공식 스택 재측정 → 배포 승격 / PAPER_OUTLINE 재작성 / gate-aware 학습 / varlen verify 커널, ② 이론 신규 TODO: ppl-acc 괴리 정량화(ghost k32) · M_task 정렬도(부분공간 각도) · flag 최적성 정리.
+- **문서 통합 완료 (07-17)**: KEY_RESULTS 전면 갱신(07-09→07-17: 공식 매트릭스·삭제 사다리·fp8 사슬·longcot2·E-T1/E-T2·read축 부정결과·self-spec·tune_decay no-op 정정 반영) + **PAPER_OUTLINE 재작성 완료**(paper-A 확정 서사; 구판은 git 역사) + README 헤드라인 갱신.
+- **다음 (GPU 전면 개방 확인됨, 07-17)**: ① 본선 1순위: longcot2 공식 스택 재측정(vLLM 서빙 + ns GSM8K/MATH-500 3-arm) → 배포 승격 판정, ② gate-aware 학습 / varlen verify 커널, ③ 이론 신규 TODO: ppl-acc 괴리 정량화(ghost k32) · M_task 정렬도(부분공간 각도) · flag 최적성 정리.
 - 판정 기대: top32 질량 큼 + 주각 cos 높음 + 갭>0 → 이론 3주장 실측 승격. cos 낮으면 "실효 M(민감도 가중) ≠ 명시 M(크기)" 해석 — 그 자체로 GHOST류 명시-통계 접근과의 차별화 데이터.
 
 ## ★★★ 현황 (2026-07-14 아침, 밤샘 세션 종료 시점)
