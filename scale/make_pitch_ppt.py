@@ -194,32 +194,58 @@ txt(s, .6, 4.45, 12.3, 2.3, [
     "· 성립 조건: per-head 스칼라 decay 가족(Mamba-2/GDN — Nemotron·Qwen 계열)은 무조건; 채널별 decay(GLA/KDA)는 경량 FT 필요."],
     fs=13)
 
-# ================================================= 7. math of sorting
-s = new_slide("6. '차원을 정렬한다'의 수학 — 트래픽 연산자 M의 고유기저",
-              "집중은 이미 존재한다; R은 그것을 좌표축에 맞출 뿐")
-txt(s, .55, 1.1, 12.4, 1.9, [
-    "방향 r ∈ ℝ^N 이 나르는 평균 트래픽:   T(r) = rᵀ M r,    M = E[ C Bᵀ · w ]   (w = loss 민감도 가중)",
-    "앞 k개 좌표가 트래픽을 최대로 담게 하는 R = M(대칭화)의 고유기저, 고유값 내림차순 — nested dropout → PCA 정리의 연산자판.",
-    "s→t 기여식은 어느 직교 기저에서 계산해도 동일하므로(불변성), '정렬'은 성능이 아니라 배치(placement)의 문제."],
-    fs=14)
-# toy bars: raw vs rotated  (baseline 5.75, scale 4.2 — keep below formula text)
-txt(s, 1.0, 2.72, 5.4, .4, "원 좌표: T = (0.22, 0.22, 0.12, 0.22, 0.22) — 균등해 보임", fs=12, bold=True)
+# ================================================= 7a. math of sorting (1/2): traffic derivation
+s = new_slide("6. 정렬의 수학 ① — readout을 채널로 쪼개면 '트래픽'이 정의된다",
+              "슬라이드 1의 갱신식에서 세 줄로 유도 (새 가정 0개)")
+box(s, .55, 1.15, 7.6, .95,
+    "① 갱신식을 재귀 대입으로 펼친다:\ny_t = Σ_s  A_{s,t} · ⟨B_s, C_t⟩ · Δx_s        (A_{s,t} = a_{s+1}···a_t : 감쇠 생존율)",
+    WHITE, BLUE, fs=12.5, align=PP_ALIGN.LEFT)
+darrow(s, 4.2, 2.18, .28)
+box(s, .55, 2.52, 7.6, 1.25,
+    "② 항등식 I = Σ_n r_n r_nᵀ 을 내적 사이에 삽입 (r_n = R의 n번째 행, 정규직교):\n⟨B_s, C_t⟩ = Σ_n ⟨r_n, B_s⟩ · ⟨r_n, C_t⟩\n→ 총 통신이 N개 채널의 몫으로 정확히 쪼개짐 — 회전된 state의 '열 n' = 통신 채널 n",
+    WHITE, BLUE, fs=12.5, align=PP_ALIGN.LEFT)
+darrow(s, 4.2, 3.85, .28)
+box(s, .55, 4.18, 7.6, .95,
+    "③ 채널 n이 나르는 평균 몫 = 트래픽:\nT(r_n) = E[ ⟨C, r_n⟩⟨r_n, B⟩ ] = r_nᵀ · E[C Bᵀ] · r_n",
+    LYEL, ORANGE, fs=13, bold=True, align=PP_ALIGN.LEFT)
+box(s, 8.45, 1.15, 4.3, 3.98,
+    "숫자 예시 (N=2)\n\nB=(3,4), C=(2,1) → 총 통신 ⟨B,C⟩ = 10\n\n표준 기저:   3·2 + 4·1 = 6 + 4\n45° 회전 기저:  10.5 + (−0.5)\n\n합은 어느 기저에서나 10\n(= 회전 불변성, full-width 무손실)\n분배만 기저에 따라 달라짐\n\n→ '정렬'은 성능이 아니라\n     배치(placement)의 문제",
+    LGREEN, GREEN, fs=12, align=PP_ALIGN.LEFT)
+# toy bars: same info, two bases (baseline 7.08, scale 2.2)
+txt(s, .8, 5.38, 5.6, .35, "원 좌표: T = (0.22, 0.22, 0.12, 0.22, 0.22) — 균등해 보임", fs=11, bold=True)
 raw = [0.22, 0.22, 0.12, 0.22, 0.22]
 for i, v in enumerate(raw):
-    box(s, 1.2 + i * .95, 5.75 - v * 4.2, .7, v * 4.2, "", LBLUE, BLUE, shape=MSO_SHAPE.RECTANGLE)
-txt(s, 7.0, 2.72, 5.6, .4, "회전 좌표: T′ = (0.60, 0.25, 0.15, 0, 0) — 고유값 수열로 정렬", fs=12, bold=True)
-rot = [0.60, 0.25, 0.15, 0.004, 0.004]
+    box(s, 1.0 + i * .85, 7.08 - v * 2.2, .62, v * 2.2, "", LBLUE, BLUE, shape=MSO_SHAPE.RECTANGLE)
+txt(s, 6.9, 5.38, 5.9, .35, "회전 좌표: T′ = (0.60, 0.25, 0.15, 0, 0) — hot 2서랍이 85% 커버", fs=10.5, bold=True, fc=RED)
+rot = [0.60, 0.25, 0.15, 0.008, 0.008]
 for i, v in enumerate(rot):
     col = (RGBColor(0xfc, 0xa5, 0xa5), RED) if i < 2 else (LBLUE, BLUE)
-    box(s, 7.2 + i * .95, 5.75 - max(v, .012) * 4.2, .7, max(v, .012) * 4.2, "", col[0], col[1], shape=MSO_SHAPE.RECTANGLE)
-txt(s, 7.2, 5.85, 5.4, .4, "hot = 앞 2서랍이 85% 커버 (원 좌표 최선 44%)", fs=11, fc=RED, bold=True)
-txt(s, .55, 6.35, 12.4, 1.0, [
-    "실측 반전 (E-T1): 크기 통계로 명시 추정한 M의 고유기저는 학습 R과 무상관 (주각 cos 0.44 ≈ 무작위; 시차·열노름·질의에너지 4중 수렴).",
-    "→ 중요도의 자(w)는 '크기'가 아니라 'loss 민감도' — training-free 통계로 대체 불가 = calibration류(GHOST)가 실패하고 end-to-end 학습이 필수인 이유."],
+    box(s, 7.1 + i * .85, 7.08 - max(v, .02) * 2.2, .62, max(v, .02) * 2.2, "", col[0], col[1], shape=MSO_SHAPE.RECTANGLE)
+
+# ================================================= 7b. math of sorting (2/2): where w is born
+s = new_slide("7. 정렬의 수학 ② — 중요도 가중 w는 loss의 미분에서 태어난다",
+              "forward 수식에 w는 없다 — R을 조각하는 끌은 forward가 아니라 gradient")
+box(s, .55, 1.2, 7.7, .95,
+    "① 학습이 실행하는 것: 스텝마다 폭 k 추첨 → 뒤 채널(n>k)을 삭제(nested dropout)\n    또는 낡힘(v4-aware, c 추첨) → 그 상태로 다음 토큰 CE loss를 측정",
+    WHITE, BLUE, fs=12.5, align=PP_ALIGN.LEFT)
+darrow(s, 4.2, 2.23, .28)
+box(s, .55, 2.57, 7.7, 1.45,
+    "② 채널 n을 잃었을 때의 loss 변화 (1차 연쇄법칙, g_t = ∂L/∂y_t):\nΔL_n ≈ Σ_{t,s}  w_{t,s} · ⟨r_n,B_s⟩⟨r_n,C_t⟩  =  r_nᵀ · M_eff · r_n\nM_eff = E[ C Bᵀ · w ],      w_{t,s} = A_{s,t} · ⟨ g_t , Δx_s ⟩",
+    LYEL, ORANGE, fs=13, bold=True, align=PP_ALIGN.LEFT)
+darrow(s, 4.2, 4.1, .28)
+box(s, .55, 4.44, 7.7, .95,
+    "③ 폭 추첨의 생존확률 p_1 > p_2 > ··· 아래 기대 loss 최소해:\nR = M_eff(대칭화)의 고유기저, 고유값 내림차순  (nested dropout → PCA 정리의 연산자판)",
+    LGREEN, GREEN, fs=12.5, bold=True, align=PP_ALIGN.LEFT)
+box(s, 8.55, 1.2, 4.2, 4.19,
+    "w의 정체 — 사건(s→t)마다 스칼라\n\n=  감쇠 생존율  A_{s,t}\n×  값의 크기  Δx_s\n×  loss 민감도  ∂L/∂y_t\n\n· 새로 도입한 가정이 아니라\n  연쇄법칙의 '나머지 인자들'\n· 아무도 입력·저장하지 않음 —\n  backprop이 매 스텝 자동으로 곱함\n· 크기 통계 M = E[CBᵀ]는\n  w ≡ 1로 잊어버린 근사",
+    LYEL, ORANGE, fs=12, align=PP_ALIGN.LEFT)
+txt(s, .55, 5.75, 12.4, 1.4, [
+    "실측 반전 (E-T1): w≡1 근사(계산 가능한 크기 M)의 고유기저는 학습 R과 무상관 (주각 cos 0.44 ≈ 무작위; 시차·열노름·질의에너지 4중 수렴).",
+    "→ w는 보정이 아니라 지배 인자 — 중요도는 loss가 정의하므로 training-free 통계(calibration류·GHOST)로 대체 불가 = end-to-end 학습이 필수인 이유."],
     fs=13, fc=NAVY, bold=True)
 
 # ================================================= 8. generalization (figure)
-s = new_slide("7. 왜 일반화되는가 — 이론이 아니라 실측으로 답한다",
+s = new_slide("8. 왜 일반화되는가 — 이론이 아니라 실측으로 답한다",
               "E-T1: 학습 기저는 어떤 통계와도 다르다 · E-T2: 그런데 도메인을 넘어 이식된다")
 s.shapes.add_picture("results/plots/theory_figs/F5_measured.png",
                      Inches(.7), Inches(1.35), Inches(12.0), Inches(4.55))
@@ -229,7 +255,7 @@ txt(s, .7, 6.05, 12.0, 1.2, [
     fs=13)
 
 # ================================================= 9. training methodology
-s = new_slide("8. 학습 방법론 — '티어링 실행권'을 사는 3요소",
+s = new_slide("9. 학습 방법론 — '티어링 실행권'을 사는 3요소",
               "총 수 GPU-시간, 백본 동결, R만 학습")
 box(s, .7, 1.45, 3.9, 1.9, "① Nested 폭 메뉴\n(정렬을 만드는 힘)\n\n스텝마다 폭 k ∈ {16,32,64,128} 추첨\n→ 앞 좌표일수록 자주 loss에 노출\n= 암묵적 '중요도 투표'", LYEL, ORANGE, fs=12)
 box(s, 4.8, 1.45, 3.9, 1.9, "② v4-aware 학습\n(staleness 내성)\n\n스텝의 절반을 tiered forward로\n(c ∈ {4..64} 추첨)\n→ 모델이 낡은 cold 읽기에 적응", LBLUE, BLUE, fs=12)
@@ -245,7 +271,7 @@ txt(s, .7, 5.35, 12.1, 1.7, [
     fs=13)
 
 # ================================================= 10. v4 semantics timeline
-s = new_slide("9. 실행 의미론 (v4) — 타임라인으로 보기",
+s = new_slide("10. 실행 의미론 (v4) — 타임라인으로 보기",
               "hot은 항상 최신, cold는 'snapshot + 감쇠 보상'으로 읽고 c마다 정확히 따라잡음")
 # timeline tokens
 for i in range(8):
@@ -267,7 +293,7 @@ txt(s, .7, 5.1, 12.2, 1.9, [
     fs=13)
 
 # ================================================= 11. results
-s = new_slide("10. 결과 — 공식 스택 3-arm 매트릭스 + B200 속도",
+s = new_slide("11. 결과 — 공식 스택 3-arm 매트릭스 + B200 속도",
               "acc = NeMo-Skills + vLLM (공식 논문과 동일 측정), 3-arm = raw / fresh / v4")
 rows = [
     ("bench", "raw", "fresh (R만 켬)", "v4-c4-fp8 (배포점)", "판정"),
@@ -299,7 +325,7 @@ txt(s, .65, 5.5, 12.2, 1.6, [
     fs=13)
 
 # ================================================= 12. fp8 license
-s = new_slide("11. 보너스 — 비대칭 정밀도 면허 (티어링이 fp8을 공짜로 만든다)",
+s = new_slide("12. 보너스 — 비대칭 정밀도 면허 (티어링이 fp8을 공짜로 만든다)",
               "같은 fp8인데: 매 토큰 재귀에 넣으면 붕괴, cold snapshot에 넣으면 무손실 — 4-cell 전부 실측")
 cells = [
     ("raw + fp8 매토큰 (폐루프)", "MATH 93.2 붕괴\n생성 2.2× 방황", LRED, RED),
@@ -317,7 +343,7 @@ txt(s, .8, 5.4, 12.0, 1.7, [
     fs=13)
 
 # ================================================= 13. roadmap
-s = new_slide("12. 현재 상태와 로드맵")
+s = new_slide("13. 현재 상태와 로드맵")
 txt(s, .7, 1.3, 12.2, 5.6, [
     "완료 (실측):",
     "· 0.04% retrofit 파이프라인 + 회전 불변성 (fresh = raw 정답수 동일, 공식 스택)",
